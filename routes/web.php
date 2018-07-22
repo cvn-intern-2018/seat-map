@@ -19,5 +19,8 @@ Route::get('/dashboard', 'AdminController@index')->name('dashboard')->middleware
 Route::get('/login', 'UserController@getLoginView')->name('login');
 Route::get('/logout', 'AdminController@logout')->name('logout');
 Route::post('/authenticate', 'UserController@login')->name('auth');
+Route::get('/set-seat', function(){
+    return view('admin.add-user-seat');
+});
 
 Auth::routes();

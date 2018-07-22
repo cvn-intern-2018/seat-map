@@ -45,14 +45,14 @@ CREATE TABLE `users` (
   `password` varchar(255) COLLATE utf32_vietnamese_ci NOT NULL,
   `group_id` int(11) DEFAULT '1',
   `email` varchar(100) COLLATE utf32_vietnamese_ci DEFAULT NULL,
-  `permisson` int(11) NOT NULL DEFAULT '0'
+  `permission` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_vietnamese_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `password`, `group_id`, `email`, `permisson`) VALUES
+INSERT INTO `users` (`id`, `name`, `password`, `group_id`, `email`, `permission`) VALUES
 (4, 'admin', '$2y$10$O/3fShfxDZDgQq/mFjpB2eJ1DyAeHtQybYNLeNHmdR4x7CXVfVrv.', 1, 'admin@admin.com', 1);
 
 -- --------------------------------------------------------
