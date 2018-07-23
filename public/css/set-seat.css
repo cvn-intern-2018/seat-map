@@ -1,0 +1,61 @@
+section.control-panel {
+  -webkit-box-shadow: 0 2px 2px 0 #ccc;
+          box-shadow: 0 2px 2px 0 #ccc;
+  background-color: white;
+  padding: 15px 0;
+  margin-bottom: 20px;
+}
+
+section.control-panel.fixed {
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+
+section.control-panel .setting {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+section.control-panel .setting .seatmap-option {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+
+section.control-panel .setting .seatmap-option input[type=text] {
+  width: 50px;
+}
+
+section.control-panel .setting .user-select {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  padding: 0 10px;
+}
+
+section.control-panel .setting .user-search input[type=text] {
+  width: calc(100% - 6px);
+}
+
+section.control-panel .setting .user-item {
+  width: 90px;
+  display: inline-block;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+
+section.control-panel .setting .user-item img {
+  max-width: 100%;
+}
+
+section.control-panel .setting .user-item .user-name {
+  text-align: center;
+}
+
+section.seatmap .seatmap-img img {
+  width: 100%;
+}
+

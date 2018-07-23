@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 17, 2018 at 08:09 AM
+-- Generation Time: Jul 17, 2018 at 12:03 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -43,16 +43,17 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf32_vietnamese_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf32_vietnamese_ci NOT NULL,
-  `group_id` int(11) DEFAULT '0',
-  `email` varchar(100) COLLATE utf32_vietnamese_ci DEFAULT NULL
+  `group_id` int(11) DEFAULT '1',
+  `email` varchar(100) COLLATE utf32_vietnamese_ci DEFAULT NULL,
+  `permission` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_vietnamese_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `password`, `group_id`, `email`) VALUES
-(2, 'admin', '$2y$10$X9y2KfiUqT5g.jAq1IvWne26lydS3vTduyniNn/yfiTqIyuroBgHe', 1, 'abc@example.com');
+INSERT INTO `users` (`id`, `name`, `password`, `group_id`, `email`, `permission`) VALUES
+(4, 'admin', '$2y$10$O/3fShfxDZDgQq/mFjpB2eJ1DyAeHtQybYNLeNHmdR4x7CXVfVrv.', 1, 'admin@admin.com', 1);
 
 -- --------------------------------------------------------
 
@@ -129,7 +130,7 @@ ALTER TABLE `seat_map`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user_group`
