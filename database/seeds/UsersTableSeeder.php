@@ -13,49 +13,44 @@ class UsersTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             'id' => 1,
-            'name' => 'admin',
+            'name' => 'Admin',
+            'username' => 'admin',
             'password' => bcrypt('123456'),
             'group_id' => 1,
-            'email' => 'abc@example.com',
+            'email' => 'admin@admin.com',
+            'short_name' => 'Admin',
             'permission' => 1
         ]);
         DB::table('users')->insert([
             'id' => 2,
-            'name' => 'admin',
+            'name' => 'user1',
+            'username' => 'user1',
             'password' => bcrypt('123456'),
             'group_id' => 1,
-            'email' => 'admin@admin.com',
+            'email' => 'user1@user.com',
+            'short_name' => 'user1',
             'permission' => 1
         ]);
         DB::table('users')->insert([
             'id' => 3,
-            'name' => 'User',
+            'name' => 'user2',
+            'username' => 'user2',
             'password' => bcrypt('123456'),
             'group_id' => 1,
-            'email' => 'user@user.com',
-            'permission' => 2
+            'email' => 'user2@user.com',
+            'short_name' => 'user2',
+            'permission' => 1
         ]);
         DB::table('users')->insert([
             'id' => 4,
-            'name' => 'User A',
+            'name' => 'user3',
+            'username' => 'user3',
             'password' => bcrypt('123456'),
             'group_id' => 1,
-            'email' => 'usera@user.com',
-            'permission' => 2
-        ]);DB::table('users')->insert([
-            'id' => 5,
-            'name' => 'User B',
-            'password' => bcrypt('123456'),
-            'group_id' => 1,
-            'email' => 'userb@user.com',
-            'permission' => 2
-        ]);DB::table('users')->insert([
-            'id' => 6,
-            'name' => 'User C',
-            'password' => bcrypt('123456'),
-            'group_id' => 1,
-            'email' => 'userc@user.com',
-            'permission' => 2
+            'email' => 'user3@user.com',
+            'short_name' => 'user3',
+            'permission' => 1
         ]);
+
     }
 }
