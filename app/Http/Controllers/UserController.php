@@ -7,26 +7,55 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    //
-    public function index()
-    {
-        $pass = [];
-        $pass['variable'] = sprintf('%1$s has passed to view index this string.', get_class($this));
-        $pass['menu'] = [];
-        if (Auth::check()) {
-            $menu_login = array ('text' => 'Dashboard', 'link' => route('dashboard'));
-            $pass['add_menu'][] = $menu_login;
-        }
-        else {
-            $menu_login = array ('text' => 'Login', 'link' => route('login'));
-            $pass['add_menu'][] = $menu_login;
-        }
 
-        return view( 'index', $pass );
-    }
+    /**
+     * Load login form
+     */
     public function getLoginView(Type $var = null)
     {
         return view('login');
     }
     
+    /**
+     * Handle logout request
+     */
+    public function logout() {
+        if ( Auth::check() ) {
+            Auth::logout();
+        }
+        return redirect('/');
+    }
+
+    /**
+     * Load Add/Edit/Delete user page
+     */
+    public function getUserSettingView()
+    {
+        return 'User setting view';
+    }
+
+    /**
+     * Handle add user request submit
+     */
+    public function addUserHandler( Request $request)
+    {
+        return 'Handle add user request';
+    }
+
+    /**
+     * Handle edit user request submit
+     */
+    public function editUserHandler( Request $request)
+    {
+        return 'Handle edit user request';
+        }
+
+    /**
+     * Handle delete user request submit
+     */
+    public function deleteUserHandler( Request $request)
+    {
+        return 'Handle delete user request';
+    }
+
 }

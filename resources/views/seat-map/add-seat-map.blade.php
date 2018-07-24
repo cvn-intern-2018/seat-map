@@ -1,10 +1,10 @@
 @extends("frame")
 
 @section("title")
-Home page
+Add seat map
 @endsection
 @section("scripts")
 @endsection
 @section("main")
-This is the home page.
+This is the Add seat map page.
 @endsection

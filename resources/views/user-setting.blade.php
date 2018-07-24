@@ -1,10 +1,10 @@
 @extends("frame")
 
 @section("title")
-Home page
+User setting
 @endsection
 @section("scripts")
 @endsection
 @section("main")
-This is the home page.
+This is the user setting page.
 @endsection
