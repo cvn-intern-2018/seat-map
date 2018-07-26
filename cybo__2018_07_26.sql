@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 24, 2018 at 10:25 AM
+-- Generation Time: Jul 26, 2018 at 03:05 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -30,8 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `seat_map` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) COLLATE utf32_vietnamese_ci DEFAULT NULL,
-  `users_seat` blob NOT NULL
+  `name` varchar(100) COLLATE utf32_vietnamese_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_vietnamese_ci;
 
 -- --------------------------------------------------------
@@ -44,7 +43,7 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf32_vietnamese_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf32_vietnamese_ci NOT NULL,
-  `group_id` int(11) DEFAULT '1',
+  `user_group_id` int(11) DEFAULT '1',
   `email` varchar(100) COLLATE utf32_vietnamese_ci DEFAULT NULL,
   `permission` int(11) NOT NULL DEFAULT '0',
   `username` varchar(100) COLLATE utf32_vietnamese_ci NOT NULL,
@@ -62,6 +61,19 @@ CREATE TABLE `user_group` (
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_vietnamese_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_seat`
+--
+
+CREATE TABLE `user_seat` (
+  `seat_map_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `X` int(11) NOT NULL,
+  `Y` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_vietnamese_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -77,13 +89,23 @@ ALTER TABLE `seat_map`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `users_group_id` (`group_id`);
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`) USING BTREE,
+  ADD KEY `users_group_id` (`user_group_id`);
 
 --
 -- Indexes for table `user_group`
 --
 ALTER TABLE `user_group`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indexes for table `user_seat`
+--
+ALTER TABLE `user_seat`
+  ADD KEY `user_id_users_id` (`user_id`),
+  ADD KEY `seat_map_id` (`seat_map_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -115,7 +137,14 @@ ALTER TABLE `user_group`
 -- Constraints for table `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_group_id` FOREIGN KEY (`group_id`) REFERENCES `user_group` (`id`);
+  ADD CONSTRAINT `users_group_id` FOREIGN KEY (`user_group_id`) REFERENCES `user_group` (`id`);
+
+--
+-- Constraints for table `user_seat`
+--
+ALTER TABLE `user_seat`
+  ADD CONSTRAINT `seat_map_id` FOREIGN KEY (`seat_map_id`) REFERENCES `seat_map` (`id`),
+  ADD CONSTRAINT `user_id_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
