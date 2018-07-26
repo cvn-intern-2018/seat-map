@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 26, 2018 at 03:05 AM
+-- Generation Time: Jul 26, 2018 at 10:04 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -47,7 +47,8 @@ CREATE TABLE `users` (
   `email` varchar(100) COLLATE utf32_vietnamese_ci DEFAULT NULL,
   `permission` int(11) NOT NULL DEFAULT '0',
   `username` varchar(100) COLLATE utf32_vietnamese_ci NOT NULL,
-  `short_name` varchar(100) COLLATE utf32_vietnamese_ci NOT NULL
+  `short_name` varchar(100) COLLATE utf32_vietnamese_ci NOT NULL,
+  `phone` varchar(15) COLLATE utf32_vietnamese_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_vietnamese_ci;
 
 -- --------------------------------------------------------
@@ -143,8 +144,8 @@ ALTER TABLE `users`
 -- Constraints for table `user_seat`
 --
 ALTER TABLE `user_seat`
-  ADD CONSTRAINT `seat_map_id` FOREIGN KEY (`seat_map_id`) REFERENCES `seat_map` (`id`),
-  ADD CONSTRAINT `user_id_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `seat_map_id` FOREIGN KEY (`seat_map_id`) REFERENCES `seat_map` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `user_id_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
