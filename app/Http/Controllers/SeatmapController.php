@@ -3,16 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\SeatMap;
 
 class SeatmapController extends Controller
 {
-    /**
-     * Load homepage
-     */
-    public function index()
-    {
-        return view('welcome');
-    }
+    
     /**
      * Load detail page
      */
