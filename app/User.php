@@ -35,15 +35,18 @@ class User extends Authenticatable
     /**
      * Disable rememberToken
      */
+
     public function getRememberToken()
     {
         return null;
     }
+
     // public function getRememberToken(){}
     public function getRememberTokenName()
     {
         return null;
     }
+
     public function setAttribute($key, $value)
     {
         $isRememberTokenAttribute = $key == $this->getRememberTokenName();
@@ -51,5 +54,10 @@ class User extends Authenticatable
         {
             parent::setAttribute($key, $value);
         }
+    }
+
+    public function group()
+    {
+        return $this->belongsTo('App\UserGroup', 'users_group_id');
     }
 }

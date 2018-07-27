@@ -17,5 +17,10 @@
 Route::get('/', 'SeatMapController@index')->name('home');
 Route::get('/login', 'UserController@getLoginView')->name('login');
 Route::get('/logout', 'UserController@logout')->name('logout');
+Route::get('/test', 'SeatmapController@test');
 
+Route::group(['middleware' => 'auth'], function(){
+    Route::get('/seat-map/add', 'SeatmapController@getAddSeatmapPage');
+    Route::post('/seat-map/add', 'SeatmapController@addSeatmapHandler');
+});
 Auth::routes();
