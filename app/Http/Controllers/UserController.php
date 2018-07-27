@@ -4,9 +4,31 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\User;
 class UserController extends Controller
 {
+    /**
+     * Load login form
+     */
+    public function getUsers()
+    {
+        $arr_users = [];
+        $users = User::all();
+
+        foreach ($users as $user) {
+            $u = [];
+            $u['name'] = $user->name;
+            $u['email'] = $user->email;
+            $arr_users[ $user->id] = json_encode($u);
+        }
+        // var_dump(json_encode($arr_users));exit;
+        $param = [
+            'users' => $users,
+            'userj' => $arr_users,
+        ];
+
+        return view('user-setting', $param);
+    }
 
     /**
      * Load login form
@@ -39,7 +61,25 @@ class UserController extends Controller
      */
     public function addUserHandler( Request $request)
     {
-        return 'Handle add user request';
+        $this->validate($request, [
+            'q' => 'required',
+        ]);
+
+        $name = trim($request->q);
+
+        $user = new User();
+        $user->name = $name;
+        $user->password = 123;
+        $user->username = "lelelele";
+        $user->short_name = "lele";
+        $user->phone = 123;
+        $user->save();
+
+        $status = [
+            'status' => 'success',
+            'data'  => $user
+        ];
+         return json_encode($status);
     }
 
     /**
@@ -47,8 +87,24 @@ class UserController extends Controller
      */
     public function editUserHandler( Request $request)
     {
-        return 'Handle edit user request';
-        }
+        $this->validate($request, [
+            'email' => 'required',
+        ]);
+
+        $email = trim($request->email);
+
+        $user = User::find(10);
+        $user->email = $email;
+        $user->save();
+
+        $status = [
+            'status' => 'success',
+            'data'  => $user
+        ];
+
+        return redirect('/users');
+
+    }
 
     /**
      * Handle delete user request submit

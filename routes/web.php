@@ -23,4 +23,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/seat-map/add', 'SeatmapController@getAddSeatmapPage');
     Route::post('/seat-map/add', 'SeatmapController@addSeatmapHandler');
 });
+Route::get('/add', 'UserController@addUserHandler')->name('adduser');
+Route::get('/users', 'UserController@getusers')->name('getusers');
+Route::post('/users', 'UserController@editUserHandler')->name('gett');
 Auth::routes();

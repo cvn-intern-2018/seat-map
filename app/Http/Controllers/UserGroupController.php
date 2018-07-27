@@ -27,7 +27,20 @@ class UserGroupController extends Controller
      */
     public function editGroupHandler( Request $request)
     {
-        return 'Handle edit group request';
+        $this->validate($request, [
+            'email' => 'required',
+        ]);
+
+        $post = User::find(1);
+        $post->email = $request->email;
+        $post->save();
+
+        $status = [
+            'status' => 'success',
+            'data'  => $post
+        ];
+
+        return json_encode($status);
         }
 
     /**
