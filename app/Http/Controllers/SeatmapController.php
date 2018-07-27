@@ -3,11 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\SeatMap;
+use Illuminate\Support\Facades\Storage;
+use App\SeatMap as Map;
+use App\UserSeat as Seat;
+use App\User;
 
 class SeatmapController extends Controller
 {
-    
+    /**
+     * Load homepage
+     */
+    public function index()
+    {
+        return view('home');
+    }
     /**
      * Load detail page
      */
@@ -20,15 +29,17 @@ class SeatmapController extends Controller
      */
     public function getAddSeatmapPage()
     {
-        return 'Load add seat map page';
+        return view('seat-map/add-seat-map');
     }
 
     /**
-     * Handle add group request submit
+     * Handle add Seatmap request submit
      */
-    public function addGroupHandler( Request $request)
+    public function addSeatmapHandler( Request $request )
     {
-        return 'Handle add group request';
+        $public = Storage::disk('public_folder');
+        $f = $request->file('seatmap_img');
+        return $public->putFileAs('images/seat-map', $f, 't1.' .  $f->extension());
     }
 
     /**
@@ -40,18 +51,44 @@ class SeatmapController extends Controller
     }
     
     /**
-     * Handle edit group request submit
+     * Handle edit Seatmap request submit
      */
-    public function editGroupHandler( Request $request)
+    public function editSeatmapHandler( Request $request)
     {
-        return 'Handle edit group request';
+        return 'Handle edit Seatmap request';
     }
 
     /**
-     * Handle delete group request submit
+     * Handle delete Seatmap request submit
      */
-    public function deleteGroupHandler( Request $request)
+    public function deleteSeatmapHandler( Request $request)
     {
-        return 'Handle delete group request';
+        return 'Handle delete Seatmap request';
+    }
+
+    public function test() {
+        $map = Map::getMapWithUsers(1);
+        $avatars = [];
+        foreach ($map->users as $user ) {
+            if ( Storage::disk( 'public_folder' )->exists( 'images/user/' . $user->id . '.jpg' ) ) {
+                $avatars[ $user->id ] = asset( 'images/user/' . $user->id . '.jpg');
+            }
+            elseif ( Storage::disk( 'public_folder' )->exists( 'images/user/' . $user->id . '.png' ) ) {
+                $avatars[ $user->id ] = asset( 'images/user/' . $user->id . '.png');
+            }
+            elseif ( Storage::disk( 'public_folder' )->exists( 'images/user/' . $user->id . '.bmp' ) ) {
+                $avatars[ $user->id ] = asset( 'images/user/' . $user->id . '.bmp');
+            }
+            elseif ( Storage::disk( 'public_folder' )->exists( 'images/user/' . $user->id . '.gif' ) ) {
+                $avatars[ $user->id ] = asset( 'images/user/' . $user->id . '.gif');
+            }
+            else {
+                $avatars[ $user->id ] = asset( 'images/user/mys-man.jpg');
+            }
+        }
+        return view( 'seat-map/map-viewport', [
+            'map' => $map ,
+            'avatars' => $avatars,
+        ] );
     }
 }
