@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 26, 2018 at 10:06 AM
+-- Generation Time: Jul 27, 2018 at 10:21 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -25,10 +25,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `seat_map`
+-- Table structure for table `seat_maps`
 --
 
-CREATE TABLE `seat_map` (
+CREATE TABLE `seat_maps` (
   `id` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf32_vietnamese_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_vietnamese_ci;
@@ -45,7 +45,7 @@ CREATE TABLE `users` (
   `password` varchar(255) COLLATE utf32_vietnamese_ci NOT NULL,
   `user_group_id` int(11) DEFAULT '1',
   `email` varchar(100) COLLATE utf32_vietnamese_ci DEFAULT NULL,
-  `permission` int(11) NOT NULL DEFAULT '0',
+  `permission` tinyint(4) NOT NULL DEFAULT '0',
   `username` varchar(100) COLLATE utf32_vietnamese_ci NOT NULL,
   `short_name` varchar(100) COLLATE utf32_vietnamese_ci NOT NULL,
   `phone` varchar(15) COLLATE utf32_vietnamese_ci NOT NULL
@@ -54,10 +54,10 @@ CREATE TABLE `users` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_group`
+-- Table structure for table `user_groups`
 --
 
-CREATE TABLE `user_group` (
+CREATE TABLE `user_groups` (
   `name` varchar(100) COLLATE utf32_vietnamese_ci NOT NULL,
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_vietnamese_ci;
@@ -65,14 +65,14 @@ CREATE TABLE `user_group` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_seat`
+-- Table structure for table `user_seats`
 --
 
-CREATE TABLE `user_seat` (
+CREATE TABLE `user_seats` (
   `seat_map_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `X` int(11) NOT NULL,
-  `Y` int(11) NOT NULL
+  `X` smallint(6) NOT NULL,
+  `Y` smallint(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_vietnamese_ci;
 
 --
@@ -80,9 +80,9 @@ CREATE TABLE `user_seat` (
 --
 
 --
--- Indexes for table `seat_map`
+-- Indexes for table `seat_maps`
 --
-ALTER TABLE `seat_map`
+ALTER TABLE `seat_maps`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -92,20 +92,20 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `username` (`username`),
   ADD UNIQUE KEY `email` (`email`) USING BTREE,
-  ADD KEY `users_group_id` (`user_group_id`);
+  ADD KEY `users_group_id` (`group_id`);
 
 --
--- Indexes for table `user_group`
+-- Indexes for table `user_groups`
 --
-ALTER TABLE `user_group`
+ALTER TABLE `user_groups`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name` (`name`);
 
 --
--- Indexes for table `user_seat`
+-- Indexes for table `user_seats`
 --
-ALTER TABLE `user_seat`
-  ADD KEY `user_id_users_id` (`user_id`),
+ALTER TABLE `user_seats`
+  ADD PRIMARY KEY (`user_id`,`seat_map_id`),
   ADD KEY `seat_map_id` (`seat_map_id`);
 
 --
@@ -113,9 +113,9 @@ ALTER TABLE `user_seat`
 --
 
 --
--- AUTO_INCREMENT for table `seat_map`
+-- AUTO_INCREMENT for table `seat_maps`
 --
-ALTER TABLE `seat_map`
+ALTER TABLE `seat_maps`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -125,9 +125,9 @@ ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `user_group`
+-- AUTO_INCREMENT for table `user_groups`
 --
-ALTER TABLE `user_group`
+ALTER TABLE `user_groups`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -138,13 +138,13 @@ ALTER TABLE `user_group`
 -- Constraints for table `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_group_id` FOREIGN KEY (`user_group_id`) REFERENCES `user_group` (`id`);
+  ADD CONSTRAINT `users_group_id` FOREIGN KEY (`group_id`) REFERENCES `user_groups` (`id`);
 
 --
--- Constraints for table `user_seat`
+-- Constraints for table `user_seats`
 --
-ALTER TABLE `user_seat`
-  ADD CONSTRAINT `seat_map_id` FOREIGN KEY (`seat_map_id`) REFERENCES `seat_map` (`id`) ON DELETE CASCADE,
+ALTER TABLE `user_seats`
+  ADD CONSTRAINT `seat_map_id` FOREIGN KEY (`seat_map_id`) REFERENCES `seat_maps` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `user_id_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
