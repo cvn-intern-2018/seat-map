@@ -3,20 +3,6 @@
 @section('content')
 <div class="container">
 <div class="row">
-<<<<<<< HEAD
-@foreach ($maps as $map)
-<div class="col-md-3">
-			<div class="panel panel-info">
-				<div class="panel-heading">
-					<h4 class="panel-title">{{$map->name}} </h4>
-				</div>
-				<div class="panel-body">Panel content</div>
-			</div>
-			</div>	
-
-@endforeach
-	
-=======
 
         <div class="col-md-3">
 			<div class="panel panel-info">
@@ -27,7 +13,6 @@
 			</div>
         </div>
 
->>>>>>> fc4837972d9fe743a92185da4c50856945c16393
     </div>
 </div>
 @endsection
