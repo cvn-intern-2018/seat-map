@@ -43,7 +43,7 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf32_vietnamese_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf32_vietnamese_ci NOT NULL,
-  `group_id` int(11) DEFAULT '1',
+  `user_group_id` int(11) DEFAULT '1',
   `email` varchar(100) COLLATE utf32_vietnamese_ci DEFAULT NULL,
   `permission` tinyint(4) NOT NULL DEFAULT '0',
   `username` varchar(100) COLLATE utf32_vietnamese_ci NOT NULL,
