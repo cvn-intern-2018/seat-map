@@ -14,7 +14,7 @@
 // Route::get('/', function () {
 //     return view('index');
 // });
-Route::get('/{search}/{page}', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 Route::get('/login', 'UserController@getLoginView')->name('login');
 Route::get('/logout', 'UserController@logout')->name('logout');
 Route::get('/test', 'SeatmapController@test');

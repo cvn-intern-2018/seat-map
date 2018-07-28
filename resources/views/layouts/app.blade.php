@@ -12,8 +12,9 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ asset('bootstrap/bootstrap.min.css') }}" >
+    <script src="{{ asset('jquery/jquery-3.3.1.min.js') }}" ></script>
     <script src="{{ asset('bootstrap/bootstrap.min.js') }}" ></script>
-
+    
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <!-- Style -->

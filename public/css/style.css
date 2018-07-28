@@ -1,3 +1,4 @@
+ /* Navbar */
  .navbar-brand { position: relative; z-index: 2; }
 
 .navbar-nav.navbar-right .btn { position: relative; z-index: 2; padding: 4px 20px; margin: 10px auto; transition: transform 0.3s; }
@@ -48,22 +49,76 @@ li.active {
     }
 }
 
-/* Reponsive panel title */
+
+
+
+/* search box */
+.search-box
+{
+    margin:30px;
+}
+/* big notify */
+.big-notify
+{
+color: grey;
+margin: 200px;
+}
+
+/* seat-map panel for home view */
+ .panel .panel-heading {
+    color: white;
+    background-color: rgb(2, 133, 173);
+}
+.home .panel {
+
+  border-color: rgb(2, 133, 173);
+}
+
+.panel-body
+{
+        height: 200px;
+        width: 100%;
+}
+.panel-body img
+{
+    max-width: 100%;
+    max-height:100%;
+    
+}
+.home .panel:hover
+{ 
+  
+    position: sticky;
+     transform: scale(1.2); 
+     cursor: pointer;
+     z-index:100;
+}
 
 .panel-title {
-    width: 150px;
+    max-width: 80%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-@media screen and (max-width: 767px) {
-    .panel-title {
-        width: 500px;
-    }
-
+.home .panel a ,.home .panel a:hover{
+    color:white;
+    text-decoration: none;
 }
-@media screen and (max-width: 500px) {
-    .panel-title {
-        width: 300px;
-    }
+.seatmap-button
+{
+    visibility: hidden;
+    width:10%;
+}
+.panel:hover .seatmap-button
+{
+    visibility: visible;
+}
+.seatmap-button:hover
+{
+
+    width:10%;
+    position: sticky;
+    transform: scale(1.2); 
+    cursor: pointer;
+    z-index:101;
 }
