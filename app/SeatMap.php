@@ -3,19 +3,25 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Pagination\Paginator;
 class SeatMap extends Model
 {   
     public $timestamps = false;
    public static function getSeatMap($search,$page)
    {
-    $search = str_replace('%','\%',$search);
-    $search = str_replace('_','\_',$search);
-    $maps = self::offset($page-1)
-                ->where('name','like',"%$search%")
-                ->limit(8)
-                ->get();
+    if($search){
+       $search = str_replace('%',"/%",$search);
+       $search = str_replace('_',"/_",$search);
+    $maps = self::where('name','like',"%$search%")
+    ->paginate(8);
     return $maps;
+    }
+    else
+    {
+        $maps = self::paginate(8)
+        ;
+        return $maps;
+    }
    }
 
 

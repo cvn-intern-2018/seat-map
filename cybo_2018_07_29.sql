@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 4.8.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 27, 2018 at 10:21 AM
--- Server version: 10.1.34-MariaDB
--- PHP Version: 7.2.7
+-- Generation Time: Jul 29, 2018 at 01:13 AM
+-- Server version: 10.1.31-MariaDB
+-- PHP Version: 7.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -43,7 +43,7 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf32_vietnamese_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf32_vietnamese_ci NOT NULL,
-  `group_id` int(11) DEFAULT '1',
+  `user_group_id` int(11) DEFAULT '1',
   `email` varchar(100) COLLATE utf32_vietnamese_ci DEFAULT NULL,
   `permission` tinyint(4) NOT NULL DEFAULT '0',
   `username` varchar(100) COLLATE utf32_vietnamese_ci NOT NULL,
@@ -92,7 +92,7 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `username` (`username`),
   ADD UNIQUE KEY `email` (`email`) USING BTREE,
-  ADD KEY `users_group_id` (`group_id`);
+  ADD KEY `users_group_id` (`user_group_id`);
 
 --
 -- Indexes for table `user_groups`
@@ -116,19 +116,19 @@ ALTER TABLE `user_seats`
 -- AUTO_INCREMENT for table `seat_maps`
 --
 ALTER TABLE `seat_maps`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user_groups`
 --
 ALTER TABLE `user_groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
@@ -138,7 +138,7 @@ ALTER TABLE `user_groups`
 -- Constraints for table `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_group_id` FOREIGN KEY (`group_id`) REFERENCES `user_groups` (`id`);
+  ADD CONSTRAINT `users_group_id` FOREIGN KEY (`user_group_id`) REFERENCES `user_groups` (`id`);
 
 --
 -- Constraints for table `user_seats`
