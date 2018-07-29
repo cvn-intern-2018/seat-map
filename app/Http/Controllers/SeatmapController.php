@@ -45,9 +45,19 @@ class SeatmapController extends Controller
     /**
      * Load add seat map page
      */
-    public function getEditSeatmapPage()
+    public function getEditSeatmapPage( int $id = 1 )
     {
-        return 'Load edit seat map page';
+        $map = Map::getMapWithUsers($id);
+        $mapImage = Map::getMapImage($id);
+        $users = User::getAllUsersWithGroup();
+        $avatars = User::getUserAvatar($users);
+        return view('seat-map/edit-seat-map', [
+            'map' => $map,
+            'arranged_users' => $map->users,
+            'users' => $users,
+            'avatars' => $avatars,
+            'mapImage' => $mapImage,
+        ]);
     }
     
     /**
@@ -67,28 +77,14 @@ class SeatmapController extends Controller
     }
 
     public function test() {
-        $map = Map::getMapWithUsers(1);
-        $avatars = [];
-        foreach ($map->users as $user ) {
-            if ( Storage::disk( 'public_folder' )->exists( 'images/user/' . $user->id . '.jpg' ) ) {
-                $avatars[ $user->id ] = asset( 'images/user/' . $user->id . '.jpg');
-            }
-            elseif ( Storage::disk( 'public_folder' )->exists( 'images/user/' . $user->id . '.png' ) ) {
-                $avatars[ $user->id ] = asset( 'images/user/' . $user->id . '.png');
-            }
-            elseif ( Storage::disk( 'public_folder' )->exists( 'images/user/' . $user->id . '.bmp' ) ) {
-                $avatars[ $user->id ] = asset( 'images/user/' . $user->id . '.bmp');
-            }
-            elseif ( Storage::disk( 'public_folder' )->exists( 'images/user/' . $user->id . '.gif' ) ) {
-                $avatars[ $user->id ] = asset( 'images/user/' . $user->id . '.gif');
-            }
-            else {
-                $avatars[ $user->id ] = asset( 'images/user/mys-man.jpg');
-            }
-        }
+        $id = 1;
+        $map = Map::getMapWithUsers($id);
+        $mapImage = Map::getMapImage($id);
+        $avatars = User::getUserAvatar($map->users);
         return view( 'seat-map/map-viewport', [
             'map' => $map ,
             'avatars' => $avatars,
+            'mapImage' => $mapImage,
         ] );
     }
 }

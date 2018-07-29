@@ -1,16 +1,17 @@
+@import 'variables';
 .seatmap-viewport {
+  width: 100%;
+  height: 80vh;
+  overflow: auto;
   .seatmap-container {
     position: relative;
-    &.x2 {
-      width: 100%;
-    }
-    &.x2 {
+    &[data-zoom="2"] {
       width: 200%;
     }
-    &.x4 {
+    &[data-zoom="3"] {
       width: 400%;
     }
-    &.x8 {
+    &[data-zoom="4"] {
       width: 800%;
     }
     .seatmap-image {
@@ -18,9 +19,9 @@
     }
     
     .seat-display {
-      text-align: center;
       position: relative;
       .name {
+        text-align: center;
         position: absolute;
         width: 100%;
         text-align: center;
@@ -30,15 +31,38 @@
       position: absolute;
       transform: translate(-50%, -50%);
       .avatar-container {
-        width: 80px;
-        height: 80px;
+        width: $avatar-size;
+        height: $avatar-size;
+        border: 1px solid black;
         border-radius: 100%;
         overflow: hidden;
         .avatar {
           width: 100%;
           height: 100%;
           object-fit: cover;
+          pointer-events: none;
+          user-select: none;
         }
+      }
+      .info-box {
+        display: none;
+      }
+      &.active .info-box {
+        display: block;
+        position: absolute;
+        width: 300px;
+        bottom: 100%;
+        left: 50%;
+        transform: translate(-50%);
+        padding: 10px;
+        background-color: white;
+        border: 1px solid black;
+        border-radius: 7px;
+      }
+    }
+    &.hide-name {
+      .seat-display .name {
+        display: block;
       }
     }
   }

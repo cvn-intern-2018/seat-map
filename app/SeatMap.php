@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Storage;
+
 class SeatMap extends Model
 {   
     public $timestamps = false;
@@ -31,6 +33,23 @@ class SeatMap extends Model
     }
     
     public static function getMapWithUsers( int $id ) {
-        return self::with( 'users' )->where( 'id', $id )->first();
+        return self::with( 'users.group' )->where( 'id', $id )->first();
+    }
+
+    public static function getMapImage(int $id)
+    {
+        if ( Storage::disk( 'public_folder' )->exists( 'images/seat-map/' . $id . '.jpg' ) ) {
+            return asset( 'images/seat-map/' . $id . '.jpg');
+        }
+        elseif ( Storage::disk( 'public_folder' )->exists( 'images/seat-map/' . $id . '.png' ) ) {
+            return asset( 'images/seat-map/' . $id . '.png');
+        }
+        elseif ( Storage::disk( 'public_folder' )->exists( 'images/seat-map/' . $id . '.bmp' ) ) {
+            return asset( 'images/seat-map/' . $id . '.bmp');
+        }
+        elseif ( Storage::disk( 'public_folder' )->exists( 'images/seat-map/' . $id . '.gif' ) ) {
+            return asset( 'images/seat-map/' . $id . '.gif');
+        }
+        return null;
     }
 }
