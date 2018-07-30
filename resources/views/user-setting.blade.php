@@ -9,19 +9,23 @@
 
 <body>
     <div id="id01" class="modal">
-            <form class="modal-content animate" action="/action_page.php">
+            <form name="inforPopup" class="modal-content animate" action="/users/add" onsubmit="addUser(event)" method="POST" >
+                @csrf
                 <div class="container">
-                      <p><b>Username</b></p>
-                      <input type="text" name="uname" required>
-                      <p for="fname"><b>Fullname</b></p>
-                      <input type="text" name="fname" required>
-                      <p><b>Email</b></p>
-                      <input type="text" name="email" required>
-                      <p><b>Group</b></p>
-                      <input type="text" name="group" required>
-                      <p><b>Password</b></p>
-                      <input type="text" name="psw" required>
-                      <button name="btnDone"type="submit">DONE</button>
+                      <p><b>Username:</b></p>
+                      <input name="username" value="levannn" type="text" placeholder="Enter username" required>
+                      <p for="fname"><b>Fullname:</b></p>
+                      <input name="fullname" value="levannn"type="text" placeholder="Enter fullname" required>
+                      <p><b>Email:</b></p>
+                      <input name="email" value="levannn@gmail.com" type="text" placeholder="Enter email" required>
+                      <p><b>Group:</b></p>
+                      <input name="group_id" value="1" type="text" placeholder="Enter group" required>
+                      <p><b>Password:</b></p>
+                      <input name="password" value="123" type="password" placeholder="Enter password" required>
+                      <div >
+                          <input name="inptSubmitPopup" type="submit" />
+                          <input onclick="document.getElementById('id01').style.display='none'" name="inptCancelPopup">CANCEL</name>
+                      </div>
                     </div>
           </form>
 
@@ -57,23 +61,23 @@
 
             </div>
             <div>
-                <form class="flex-container" action="/users" onsubmit="editUser(event)" method="POST" >@csrf
+                <form name="infor" class="flex-container" action="/users" onsubmit="editUser(event)" method="POST" >@csrf
                     <p><strong>Full name:</strong></p>
-                    <input type="text" name="name" value=""/>
+                    <input type="text" name="name" value="" required/>
                     <p><strong>Username:</strong></p>
-                    <input type="text" name="username" value=""/>
+                    <input type="text" name="username" value="" required/>
                     <p><strong>Phone number:</strong></p>
-                    <input type="text" name="phone" value=""/>
+                    <input type="text" name="phone" value="" required/>
                     <p><strong>Email:</strong></p>
-                    <input type="text" name="email" value=""/>
+                    <input type="text" name="email" value="" required/>
                     <p><strong>Group:</strong></p>
-                    <select name="group_id">
+                    <select name="group_id" required/>
                         <option value=1>Cybozu</option>
                         <option value=2>Cyboz</option>
                         <option value=3>Cyb</option>
                     </select>
                     <p><strong>Password:</strong></p>
-                    <input type="text" name="password" value=""/>
+                    <input type="text" name="password" value="" required/>
                     <input type="submit" value="Save" />
                     <input type="reset" value="Cancel" />
                 </form>
@@ -89,8 +93,49 @@
 <!-- javascript -->
 <script>
     //function to add a user to the list
-    function addUser(){
-        
+    function addUser(event){
+        event.preventDefault();
+        var form = document.querySelector("form[name=inforPopup]");
+        var formData = new FormData(form);
+        //confirm
+        if(confirm("Sure?")){
+
+
+            // check if existed in the database
+            // from the database
+            // event.preventDefault();
+            // if (currentItem.name.length == 0) {
+ 
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    // var abc = JSON.parse(this.responseText);
+                    //console.log(this.responseText);
+                    alert(this.responseText);
+                    // alert("successful");
+
+                    // add on the screen
+                    var nodeLi = document.createElement("li");
+                    nodeLi.className += "flex-container";
+                    var nodeP = document.createElement("p");
+                    nodeP.setAttribute('name', "name");
+                    nodeP.onclick = function(){displayUserInfor(this, '{{ $userj[$user->id] }}')};
+                    nodeP.appendChild(document.createTextNode("{{$user->name}}"));
+                    var nodeBtn = document.createElement("button");
+                    nodeBtn.setAttribute('name', "{{$user->name}}");
+                    nodeBtn.onclick=function(){deleteUser(this)};
+                    nodeBtn.appendChild(document.createTextNode("Delete"));
+                    nodeLi.appendChild(nodeP);
+                    nodeLi.appendChild(nodeBtn);
+                    document.querySelector("ul[id=list-of-users]").appendChild(nodeLi);
+                    document.getElementById('id01').style.display='none';
+
+                }
+            }
+            xmlhttp.open("POST", "/users/add", true);
+            xmlhttp.send(formData);
+
+            } 
     };
 
     // function to delete a user
@@ -175,7 +220,7 @@
     // testing
     function editUser(event){
         event.preventDefault();
-        var form = document.querySelector("form");
+        var form = document.querySelector("form[name=infor]");
         var formData = new FormData(form);
         if (formData.length == 0) {
             return;
