@@ -25,6 +25,20 @@ class SeatMap extends Model
         return $maps;
     }
    }
+   public static function addSeatMap($name)
+   {
+ 
+    $id = self::insertGetId(
+        ['name' => $name]
+    );
+    return $id;
+   }
+   public static function deleteSeatMap($id)
+   {
+    self::where('id',$id)->delete();
+    return;
+   }
+ 
 
 
     public function users()

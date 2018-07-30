@@ -37,11 +37,39 @@ class SeatmapController extends Controller
      */
     public function addSeatmapHandler( Request $request )
     {
-        $public = Storage::disk('public_folder');
-        $f = $request->file('seatmap_img');
-        return $public->putFileAs('images/seat-map', $f, 't1.' .  $f->extension());
+        if($request->user()->permission==1)
+        {
+            $id = Map::addSeatMap($request->name);
+            $public = Storage::disk('public_folder');
+            $f = $request->file('pic');
+            $public->putFileAs('images/seat-map', $f, $id.'.' .  $f->extension());
+            return "Đã ADD";
+        }
+        else 
+        {
+            return "Bạn không có quyền ADD!!!";
+        }
+
+     
     }
 
+    // Delete seat map
+
+    public function deleteSeatmapHandler( Request $request )
+    {
+        if($request->user()->permission==1)
+        {
+            $id = $request->id;
+            Map::deleteSeatMap($id);
+            return "Đã Xóa";
+        }
+        else 
+        {
+            return "Bạn không có quyền Delete!!!";
+        }
+
+     
+    }
     /**
      * Load add seat map page
      */
@@ -73,10 +101,7 @@ class SeatmapController extends Controller
     /**
      * Handle delete Seatmap request submit
      */
-    public function deleteSeatmapHandler( Request $request)
-    {
-        return 'Handle delete Seatmap request';
-    }
+   
 
     public function test() {
         $id = 1;
