@@ -33,6 +33,11 @@ class SeatMap extends Model
     );
     return $id;
    }
+   public static function deleteSeatMap($id)
+   {
+    self::where('id',$id)->delete();
+    return;
+   }
  
 
 

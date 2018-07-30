@@ -20,8 +20,8 @@ Route::get('/logout', 'UserController@logout')->name('logout');
 Route::get('/test', 'SeatmapController@test');
 
 Route::group(['middleware' => 'auth'], function(){
-    Route::get('/seat-map/add', 'SeatmapController@getAddSeatmapPage');
     Route::post('/seat-map/add', 'SeatmapController@addSeatmapHandler');
+    Route::post('/seat-map/delete', 'SeatmapController@deleteSeatmapHandler');
     Route::get('/seat-map/edit/', 'SeatmapController@getEditSeatmapPage');
     Route::post('/seat-map/edit/', 'SeatmapController@editSeatmapHandler')->name("seatmapEditHandler");
 });

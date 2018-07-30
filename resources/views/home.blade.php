@@ -5,6 +5,18 @@
 <!-- <input name="_token" type="hidden" value="{{ csrf_token() }}"> -->
 <div class="container home">
 
+
+
+<form role="form" id="frmDeleteID"  action="/seat-map/delete" method="post" >
+@csrf
+<input type="hidden" name="id" id="deleteID">
+</form>
+
+
+
+
+
+
 	<div class="row search-box">
 
 				<form role="form" action="/" method="get" class="">
@@ -35,21 +47,22 @@
 					<form role="form"  class="modal-content animate" action="/seat-map/add" method="post" enctype="multipart/form-data" >
 					@csrf
 						<div class="imgcontainer">
+						<h2>Add Seat map<h2>
 						<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
 						</div>
 
 						<div class="sm-form" >
 							
-						<label for="name"><b>Tên Seatmap: </b></label>
+						<label for="name"><b>Tên Seat map: </b></label>
 						<input type="text"  class="form-control sm-name" placeholder="Enter Seatmap's name" name="name" required>
-						<label for="pic"><b>Sơ đồ: </b></label>
-						<input type="file" name="pic" id="pic" accept="image/*" required>
+						<label for="pic"><b>Sơ đồ (hỗ trợ định dạng .jpg, .png và .gif) : </b></label>
+						<input type="file" name="pic" id="pic" accept=".png, .jpg, .gif" required>
 						
 						</div>
 
-						<div class="sm-form" style="background-color:#f1f1f1">
+						<div class="sm-form" >
 						<button type="button" onclick="document.getElementById('id01').style.display='none'" class=" btn btn-md btn-danger ">Cancel</button>
-						<button class="addbtn btn btn-md btn-success " type="submit"> Add Seatmap</button>
+						<button class="addbtn btn btn-md btn-success " type="submit"> Add map</button>
 						</div>
 					</form>
 					</div>
@@ -92,9 +105,9 @@
 					<div class="panel-title pull-left">{{$map->name}}  </div>
 					</a>
 					@auth
-					<a href="/seat-map/{{$map->id}}">	<img class="seatmap-button pull-right" src="{{asset('images/remove.png')}}">
-					</a>
-					<a href="/seat-map/{{$map->id}}">	<img  class="seatmap-button pull-right" src="{{asset('images/edit.png')}}">
+					<img data-id="{{$map->id}}" class="delete-button seatmap-button pull-right" src="{{asset('images/remove.png')}}">
+
+					<a href="/seat-map/{{$map->id}}">	<img   class="seatmap-button pull-right" src="{{asset('images/edit.png')}}">
 					</a>
 					
 					@endauth
@@ -132,6 +145,13 @@
 
    </div>
 </div>
+<script type="text/javascript">
+  $('.delete-button').on('click', function() {
+      var id = $(this).data('id');
+      $('#deleteID').val(id);
+      $('#frmDeleteID').submit();
+  });
+</script>
 @endsection
 
 

@@ -47,12 +47,29 @@ class SeatmapController extends Controller
         }
         else 
         {
-            return "Không có quyền ADD";
+            return "Bạn không có quyền ADD!!!";
         }
 
      
     }
 
+    // Delete seat map
+
+    public function deleteSeatmapHandler( Request $request )
+    {
+        if($request->user()->permission==1)
+        {
+            $id = $request->id;
+            Map::deleteSeatMap($id);
+            return "Đã Xóa";
+        }
+        else 
+        {
+            return "Bạn không có quyền Delete!!!";
+        }
+
+     
+    }
     /**
      * Load add seat map page
      */
@@ -82,10 +99,7 @@ class SeatmapController extends Controller
     /**
      * Handle delete Seatmap request submit
      */
-    public function deleteSeatmapHandler( Request $request)
-    {
-        return 'Handle delete Seatmap request';
-    }
+   
 
     public function test() {
         $id = 1;
