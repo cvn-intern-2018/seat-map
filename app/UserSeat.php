@@ -7,5 +7,5 @@ use Illuminate\Support\Facades\DB;
 
 class UserSeat extends Model
 {
-    
+
 }

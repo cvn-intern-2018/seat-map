@@ -37,17 +37,57 @@ class SeatmapController extends Controller
      */
     public function addSeatmapHandler( Request $request )
     {
-        $public = Storage::disk('public_folder');
-        $f = $request->file('seatmap_img');
-        return $public->putFileAs('images/seat-map', $f, 't1.' .  $f->extension());
+        if($request->user()->permission==1)
+        {
+            $id = Map::addSeatMap($request->name);
+            $public = Storage::disk('public_folder');
+            $f = $request->file('pic');
+            $public->putFileAs('images/seat-map', $f, $id.'.' .  $f->extension());
+            return "Đã ADD";
+        }
+        else 
+        {
+            return "Bạn không có quyền ADD!!!";
+        }
+
+     
     }
 
+    // Delete seat map
+
+    public function deleteSeatmapHandler( Request $request )
+    {
+        if($request->user()->permission==1)
+        {
+            $id = $request->id;
+            Map::deleteSeatMap($id);
+            return "Đã Xóa";
+        }
+        else 
+        {
+            return "Bạn không có quyền Delete!!!";
+        }
+
+     
+    }
     /**
      * Load add seat map page
      */
-    public function getEditSeatmapPage()
+    public function getEditSeatmapPage( int $id )
     {
-        return 'Load edit seat map page';
+        $map = Map::getMapWithUsers($id);
+        $map_image = Map::getMapImage($id);
+        $users = User::getAllUsersWithGroup();
+        $avatars = User::getUserAvatar($users);
+        return view('seat-map/edit-seat-map', [
+            'map' => $map,
+            'arranged_users' => $map->users,
+            'arranged_ids' => $map->users->keyBy('id')->keys()->toArray(),
+            'users' => $users,
+            'avatars' => $avatars,
+            'map_image' => $map_image,
+            'edit_mode' => true,
+        ]);
     }
     
     /**
@@ -61,34 +101,17 @@ class SeatmapController extends Controller
     /**
      * Handle delete Seatmap request submit
      */
-    public function deleteSeatmapHandler( Request $request)
-    {
-        return 'Handle delete Seatmap request';
-    }
+   
 
     public function test() {
-        $map = Map::getMapWithUsers(1);
-        $avatars = [];
-        foreach ($map->users as $user ) {
-            if ( Storage::disk( 'public_folder' )->exists( 'images/user/' . $user->id . '.jpg' ) ) {
-                $avatars[ $user->id ] = asset( 'images/user/' . $user->id . '.jpg');
-            }
-            elseif ( Storage::disk( 'public_folder' )->exists( 'images/user/' . $user->id . '.png' ) ) {
-                $avatars[ $user->id ] = asset( 'images/user/' . $user->id . '.png');
-            }
-            elseif ( Storage::disk( 'public_folder' )->exists( 'images/user/' . $user->id . '.bmp' ) ) {
-                $avatars[ $user->id ] = asset( 'images/user/' . $user->id . '.bmp');
-            }
-            elseif ( Storage::disk( 'public_folder' )->exists( 'images/user/' . $user->id . '.gif' ) ) {
-                $avatars[ $user->id ] = asset( 'images/user/' . $user->id . '.gif');
-            }
-            else {
-                $avatars[ $user->id ] = asset( 'images/user/mys-man.jpg');
-            }
-        }
+        $id = 1;
+        $map = Map::getMapWithUsers($id);
+        $map_image = Map::getMapImage($id);
+        $avatars = User::getUserAvatar($map->users);
         return view( 'seat-map/map-viewport', [
             'map' => $map ,
             'avatars' => $avatars,
+            'mapImage' => $map_image,
         ] );
     }
 }

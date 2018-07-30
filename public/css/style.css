@@ -1,3 +1,4 @@
+ /* Navbar */
  .navbar-brand { position: relative; z-index: 2; }
 
 .navbar-nav.navbar-right .btn { position: relative; z-index: 2; padding: 4px 20px; margin: 10px auto; transition: transform 0.3s; }
@@ -48,22 +49,5 @@ li.active {
     }
 }
 
-/* Reponsive panel title */
 
-.panel-title {
-    width: 150px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-@media screen and (max-width: 767px) {
-    .panel-title {
-        width: 500px;
-    }
 
-}
-@media screen and (max-width: 500px) {
-    .panel-title {
-        width: 300px;
-    }
-}

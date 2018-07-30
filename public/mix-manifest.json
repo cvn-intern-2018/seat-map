@@ -1,3 +1,5 @@
 {
-    "/css/seatmap-viewport.css": "/css/seatmap-viewport.css"
+    "/css/seatmap-viewport.css": "/css/seatmap-viewport.css",
+    "/css/edit-seat-map.css": "/css/edit-seat-map.css",
+    "/css/login.css": "/css/login.css"
 }

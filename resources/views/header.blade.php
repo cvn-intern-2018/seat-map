@@ -27,7 +27,7 @@
               <a class="btn btn-default btn-outline btn-circle collapsed"   href="/login">Login</a>
             </li>
             @else
-            
+         
             <li class="@yield('home-active')"><a   href="#">Home</a></li>
             <li><a href="@yield('groups-active')">Groups</a></li>
             <li><a href="@yield('users-active')">Users</a></li>
