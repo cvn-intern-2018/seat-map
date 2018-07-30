@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+
 class UserController extends Controller
 {
     /**
@@ -24,7 +25,7 @@ class UserController extends Controller
             $u['groupid'] = $user->group_id;
             $u['password'] = $user->password;
             $u['username'] = $user->username;
-            $arr_users[ $user->id] = json_encode($u);
+            $arr_users[$user->id] = json_encode($u);
         }
         // var_dump(json_encode($arr_users));exit;
         $param = [
@@ -43,12 +44,13 @@ class UserController extends Controller
     {
         return view('login');
     }
-    
+
     /**
      * Handle logout request
      */
-    public function logout() {
-        if ( Auth::check() ) {
+    public function logout()
+    {
+        if (Auth::check()) {
             Auth::logout();
         }
         return redirect('/');
@@ -65,7 +67,7 @@ class UserController extends Controller
     /**
      * Handle add user request submit
      */
-    public function addUserHandler( Request $request)
+    public function addUserHandler(Request $request)
     {
         $this->validate($request, [
             'c' => 'required',
@@ -83,7 +85,7 @@ class UserController extends Controller
 
         $status = [
             'status' => 'success',
-            'data'  => $user
+            'data' => $user
         ];
         return json_encode($status);
     }
@@ -91,81 +93,81 @@ class UserController extends Controller
     /**
      * Handle edit user request submit
      */
-    public function editUserHandler( Request $request)
-    {   
+    public function editUserHandler(Request $request)
+    {
         $status = [];
         $status['status'] = "Success";
         $user = new User();
 
         // check fullname
-        if(empty($request->name)){
+        if (empty($request->name)) {
             $status['name'] = "Full Name is required";
             $status['status'] = "Error";
-        }else{
+        } else {
             $name = $request->name;
             if (!preg_match("/^[a-zA-Z ]*$/", $name)) {
-              $status['name'] = "Only letters and white space allowed";
-              $status['status'] = "Error";
-            }else{
+                $status['name'] = "Only letters and white space allowed";
+                $status['status'] = "Error";
+            } else {
 
-            $user->name = $name;
+                $user->name = $name;
             }
         }
 
         // check username
-        if(empty($request->username)){
-            $status['username'] = "Username is required"; 
+        if (empty($request->username)) {
+            $status['username'] = "Username is required";
             $status['status'] = "Error";
-        }else{
+        } else {
             $username = $request->username;
             if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
                 $status['name'] = "Only letters and numbers allowed";
                 $status['status'] = "Error";
-            }else if(User::where('username', '=', $username)->count() > 1){
+            } else if (User::where('username', '=', $username)->count() > 1) {
                 $status['username'] = "Existed";
-            }else{
+            } else {
                 $user->username = $username;
             }
         }
 
         // check phonenumber
-        if(empty($request->phone)){
+        if (empty($request->phone)) {
             $status['phone'] = "Phone number is required";
-        }else{
+        } else {
             $phone = $request->phone;
-            if(!preg_match("/^[0-9]*/", $phone)){
+            if (!preg_match("/^[0-9]*/", $phone)) {
                 $status['phone'] = "Only numbers allowed";
-            }else{
+            } else {
                 $user->phone = $phone;
             }
         }
 
         // check password
-        if(empty($request->password)){
+        if (empty($request->password)) {
             $status['password'] = "Password is required";
             $status['status'] = "Error";
 
-        }else{
+        } else {
             $password = $request->password;
             if (!preg_match("/^[a-zA-Z0-9]*$/", $password)) {
                 $status['password'] = "Only letters and numbers allowed";
                 $status['status'] = "Error";
-            }else{
+            } else {
                 $user->password = $password;
             }
         }
 
         // check groupid
-        if(empty($request->group_id)){
+        if (empty($request->group_id)) {
             $status['group_id'] = "Group is required";
             $status['status'] = "Error";
-        }else{
+        } else {
             $group_id = $request->group_id;
             $user->user_group_id = $group_id;
         }
 
         // check status
-        if($status['status'] == "Success"){
+        if ($status['status'] == "Success") {
             $user->short_name = "";
             // delete
             User::where('username', '=', $username)->delete();
@@ -175,21 +177,22 @@ class UserController extends Controller
 
         return json_encode($status);
     }
+
     /**
      * Handle delete user request submit
      */
-    public function deleteUserHandler( Request $request)
+    public function deleteUserHandler(Request $request)
     {
         $status = [];
         $status['status'] = "successful";
-        
-        if(empty($request->name)){
 
-        }else{
+        if (empty($request->name)) {
+
+        } else {
             User::where('name', $request->name)->delete();
-            
+
         }
-        
+
         return json_encode($status);
     }
 

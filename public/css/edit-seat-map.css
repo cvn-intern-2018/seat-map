@@ -1,81 +1,81 @@
 #seatmap_name {
-  font-size: 24px;
-  margin-bottom: 10px;
+    font-size: 24px;
+    margin-bottom: 10px;
 }
 
 .control-panel-container {
-  -webkit-box-shadow: 0 2px 2px 0 #CECECE;
-          box-shadow: 0 2px 2px 0 #CECECE;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
+    -webkit-box-shadow: 0 2px 2px 0 #CECECE;
+    box-shadow: 0 2px 2px 0 #CECECE;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .control-panel-container .control-panel {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
 }
 
 .control-panel-container .control-panel .settings,
 .control-panel-container .control-panel .search-user {
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
 }
 
 .control-panel-container .control-panel .settings {
-  padding-right: 10px;
-  border-right: 1px solid #CECECE;
+    padding-right: 10px;
+    border-right: 1px solid #CECECE;
 }
 
 .control-panel-container .control-panel .search-user {
-  padding-left: 10px;
-  border-left: 1px solid #CECECE;
+    padding-left: 10px;
+    border-left: 1px solid #CECECE;
 }
 
 .control-panel-container .control-panel .user-list {
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
-  margin: 0 10px;
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    margin: 0 10px;
 }
 
 .user-list {
-  white-space: nowrap;
-  overflow-x: scroll;
+    white-space: nowrap;
+    overflow-x: scroll;
 }
 
 .user-list .user-select {
-  display: inline-block;
-  width: 80px;
+    display: inline-block;
+    width: 80px;
 }
 
 .user-list .user-select[hidden] {
-  display: none;
+    display: none;
 }
 
 .user-list .user-select .avatar img {
-  pointer-events: none;
+    pointer-events: none;
 }
 
 .user-list .user-select .name {
-  text-align: center;
-  padding: 5px 0;
+    text-align: center;
+    padding: 5px 0;
 }
 
 .search-user .user-search-avatar .avatar {
-  width: 80px;
-  height: auto;
+    width: 80px;
+    height: auto;
 }
 
 .search-user .user-search-avatar input {
-  width: 80px;
+    width: 80px;
 }
 
 .form-buttons .right {
-  float: right;
+    float: right;
 }
 
 #remove-confirm .modal-body .remove-name {
-  font-weight: bold;
+    font-weight: bold;
 }
 

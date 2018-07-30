@@ -17,7 +17,6 @@ class SeatmapController extends Controller
     {
         return view('home');
     }
-    
     /**
      * Load detail page
      */
@@ -34,28 +33,28 @@ class SeatmapController extends Controller
         return view('seat-map/add-seat-map');
     }
 
+
     /**
      * Handle add Seatmap request submit
      */
     public function addSeatmapHandler(Request $request)
     {
-        if ($request->user()->permission==1) {
+        if ($request->user()->permission == 1) {
             $id = Map::addSeatMap($request->name);
             $public = Storage::disk('public_folder');
             $f = $request->file('pic');
-            $public->putFileAs('images/seat-map', $f, $id.'.' .  $f->extension());
+            $public->putFileAs('images/seat-map', $f, $id . '.' . $f->extension());
             return redirect()->route('home');
         } else {
             return "Bạn không có quyền ADD!!!";
         }
     }
 
-    /**
-     * Delete seat map
-     */
+    // Delete seat map
+
     public function deleteSeatmapHandler(Request $request)
     {
-        if ($request->user()->permission==1) {
+        if ($request->user()->permission == 1) {
             $id = $request->id;
             Map::deleteSeatMap($id);
             return "Đã Xóa";
@@ -83,7 +82,7 @@ class SeatmapController extends Controller
             'edit_mode' => true,
         ]);
     }
-    
+
     /**
      * Handle edit Seatmap request submit
      */
