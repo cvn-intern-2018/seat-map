@@ -1,61 +1,67 @@
 @import 'variables';
+
 #seatmap_name {
-    font-size: 24px;
-    margin-bottom: 10px;
+  font-size: 24px;
+  margin-bottom: 10px;
 }
+
 .control-panel-container {
-    box-shadow: 0 2px 2px 0 $gray;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-    .control-panel {
-        display: flex;
-        .settings, .search-user {
-            flex-shrink: 0;
-        }
-        .settings {
-            padding-right: 10px;
-            border-right: 1px solid $gray;
-        }
-        .search-user {
-            padding-left: 10px;
-            border-left: 1px solid $gray;
-        }
-        .user-list {
-            flex-grow: 1;
-            margin: 0 10px;
-        }
+  box-shadow: 0 2px 2px 0 $gray;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  .control-panel {
+    display: flex;
+    .settings, .search-user {
+      flex-shrink: 0;
     }
+    .settings {
+      padding-right: 10px;
+      border-right: 1px solid $gray;
+    }
+    .search-user {
+      padding-left: 10px;
+      border-left: 1px solid $gray;
+    }
+    .user-list {
+      flex-grow: 1;
+      margin: 0 10px;
+    }
+  }
 }
+
 .user-list {
-    white-space: nowrap;
-    overflow-x: scroll;
-    .user-select {
-        display: inline-block;
-        width: $avatar-size;
-        &[hidden] {
-            display: none;
-        }
-        .avatar img {
-            pointer-events: none;
-        }
-        .name {
-            text-align: center;
-            padding: 5px 0;
-        }
+  white-space: nowrap;
+  overflow-x: scroll;
+  .user-select {
+    display: inline-block;
+    width: $avatar-size;
+    &[hidden] {
+      display: none;
     }
+    .avatar img {
+      pointer-events: none;
+    }
+    .name {
+      text-align: center;
+      padding: 5px 0;
+    }
+  }
 }
+
 .search-user .user-search-avatar {
-    .avatar {
-        width: $avatar-size;
-        height: auto;
-    }
-    input {
-        width: $avatar-size;
-    }
+  .avatar {
+    width: $avatar-size;
+    height: auto;
+  }
+  input {
+    width: $avatar-size;
+  }
 }
+
 .form-buttons .right {
-    float: right;
+  float: right;
 }
+
 #remove-confirm .modal-body .remove-name {
-    font-weight: bold;
+  font-weight: bold;
 }
