@@ -37,9 +37,20 @@ class SeatmapController extends Controller
      */
     public function addSeatmapHandler( Request $request )
     {
-        $public = Storage::disk('public_folder');
-        $f = $request->file('seatmap_img');
-        return $public->putFileAs('images/seat-map', $f, 't1.' .  $f->extension());
+        if($request->user()->permission==1)
+        {
+            $id = Map::addSeatMap($request->name);
+            $public = Storage::disk('public_folder');
+            $f = $request->file('pic');
+            $public->putFileAs('images/seat-map', $f, $id.'.' .  $f->extension());
+            return "Đã ADD";
+        }
+        else 
+        {
+            return "Không có quyền ADD";
+        }
+
+     
     }
 
     /**

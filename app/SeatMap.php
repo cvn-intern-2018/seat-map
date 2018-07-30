@@ -25,6 +25,15 @@ class SeatMap extends Model
         return $maps;
     }
    }
+   public static function addSeatMap($name)
+   {
+ 
+    $id = self::insertGetId(
+        ['name' => $name]
+    );
+    return $id;
+   }
+ 
 
 
     public function users()
