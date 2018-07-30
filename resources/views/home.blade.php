@@ -67,22 +67,6 @@
 					</form>
 					</div>
 
-					<script>
-					// Get the modal
-					var modal = document.getElementById('id01');
-
-					// When the user clicks anywhere outside of the modal, close it
-					window.onclick = function(event) {
-						if (event.target == modal) {
-							modal.style.display = "none";
-						}
-					}
-					</script>
-
-
-
-
-
 									
 					@endauth
 		<!--end of col-->
@@ -145,13 +129,7 @@
 
    </div>
 </div>
-<script type="text/javascript">
-  $('.delete-button').on('click', function() {
-      var id = $(this).data('id');
-      $('#deleteID').val(id);
-      $('#frmDeleteID').submit();
-  });
-</script>
+<script src="{{ asset('js/home.js') }}" ></script>
 @endsection
 
 
