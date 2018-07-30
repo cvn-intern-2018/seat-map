@@ -25,7 +25,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/seat-map/delete', 'SeatmapController@deleteSeatmapHandler');
     Route::post('/seat-map/edit/', 'SeatmapController@editSeatmapHandler')->name("seatmapEditHandler");
 });
-Route::get('/add', 'UserController@addUserHandler')->name('adduser');
-Route::get('/users', 'UserController@getusers')->name('getusers');
-Route::post('/users', 'UserController@editUserHandler')->name('gett');
+Route::get('/users', 'UserController@getUsers');
+Route::get('/users/delete/{name}', 'UserController@deleteUserHandler')->name('delete');
+Route::post('/users/edit', 'UserController@editUserHandler')->name('edit');
 Auth::routes();
