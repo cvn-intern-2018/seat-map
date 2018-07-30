@@ -73,18 +73,20 @@ class SeatmapController extends Controller
     /**
      * Load add seat map page
      */
-    public function getEditSeatmapPage( int $id = 1 )
+    public function getEditSeatmapPage( int $id )
     {
         $map = Map::getMapWithUsers($id);
-        $mapImage = Map::getMapImage($id);
+        $map_image = Map::getMapImage($id);
         $users = User::getAllUsersWithGroup();
         $avatars = User::getUserAvatar($users);
         return view('seat-map/edit-seat-map', [
             'map' => $map,
             'arranged_users' => $map->users,
+            'arranged_ids' => $map->users->keyBy('id')->keys()->toArray(),
             'users' => $users,
             'avatars' => $avatars,
-            'mapImage' => $mapImage,
+            'map_image' => $map_image,
+            'edit_mode' => true,
         ]);
     }
     
@@ -104,12 +106,12 @@ class SeatmapController extends Controller
     public function test() {
         $id = 1;
         $map = Map::getMapWithUsers($id);
-        $mapImage = Map::getMapImage($id);
+        $map_image = Map::getMapImage($id);
         $avatars = User::getUserAvatar($map->users);
         return view( 'seat-map/map-viewport', [
             'map' => $map ,
             'avatars' => $avatars,
-            'mapImage' => $mapImage,
+            'mapImage' => $map_image,
         ] );
     }
 }

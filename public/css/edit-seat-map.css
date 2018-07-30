@@ -49,6 +49,10 @@
   width: 80px;
 }
 
+.user-list .user-select[hidden] {
+  display: none;
+}
+
 .user-list .user-select .avatar img {
   pointer-events: none;
 }
@@ -69,5 +73,9 @@
 
 .form-buttons .right {
   float: right;
+}
+
+#remove-confirm .modal-body .remove-name {
+  font-weight: bold;
 }
 

@@ -32,6 +32,9 @@
     .user-select {
         display: inline-block;
         width: $avatar-size;
+        &[hidden] {
+            display: none;
+        }
         .avatar img {
             pointer-events: none;
         }
@@ -52,4 +55,7 @@
 }
 .form-buttons .right {
     float: right;
+}
+#remove-confirm .modal-body .remove-name {
+    font-weight: bold;
 }
