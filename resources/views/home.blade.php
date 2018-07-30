@@ -89,7 +89,7 @@
 					<div class="panel-title pull-left">{{$map->name}}  </div>
 					</a>
 					@auth
-					<img data-id="{{$map->id}}" class="delete-button seatmap-button pull-right" src="{{asset('images/remove.png')}}">
+					<img data-id="{{$map->id}}" data-name="{{$map->name}}" class="delete-button seatmap-button pull-right" src="{{asset('images/remove.png')}}">
 
 					<a href="/seat-map/{{$map->id}}">	<img   class="seatmap-button pull-right" src="{{asset('images/edit.png')}}">
 					</a>

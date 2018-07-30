@@ -43,7 +43,7 @@ class SeatmapController extends Controller
             $public = Storage::disk('public_folder');
             $f = $request->file('pic');
             $public->putFileAs('images/seat-map', $f, $id.'.' .  $f->extension());
-            return "Đã ADD";
+            return redirect()->route('home');
         }
         else 
         {

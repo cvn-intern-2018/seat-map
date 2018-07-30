@@ -14,13 +14,12 @@ class SeatMap extends Model
     if($search){
        $search = str_replace('%',"/%",$search);
        $search = str_replace('_',"/_",$search);
-    $maps = self::where('name','like',"%$search%")
-    ->paginate(8);
+    $maps = self::where('name','like',"%$search%")->orderBy('id', 'desc')->paginate(8);
     return $maps;
     }
     else
     {
-        $maps = self::paginate(8)
+        $maps = self::orderBy('id', 'desc')->paginate(8)
         ;
         return $maps;
     }
