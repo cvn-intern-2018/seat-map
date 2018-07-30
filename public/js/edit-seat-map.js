@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function(e){
     var mapHeight = 0;
     var waiterSetTimeOut = 0;
     var seatmap = document.querySelector(".seatmap-container");
+    var seatData = {};
     window.onload = function(){
         mapWidth = seatmap.clientWidth;
         mapHeight = seatmap.clientHeight;
@@ -15,10 +16,23 @@ document.addEventListener("DOMContentLoaded", function(e){
     var userList = document.querySelectorAll(".user-list .user-select");
 
     /**
+     * Get current seatmap data
+     */
+    if (arrangedUserSeat.length !== 0) {
+        Array.from(arrangedUserSeat).forEach(function(el){
+            seatData[parseInt(el.id.slice(el.id.lastIndexOf("-")+1))] =  {       
+                x: parseInt(el.style.left),
+                y: parseInt(el.style.top)
+            }
+        });
+    }
+    document.getElementById("seat_data").value = JSON.stringify(seatData);
+
+    /**
      * Add event listener for arranged users
      */
     function arrangedDragHandler(e) {
-        e.dataTransfer.setData("object_id", this.id);
+        e.dataTransfer.setData("object_id", this.id.slice(this.id.lastIndexOf("-")+1));
         if (e.offsetX || e.offsetY) {
             e.dataTransfer.setData("pointer_x", e.offsetX);
             e.dataTransfer.setData("pointer_y", e.offsetY);
@@ -106,20 +120,35 @@ document.addEventListener("DOMContentLoaded", function(e){
             document.querySelector(".user-list .user-select[data-id=\"" + e.dataTransfer.getData("object_id") +"\"]").
             setAttribute("hidden", "");
 
+            // Update seatData object
+            seatData[e.dataTransfer.getData("object_id")] = {
+                x: parseInt(e.layerX / mapWidth * 100 ),
+                y: parseInt(e.layerY / mapHeight * 100 )
+            }
+            document.getElementById("seat_data").value = JSON.stringify(seatData);
         }
         else {
             if (e.dataTransfer.getData("object_id")) {
-                var obj = document.getElementById(e.dataTransfer.getData("object_id"));
+                var obj = document.getElementById("user-seat-" + e.dataTransfer.getData("object_id"));
                 var pointerX = parseInt(e.dataTransfer.getData("pointer_x"));
                 var pointerY = parseInt(e.dataTransfer.getData("pointer_y"));
                 if (e.offsetX || e.offsetY) {
                     obj.style.top = ((e.offsetY + avatarSize / 2 - pointerY) / mapHeight * 100 ) + "%" ;
                     obj.style.left = ((e.offsetX + avatarSize / 2 - pointerX ) / mapWidth * 100 ) + "%";
+                    seatData[e.dataTransfer.getData("object_id")] = {
+                        x: parseInt((e.offsetX + avatarSize / 2 - pointerX ) / mapWidth * 100),
+                        y: parseInt((e.offsetY + avatarSize / 2 - pointerY) / mapHeight * 100 )
+                    }
                 }
                 else {
                     obj.style.top = ((e.layerY + avatarSize / 2 - pointerY) / mapHeight * 100 ) + "%" ;
                     obj.style.left = ((e.layerX + avatarSize / 2 - pointerX ) / mapWidth * 100 ) + "%";
+                    seatData[e.dataTransfer.getData("object_id")] = {
+                        x: parseInt((e.layerX + avatarSize / 2 - pointerX ) / mapWidth * 100),
+                        y: parseInt((e.layerY + avatarSize / 2 - pointerY) / mapHeight * 100 )
+                    }
                 }
+                document.getElementById("seat_data").value = JSON.stringify(seatData);
             }
         }
     });

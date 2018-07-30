@@ -17,6 +17,7 @@ class SeatmapController extends Controller
     {
         return view('home');
     }
+    
     /**
      * Load detail page
      */
@@ -24,6 +25,7 @@ class SeatmapController extends Controller
     {
         return 'Detail page.';
     }
+
     /**
      * Load add seat map page
      */
@@ -35,45 +37,37 @@ class SeatmapController extends Controller
     /**
      * Handle add Seatmap request submit
      */
-    public function addSeatmapHandler( Request $request )
+    public function addSeatmapHandler(Request $request)
     {
-        if($request->user()->permission==1)
-        {
+        if ($request->user()->permission==1) {
             $id = Map::addSeatMap($request->name);
             $public = Storage::disk('public_folder');
             $f = $request->file('pic');
             $public->putFileAs('images/seat-map', $f, $id.'.' .  $f->extension());
             return redirect()->route('home');
-        }
-        else 
-        {
+        } else {
             return "Bạn không có quyền ADD!!!";
         }
-
-     
     }
 
-    // Delete seat map
-
-    public function deleteSeatmapHandler( Request $request )
+    /**
+     * Delete seat map
+     */
+    public function deleteSeatmapHandler(Request $request)
     {
-        if($request->user()->permission==1)
-        {
+        if ($request->user()->permission==1) {
             $id = $request->id;
             Map::deleteSeatMap($id);
             return "Đã Xóa";
-        }
-        else 
-        {
+        } else {
             return "Bạn không có quyền Delete!!!";
         }
-
-     
     }
+
     /**
      * Load add seat map page
      */
-    public function getEditSeatmapPage( int $id )
+    public function getEditSeatmapPage(int $id)
     {
         $map = Map::getMapWithUsers($id);
         $map_image = Map::getMapImage($id);
@@ -93,25 +87,8 @@ class SeatmapController extends Controller
     /**
      * Handle edit Seatmap request submit
      */
-    public function editSeatmapHandler( Request $request)
+    public function editSeatmapHandler(Request $request)
     {
         return 'Handle edit Seatmap request';
-    }
-
-    /**
-     * Handle delete Seatmap request submit
-     */
-   
-
-    public function test() {
-        $id = 1;
-        $map = Map::getMapWithUsers($id);
-        $map_image = Map::getMapImage($id);
-        $avatars = User::getUserAvatar($map->users);
-        return view( 'seat-map/map-viewport', [
-            'map' => $map ,
-            'avatars' => $avatars,
-            'mapImage' => $map_image,
-        ] );
     }
 }

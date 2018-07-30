@@ -7,39 +7,36 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Storage;
 
 class SeatMap extends Model
-{   
+{
     public $timestamps = false;
-   public static function getSeatMap($search,$page)
-   {
-    if($search){
-       $search = str_replace('%',"/%",$search);
-       $search = str_replace('_',"/_",$search);
-    $maps = self::where('name','like',"%$search%")->orderBy('id', 'desc')->paginate(8);
-    return $maps;
-    }
-    else
+    public static function getSeatMap($search, $page)
     {
-        $maps = self::orderBy('id', 'desc')->paginate(8)
-        ;
-        return $maps;
+        if ($search) {
+            $search = str_replace('%', "/%", $search);
+            $search = str_replace('_', "/_", $search);
+            $maps = self::where('name', 'like', "%$search%")->orderBy('id', 'desc')->paginate(8);
+            return $maps;
+        } else {
+            $maps = self::orderBy('id', 'desc')->paginate(8);
+            return $maps;
+        }
     }
-   }
-   public static function addSeatMap($name)
-   {
- 
-    $id = self::insertGetId(
+    public static function addSeatMap($name)
+    {
+        $id = self::insertGetId(
         ['name' => $name]
     );
-    return $id;
-   }
-   public static function deleteSeatMap($id)
-   {
-    self::where('id',$id)->delete();
-    return;
-   }
- 
+        return $id;
+    }
+    public static function deleteSeatMap($id)
+    {   
+        self::where('id', $id)->delete();
+        return;
+    }
 
-
+    /**
+     * Add constraint property users to App\SeatMap
+     */
     public function users()
     {
         return  $this->belongsToMany('App\User', 'user_seats')->withPivot('X', 'Y');
@@ -52,7 +49,7 @@ class SeatMap extends Model
 
     /**
      * Get map image file by map ID
-     * 
+     *
      * @param int $id
      * @return string|null
      */
@@ -60,17 +57,13 @@ class SeatMap extends Model
     {
         if (Storage::disk('public_folder')->exists('images/seat-map/'.$id.'.jpg')) {
             return asset('images/seat-map/'.$id.'.jpg');
-        }
-        elseif (Storage::disk('public_folder')->exists('images/seat-map/'.$id.'.jpeg')) {
+        } elseif (Storage::disk('public_folder')->exists('images/seat-map/'.$id.'.jpeg')) {
             return asset('images/seat-map/'.$id.'.jpeg');
-        }
-        elseif (Storage::disk('public_folder')->exists('images/seat-map/'.$id.'.png')) {
+        } elseif (Storage::disk('public_folder')->exists('images/seat-map/'.$id.'.png')) {
             return asset('images/seat-map/'.$id.'.png');
-        }
-        elseif (Storage::disk('public_folder')->exists('images/seat-map/'.$id.'.bmp')) {
+        } elseif (Storage::disk('public_folder')->exists('images/seat-map/'.$id.'.bmp')) {
             return asset('images/seat-map/'.$id.'.bmp');
-        }
-        elseif (Storage::disk('public_folder')->exists('images/seat-map/'.$id.'.gif')) {
+        } elseif (Storage::disk('public_folder')->exists('images/seat-map/'.$id.'.gif')) {
             return asset('images/seat-map/'.$id.'.gif');
         }
         return null;

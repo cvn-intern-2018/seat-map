@@ -78,6 +78,7 @@ Edit seat map
             </div>
         </div>
     </div>
+    <input type="hidden" name="seat_data" id="seat_data">
 </form>
 <div class="modal fade" id="remove-confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
