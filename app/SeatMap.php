@@ -32,23 +32,33 @@ class SeatMap extends Model
         return  $this->belongsToMany('App\User', 'user_seats')->withPivot('X', 'Y');
     }
     
-    public static function getMapWithUsers( int $id ) {
-        return self::with( 'users.group' )->where( 'id', $id )->first();
+    public static function getMapWithUsers(int $id)
+    {
+        return self::with('users.group')->where('id', $id)->first();
     }
 
+    /**
+     * Get map image file by map ID
+     * 
+     * @param int $id
+     * @return string|null
+     */
     public static function getMapImage(int $id)
     {
-        if ( Storage::disk( 'public_folder' )->exists( 'images/seat-map/' . $id . '.jpg' ) ) {
-            return asset( 'images/seat-map/' . $id . '.jpg');
+        if (Storage::disk('public_folder')->exists('images/seat-map/'.$id.'.jpg')) {
+            return asset('images/seat-map/'.$id.'.jpg');
         }
-        elseif ( Storage::disk( 'public_folder' )->exists( 'images/seat-map/' . $id . '.png' ) ) {
-            return asset( 'images/seat-map/' . $id . '.png');
+        elseif (Storage::disk('public_folder')->exists('images/seat-map/'.$id.'.jpeg')) {
+            return asset('images/seat-map/'.$id.'.jpeg');
         }
-        elseif ( Storage::disk( 'public_folder' )->exists( 'images/seat-map/' . $id . '.bmp' ) ) {
-            return asset( 'images/seat-map/' . $id . '.bmp');
+        elseif (Storage::disk('public_folder')->exists('images/seat-map/'.$id.'.png')) {
+            return asset('images/seat-map/'.$id.'.png');
         }
-        elseif ( Storage::disk( 'public_folder' )->exists( 'images/seat-map/' . $id . '.gif' ) ) {
-            return asset( 'images/seat-map/' . $id . '.gif');
+        elseif (Storage::disk('public_folder')->exists('images/seat-map/'.$id.'.bmp')) {
+            return asset('images/seat-map/'.$id.'.bmp');
+        }
+        elseif (Storage::disk('public_folder')->exists('images/seat-map/'.$id.'.gif')) {
+            return asset('images/seat-map/'.$id.'.gif');
         }
         return null;
     }

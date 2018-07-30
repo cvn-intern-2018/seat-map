@@ -67,23 +67,30 @@ class User extends Authenticatable
         return self::with('group')->get();
     }
 
-    public static function getUserAvatar( $userList ) {
+    /**
+     * Get array of user's avatar URL
+     * 
+     * @param array|Illuminate\Support\Collection $user_list 
+     * @return array
+     */
+    public static function getUserAvatar($user_list)
+    {
         $avatars = [];
-        foreach ( $userList as $user ) {
-            if ( Storage::disk( 'public_folder' )->exists( 'images/user/' . $user->id . '.jpg' ) ) {
-                $avatars[ $user->id ] = asset( 'images/user/' . $user->id . '.jpg');
+        foreach ($user_list as $user) {
+            if (Storage::disk('public_folder')->exists('images/user/' . $user->id . '.jpg')) {
+                $avatars[ $user->id ] = asset('images/user/' . $user->id . '.jpg');
             }
-            elseif ( Storage::disk( 'public_folder' )->exists( 'images/user/' . $user->id . '.png' ) ) {
-                $avatars[ $user->id ] = asset( 'images/user/' . $user->id . '.png');
+            elseif (Storage::disk('public_folder')->exists('images/user/' . $user->id . '.png')) {
+                $avatars[ $user->id ] = asset('images/user/' . $user->id . '.png');
             }
-            elseif ( Storage::disk( 'public_folder' )->exists( 'images/user/' . $user->id . '.bmp' ) ) {
-                $avatars[ $user->id ] = asset( 'images/user/' . $user->id . '.bmp');
+            elseif (Storage::disk('public_folder')->exists('images/user/' . $user->id . '.bmp')) {
+                $avatars[ $user->id ] = asset('images/user/' . $user->id . '.bmp');
             }
-            elseif ( Storage::disk( 'public_folder' )->exists( 'images/user/' . $user->id . '.gif' ) ) {
-                $avatars[ $user->id ] = asset( 'images/user/' . $user->id . '.gif');
+            elseif (Storage::disk('public_folder')->exists('images/user/' . $user->id . '.gif')) {
+                $avatars[ $user->id ] = asset('images/user/' . $user->id . '.gif');
             }
             else {
-                $avatars[ $user->id ] = asset( 'images/user/mys-man.jpg');
+                $avatars[ $user->id ] = asset('images/user/mys-man.jpg');
             }
         }
         return $avatars;

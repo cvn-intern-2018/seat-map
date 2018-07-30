@@ -22,7 +22,7 @@ Route::get('/test', 'SeatmapController@test');
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/seat-map/add', 'SeatmapController@getAddSeatmapPage');
     Route::post('/seat-map/add', 'SeatmapController@addSeatmapHandler');
-    Route::get('/seat-map/edit/', 'SeatmapController@getEditSeatmapPage');
+    Route::get('/seat-map/edit/{id}', 'SeatmapController@getEditSeatmapPage');
     Route::post('/seat-map/edit/', 'SeatmapController@editSeatmapHandler')->name("seatmapEditHandler");
 });
 Route::get('/add', 'UserController@addUserHandler')->name('adduser');

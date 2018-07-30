@@ -34,12 +34,15 @@ Edit seat map
                         <button class="btn btn-default zoom-out" type="button"><span class="glyphicon glyphicon-zoom-out"></span></button>
                         <button class="btn btn-default zoom-in" type="button"><span class="glyphicon glyphicon-zoom-in"></span></button>
                     </div>
-            
                 </div>
                 <div class="user-list">
                     @foreach ($users as $user)
                     <div class="user-select" data-id="{{ $user->id }}" data-name="{{ $user->name }}" data-avatar="{{ $avatars[ $user->id ] }}" 
-                        data-group="{{ $user->group->name }}" data-phone="{{ $user->phone }}" data-email="{{ $user->email }}" draggable="true">
+                        data-group="{{ $user->group->name }}" data-phone="{{ $user->phone }}" data-email="{{ $user->email }}" draggable="true" 
+                        @if (in_array($user->id, $arranged_ids))
+                        hidden
+                        @endif
+                    >
                         <div class="avatar">
                             <img src="{{ $avatars[ $user->id ] }}" alt="" class="img-responsive">
                         </div>
@@ -76,4 +79,21 @@ Edit seat map
         </div>
     </div>
 </form>
+<div class="modal fade" id="remove-confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Remove user from map</h4>
+        </div>
+        <div class="modal-body">
+          Do you really want to remove <span class="remove-name"></span> from the seat map?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger remove-confirmed" data-dismiss="modal" data-id="">Remove</button>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
