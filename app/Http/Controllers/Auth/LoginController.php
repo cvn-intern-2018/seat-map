@@ -1,12 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-
 /**
  * Class LoginController
  * @package App\Http\Controllers\Auth
@@ -30,7 +27,6 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
-
     /**
      * Create a new controller instance.
      */
@@ -38,19 +34,17 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-
     /**
      * Check either username or email.
      * @return string
      */
     public function username()
     {
-        $identity = request()->get('identity');
+        $identity  = request()->get('identity');
         $fieldName = filter_var($identity, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         request()->merge([$fieldName => $identity]);
         return $fieldName;
     }
-
     /**
      * Validate the user login.
      * @param Request $request
@@ -69,7 +63,6 @@ class LoginController extends Controller
             ]
         );
     }
-
     /**
      * @param Request $request
      * @throws ValidationException

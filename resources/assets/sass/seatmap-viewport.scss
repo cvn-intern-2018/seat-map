@@ -1,5 +1,4 @@
 @import 'variables';
-
 .seatmap-viewport {
   width: 100%;
   max-height: 80vh;
@@ -18,7 +17,7 @@
     .seatmap-image {
       width: 100%;
     }
-
+    
     .seat-display {
       position: relative;
       > .name {

@@ -17,7 +17,7 @@ class UserGroupController extends Controller
     /**
      * Handle add group request submit
      */
-    public function addGroupHandler(Request $request)
+    public function addGroupHandler( Request $request)
     {
         return 'Handle add group request';
     }
@@ -25,7 +25,7 @@ class UserGroupController extends Controller
     /**
      * Handle edit group request submit
      */
-    public function editGroupHandler(Request $request)
+    public function editGroupHandler( Request $request)
     {
         $this->validate($request, [
             'email' => 'required',
@@ -37,16 +37,16 @@ class UserGroupController extends Controller
 
         $status = [
             'status' => 'success',
-            'data' => $post
+            'data'  => $post
         ];
 
         return json_encode($status);
-    }
+        }
 
     /**
      * Handle delete group request submit
      */
-    public function deleteGroupHandler(Request $request)
+    public function deleteGroupHandler( Request $request)
     {
         return 'Handle delete group request';
     }

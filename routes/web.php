@@ -19,12 +19,9 @@ Route::get('/login', 'UserController@getLoginView')->name('login');
 Route::get('/logout', 'UserController@logout')->name('logout');
 Route::get('/test', 'SeatmapController@test');
 
-
-Route::group(['middleware' => 'auth'], function () {
-    Route::post('/seat-map/add', 'SeatmapController@addSeatmapHandler');
-    Route::get('/seat-map/edit/{id}', 'SeatmapController@getEditSeatmapPage');
-    Route::post('/seat-map/delete', 'SeatmapController@deleteSeatmapHandler');
-    Route::post('/seat-map/edit/', 'SeatmapController@editSeatmapHandler')->name("seatmapEditHandler");
+Route::group(['middleware' => 'auth'], function(){
+	Route::get('/seat-map/add', 'SeatmapController@getAddSeatmapPage');
+	Route::post('/seat-map/add', 'SeatmapController@addSeatmapHandler');
 });
 
 
