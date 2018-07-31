@@ -20,8 +20,17 @@
   width: 800%;
 }
 
+.seatmap-viewport .seatmap-container.hide-name .seat-display > .name {
+  display: none;
+}
+
+.seatmap-viewport .seatmap-container.hide-group .info-box .group-line {
+  display: none;
+}
+
 .seatmap-viewport .seatmap-container .seatmap-image {
   width: 100%;
+  pointer-events: none;
 }
 
 .seatmap-viewport .seatmap-container .seat-display {
@@ -81,9 +90,5 @@
   background-color: white;
   border: 1px solid black;
   border-radius: 7px;
-}
-
-.seatmap-viewport .seatmap-container.hide-name .seat-display .name {
-  display: block;
 }
 

@@ -44,11 +44,6 @@ class SeatMap extends Model
     {
         return  $this->belongsToMany('App\User', 'user_seats')->withPivot('X', 'Y');
     }
-    
-    public static function getMapWithUsers(int $id)
-    {
-        return self::with('users.group')->where('id', $id)->first();
-    }
 
     /**
      * Get map image file by map ID

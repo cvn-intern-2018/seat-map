@@ -8,14 +8,25 @@ Edit seat map
 <script src="{{ asset("/js/edit-seat-map.js") }}"></script>
 @endsection
 @section("main")
-<div class="container">
-<h1 class="page-title">Edit seat map</h1>
+    <div class="container">
+    <h1 class="page-title">Edit seat map</h1>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
 </div>
-<form class="edit-section" method="POST" action="{{ route("seatmapEditHandler") }}" >
-    <input type="hidden" name="seamap_id" value="{{ $map->id}}">
+<form class="edit-section" method="POST" action="{{ route("seatmapEditHandler") }}">
+    {{ csrf_field() }}
+    <input type="hidden" name="seatmap_id" value="{{ $map->id}}" required>
+    <input type="hidden" name="seat_data" id="seat_data" required>
     <div class="container">
         <div class="form-group">
-            <input type="text" name="seatmap_name" id="seatmap_name" placeholder="Seat map name (required)" value="{{ $map->name }}">
+            <input type="text" name="seatmap_name" id="seatmap_name" placeholder="Seat map name (required)" value="{{ $map->name }}" maxlength="100" minlength="1">
         </div>
     </div>
     <div class="control-panel-container">
@@ -23,11 +34,11 @@ Edit seat map
             <div class="control-panel">
                 <div class="settings">
                     <div class="form-group">
-                        <input type="checkbox" name="display_name" id="display_name">
+                        <input type="checkbox" name="display_name" id="display_name" value="name" checked>
                         <label for="display_name">Show name</label>
                     </div>
                     <div class="form-group">
-                        <input type="checkbox" name="display_group" id="display_group">
+                        <input type="checkbox" name="display_group" id="display_group" value="group" checked>
                         <label for="display_group">Show group</label>
                     </div>
                     <div class="btn-group">
@@ -74,11 +85,10 @@ Edit seat map
                 <button class="btn btn-default" type="button">Cancel</button>
             </div>
             <div class="col-md-1 right">
-                <button class="btn btn-success" type="submit">Save</button>
+                <button class="btn btn-success" type="submit" id="save_edit">Save</button>
             </div>
         </div>
     </div>
-    <input type="hidden" name="seat_data" id="seat_data">
 </form>
 <div class="modal fade" id="remove-confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">

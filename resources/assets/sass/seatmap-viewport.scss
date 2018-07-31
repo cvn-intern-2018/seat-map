@@ -14,8 +14,19 @@
     &[data-zoom="4"] {
       width: 800%;
     }
+    &.hide-name {
+      .seat-display > .name {
+        display: none;
+      }
+    }
+    &.hide-group {
+      .info-box .group-line {
+        display: none;
+      }
+    }
     .seatmap-image {
       width: 100%;
+      pointer-events: none;
     }
     
     .seat-display {
@@ -61,11 +72,6 @@
         background-color: white;
         border: 1px solid black;
         border-radius: 7px;
-      }
-    }
-    &.hide-name {
-      .seat-display .name {
-        display: block;
       }
     }
   }

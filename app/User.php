@@ -62,11 +62,6 @@ class User extends Authenticatable
         return $this->belongsTo('App\UserGroup', 'user_group_id');
     }
 
-    public  static function getAllUsersWithGroup()
-    {
-        return self::with('group')->get();
-    }
-
     /**
      * Get array of user's avatar URL
      * 
