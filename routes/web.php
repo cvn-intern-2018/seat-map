@@ -14,19 +14,18 @@
 // Route::get('/', function () {
 //     return view('index');
 // });
-Route::get('/{search}/{page}', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 Route::get('/login', 'UserController@getLoginView')->name('login');
 Route::get('/logout', 'UserController@logout')->name('logout');
 Route::get('/test', 'SeatmapController@test');
 
 Route::group(['middleware' => 'auth'], function(){
-	Route::get('/seat-map/add', 'SeatmapController@getAddSeatmapPage');
-	Route::post('/seat-map/add', 'SeatmapController@addSeatmapHandler');
+    Route::post('/seat-map/add', 'SeatmapController@addSeatmapHandler');
+    Route::get('/seat-map/edit/{id}', 'SeatmapController@getEditSeatmapPage');
+    Route::post('/seat-map/delete', 'SeatmapController@deleteSeatmapHandler');
+    Route::post('/seat-map/edit/', 'SeatmapController@editSeatmapHandler')->name("seatmapEditHandler");
 });
-
-
-Route::get('/users', 'UserController@getUsers')->name('getUser');
-Route::get('/users/delete/{name}', 'UserController@deleteUserHandler')->name('deleteUser');
-Route::post('/users/add', 'UserController@addUserHandler')->name('addUser');
-Route::post('/users/edit', 'UserController@editUserHandler')->name('editUser');
+Route::get('/users', 'UserController@getUsers');
+Route::get('/users/delete/{name}', 'UserController@deleteUserHandler')->name('delete');
+Route::post('/users/edit', 'UserController@editUserHandler')->name('edit');
 Auth::routes();

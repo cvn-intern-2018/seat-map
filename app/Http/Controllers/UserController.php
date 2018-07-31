@@ -67,52 +67,26 @@ class UserController extends Controller
      */
     public function addUserHandler( Request $request)
     {
-        
-        $status = [];
-        $status['response'] = "Success";
+        $this->validate($request, [
+            'c' => 'required',
+        ]);
+
+        $name = trim($request->q);
+
         $user = new User();
+        $user->name = $name;
+        $user->password = 123;
+        $user->username = "lelelele";
+        $user->short_name = "lele";
+        $user->phone = 123;
+        $user->save();
 
-        if(empty($request->fullname)){
-            $status['fullname'] = "Fullname is required";
-            $status['response'] = "Error";
-        }else {
-            $user->name = $request->name;
-        }
-
-        if(empty($request->username)){
-            $status['username'] = "Username is required";
-            $status['response'] = "Error";
-        }else {
-            $user->username = $request->username;
-        }
-
-        if(empty($request->email)){
-            $status['email'] = "Email is required";
-            $status['response'] = "Error";
-        }else {
-            $user->email = $request->email; 
-        }
-
-        if(empty($request->group_id)){
-            $status['group_id'] = "Group is required";
-            $status['response'] = "Error";
-        }else {
-            $user->group_id = $request->group_id; 
-        }
-
-        if(empty($request->password)){
-            $status['password'] = "Password is required";
-            $status['response'] = "Error";
-        }else {
-            $user->password = $request->password; 
-        }
-
-
-
+        $status = [
+            'status' => 'success',
+            'data'  => $user
+        ];
         return json_encode($status);
-
-        // return "status";
-     }
+    }
 
     /**
      * Handle edit user request submit
@@ -125,7 +99,7 @@ class UserController extends Controller
 
         // check fullname
         if(empty($request->name)){
-            $status['name'] = "Fullname is required";
+            $status['name'] = "Full Name is required";
             $status['status'] = "Error";
         }else{
             $name = $request->name;
