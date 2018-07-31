@@ -51,14 +51,14 @@ Edit seat map
                     @endforeach
                 </div>
                 <div class="search-user">
-                        <div class="user-search-avatar">
-                            <div class="avatar">
-                                <img src="{{ asset("/images/user/mys-man.jpg") }}" alt="" class="img-responsive">
-                            </div>
-                            <div class="input-search-user">
-                                <input type="text" name="keyword" id="keyword">
-                            </div>
+                    <div class="user-search-avatar">
+                        <div class="avatar">
+                            <img src="{{ asset("/images/user/mys-man.jpg") }}" alt="" class="img-responsive">
                         </div>
+                        <div class="input-search-user">
+                            <input type="text" name="keyword" id="keyword">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -78,6 +78,7 @@ Edit seat map
             </div>
         </div>
     </div>
+    <input type="hidden" name="seat_data" id="seat_data">
 </form>
 <div class="modal fade" id="remove-confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
