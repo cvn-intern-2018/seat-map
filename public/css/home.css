@@ -1,44 +1,42 @@
-
 /* search box */
-.search-box
-{
-    margin:30px;
+.search-box {
+    margin: 30px;
 }
+
 /* big notify */
-.big-notify
-{
-color: grey;
-margin: 200px;
+.big-notify {
+    color: grey;
+    margin: 200px;
 }
 
 /* seat-map panel for home view */
- .panel .panel-heading {
+.panel .panel-heading {
     color: white;
     background-color: rgb(2, 133, 173);
 }
+
 .home .panel {
 
-  border-color: rgb(2, 133, 173);
+    border-color: rgb(2, 133, 173);
 }
 
-.panel-body
-{
-        height: 200px;
-        width: 100%;
+.panel-body {
+    height: 200px;
+    width: 100%;
 }
-.panel-body img
-{
+
+.panel-body img {
     max-width: 100%;
-    max-height:100%;
-    
+    max-height: 100%;
+
 }
-.home .panel:hover
-{ 
-  
+
+.home .panel:hover {
+
     position: sticky;
-     transform: scale(1.2); 
-     cursor: pointer;
-     z-index:100;
+    transform: scale(1.2);
+    cursor: pointer;
+    z-index: 100;
 }
 
 .panel-title {
@@ -47,33 +45,29 @@ margin: 200px;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-.home .panel a ,.home .panel a:hover{
-    color:white;
+
+.home .panel a, .home .panel a:hover {
+    color: white;
     text-decoration: none;
 }
-.seatmap-button
-{
+
+.seatmap-button {
     visibility: hidden;
-    width:10%;
+    width: 10%;
 }
-.panel:hover .seatmap-button
-{
+
+.panel:hover .seatmap-button {
     visibility: visible;
 }
-.seatmap-button:hover
-{
 
-    width:10%;
+.seatmap-button:hover {
+
+    width: 10%;
     position: sticky;
-    transform: scale(1.2); 
+    transform: scale(1.2);
     cursor: pointer;
-    z-index:101;
+    z-index: 101;
 }
-
-
-
-
-
 
 /* Center the image and position the close button */
 .imgcontainer {
@@ -81,13 +75,16 @@ margin: 200px;
     margin: 24px 0 12px 0;
     position: relative;
 }
-.addbtn{
+
+.addbtn {
     float: right;
 }
+
 .sm-form {
     padding: 16px;
 }
-.sm-name{
+
+.sm-name {
     margin-bottom: 10px;
 }
 
@@ -100,10 +97,11 @@ margin: 200px;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
     padding-top: 60px;
 }
+
 /* Modal Content/Box */
 .modal-content {
     background-color: #fefefe;
@@ -111,6 +109,7 @@ margin: 200px;
     border: 1px solid #888;
     width: 40%; /* Could be more or less, depending on screen size */
 }
+
 @media only screen and (max-width: 1800px) {
     .modal-content {
         background-color: #fefefe;
@@ -126,12 +125,12 @@ margin: 200px;
         margin: 10% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
         border: 1px solid #888;
         width: 80%; /* Could be more or less, depending on screen size */
-        
+
     }
-    
+
     .cancelbtn {
         width: 100%;
-     }
+    }
 }
 
 /* The Close Button (x) */
@@ -157,12 +156,20 @@ margin: 200px;
 }
 
 @-webkit-keyframes animatezoom {
-    from {-webkit-transform: scale(0)} 
-    to {-webkit-transform: scale(1)}
+    from {
+        -webkit-transform: scale(0)
+    }
+    to {
+        -webkit-transform: scale(1)
+    }
 }
-    
+
 @keyframes animatezoom {
-    from {transform: scale(0)} 
-    to {transform: scale(1)}
+    from {
+        transform: scale(0)
+    }
+    to {
+        transform: scale(1)
+    }
 }
 

@@ -9,12 +9,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-    
+
     <!-- Jquery -->
-    <script src="{{ asset('js/jquery-3.3.1.min.js') }}" ></script>
+    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="{{ asset('bootstrap/bootstrap.min.css') }}" >
-    <script src="{{ asset('bootstrap/bootstrap.min.js') }}" ></script>
+    <link rel="stylesheet" href="{{ asset('bootstrap/bootstrap.min.css') }}">
+    <script src="{{ asset('bootstrap/bootstrap.min.js') }}"></script>
     <!-- Style -->
     <link href="{{asset('css/style.css')}}" rel="stylesheet" type="text/css">
     <!-- Fonts -->
@@ -29,14 +29,37 @@
 @include('header')
 
 
+<div id="app">
+
+    <main class="py-4">
+        <div class="container">
+
+            @if (Session::has('notifications'))
+                <div class="alert alert-success">
+                    <ul>
+                @foreach (Session::get('notifications') as $notification)
+
+                 <li>{{ $notification }}</li>
+                @endforeach
+                    </ul>
+                </div>
+            @endif
 
 
 
-    <div id="app">
-        
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+        </div>
+
+        @yield('content')
+    </main>
+</div>
 </body>
 </html>
