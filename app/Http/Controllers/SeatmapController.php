@@ -10,6 +10,7 @@ use Exception;
 use App\SeatMap as Map;
 use App\UserSeat as Seat;
 use App\User;
+use Lang;
 
 class SeatmapController extends Controller
 {
@@ -20,6 +21,7 @@ class SeatmapController extends Controller
     {
         return view('home');
     }
+
     /**
      * Load detail page
      */
@@ -27,42 +29,59 @@ class SeatmapController extends Controller
     {
         return 'Detail page.';
     }
-    /**
-     * Load add seat map page
-     */
-    public function getAddSeatmapPage()
-    {
-        return view('seat-map/add-seat-map');
-    }
 
     /**
-     * Handle add Seatmap request submit
+     *  'Add Seatmap' request handler
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function addSeatmapHandler(Request $request)
     {
-        if ($request->user()->permission==1) {
-            $id = Map::addSeatMap($request->name);
+        $request->validate([
+            'SeatmapPic' => 'max:5120 | required | dimensions:min_width=300,min_height=300',
+            'SeatmapName' => 'required| max:100| string'
+        ]);
+        if ($request->user()->permission == 1) {
+            $id = Map::addSeatMap($request->SeatmapName);
             $public = Storage::disk('public_folder');
-            $f = $request->file('pic');
-            $public->putFileAs('images/seat-map', $f, $id.'.' .  $f->extension());
-            return redirect()->route('home');
+            $f = $request->file('SeatmapPic');
+            $public->putFileAs('images/seat-map', $f, $id . '.' . $f->extension());
+            $addSeatmapNoti = $request->SeatmapName . Lang::get('notification.added');
+            $notifications = [$addSeatmapNoti];
+            return back()->with(['notifications' => $notifications]);
         } else {
-            return "Bạn không có quyền ADD!!!";
+            return "update later";
         }
+
+
     }
 
-    // Delete seat map
-
+    /**
+     * 'Delete Seatmap' request handler
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|string
+     */
     public function deleteSeatmapHandler(Request $request)
     {
-        if ($request->user()->permission==1) {
-            $id = $request->id;
+        $request->validate([
+            'SeatmapID' => 'required | interger',
+            'SeatmapName' => 'required| max:100| string'
+        ]);
+        if ($request->user()->permission == 1) {
+            $id = $request->SeatmapID;
+            $name = $request->SeatmapName;
             Map::deleteSeatMap($id);
-            return "Đã Xóa";
+            $deletedSeatmapNoti = $name . Lang::get('notification.deleted');
+            $notifications = [$deletedSeatmapNoti];
+            return back()->with(['notifications' => $notifications]);
+
         } else {
-            return "Bạn không có quyền Delete!!!";
+            return "update later";
         }
+
+
     }
+
     /**
      * Load add seat map page
      */
@@ -82,7 +101,7 @@ class SeatmapController extends Controller
             'edit_mode' => true,
         ]);
     }
-    
+
     /**
      * Handle edit Seatmap request submit
      */

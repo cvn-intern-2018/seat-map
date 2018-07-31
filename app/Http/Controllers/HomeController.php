@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\SeatMap;
+
 class HomeController extends Controller
 {
     /**
@@ -11,7 +13,9 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     /**
      * Show the application dashboard.
@@ -21,7 +25,10 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-        $maps = SeatMap::getSeatMap($request->search,$request->page);
-        return view('home',['maps'=>$maps->appends(Input::except('page')),'search'=>$request->search]);
+        $request->validate([
+            'search' => 'max:100 | string',
+        ]);
+        $maps = SeatMap::getSeatMap($request->search, $request->page);
+        return view('home', ['maps' => $maps->appends(Input::except('page')), 'search' => $request->search]);
     }
 }

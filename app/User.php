@@ -27,7 +27,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-    
+
     /**
      * Disable timestamps
      */
@@ -51,8 +51,7 @@ class User extends Authenticatable
     public function setAttribute($key, $value)
     {
         $isRememberTokenAttribute = $key == $this->getRememberTokenName();
-        if (!$isRememberTokenAttribute)
-        {
+        if (!$isRememberTokenAttribute) {
             parent::setAttribute($key, $value);
         }
     }
@@ -64,8 +63,8 @@ class User extends Authenticatable
 
     /**
      * Get array of user's avatar URL
-     * 
-     * @param array|Illuminate\Support\Collection $user_list 
+     *
+     * @param array|Illuminate\Support\Collection $user_list
      * @return array
      */
     public static function getUserAvatar($user_list)
@@ -73,19 +72,15 @@ class User extends Authenticatable
         $avatars = [];
         foreach ($user_list as $user) {
             if (Storage::disk('public_folder')->exists('images/user/' . $user->id . '.jpg')) {
-                $avatars[ $user->id ] = asset('images/user/' . $user->id . '.jpg');
-            }
-            elseif (Storage::disk('public_folder')->exists('images/user/' . $user->id . '.png')) {
-                $avatars[ $user->id ] = asset('images/user/' . $user->id . '.png');
-            }
-            elseif (Storage::disk('public_folder')->exists('images/user/' . $user->id . '.bmp')) {
-                $avatars[ $user->id ] = asset('images/user/' . $user->id . '.bmp');
-            }
-            elseif (Storage::disk('public_folder')->exists('images/user/' . $user->id . '.gif')) {
-                $avatars[ $user->id ] = asset('images/user/' . $user->id . '.gif');
-            }
-            else {
-                $avatars[ $user->id ] = asset('images/user/mys-man.jpg');
+                $avatars[$user->id] = asset('images/user/' . $user->id . '.jpg');
+            } elseif (Storage::disk('public_folder')->exists('images/user/' . $user->id . '.png')) {
+                $avatars[$user->id] = asset('images/user/' . $user->id . '.png');
+            } elseif (Storage::disk('public_folder')->exists('images/user/' . $user->id . '.bmp')) {
+                $avatars[$user->id] = asset('images/user/' . $user->id . '.bmp');
+            } elseif (Storage::disk('public_folder')->exists('images/user/' . $user->id . '.gif')) {
+                $avatars[$user->id] = asset('images/user/' . $user->id . '.gif');
+            } else {
+                $avatars[$user->id] = asset('images/user/mys-man.jpg');
             }
         }
         return $avatars;

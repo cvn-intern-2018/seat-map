@@ -19,7 +19,7 @@ Route::get('/login', 'UserController@getLoginView')->name('login');
 Route::get('/logout', 'UserController@logout')->name('logout');
 Route::get('/seat-map/{id}', 'SeatmapController@detail')->name('seatmapDetail');
 
-Route::group(['middleware' => 'auth'], function(){
+Route::group(['middleware' => 'auth'], function () {
     Route::post('/seat-map/add', 'SeatmapController@addSeatmapHandler');
     Route::get('/seat-map/edit/{id}', 'SeatmapController@getEditSeatmapPage');
     Route::post('/seat-map/delete', 'SeatmapController@deleteSeatmapHandler');
