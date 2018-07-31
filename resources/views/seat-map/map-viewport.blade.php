@@ -16,7 +16,7 @@
         <img src="{{ $map_image }}" alt="{{ $map->name }}" class="seatmap-image">
         @foreach($arranged_users as $user)
         <div class="user-seat" id="user-seat-{{ $user->id }}"
-            style="top:{{ $user->pivot->Y / 10000 }}%;left:{{ $user->pivot->X / 10000 }}%"
+            style="top:{{ $user->pivot->Y / 100 }}%;left:{{ $user->pivot->X / 100 }}%"
             @isset($edit_mode)
             draggable="true"
             @endisset

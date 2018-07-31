@@ -126,8 +126,8 @@ class SeatmapController extends Controller
             } else {
                 $user_seat = array_map(function ($item) use ($validatedData) {
                     $new_item = get_object_vars($item);
-                    $new_item['x'] = (int)($new_item['x'] * 10000);
-                    $new_item['y'] = (int)($new_item['y'] * 10000);
+                    $new_item['x'] = (int)($new_item['x'] * 100);
+                    $new_item['y'] = (int)($new_item['y'] * 100);
                     $new_item['seat_map_id'] = $validatedData['seatmap_id'];
                     return $new_item;
                 }, json_decode($validatedData['seat_data']));

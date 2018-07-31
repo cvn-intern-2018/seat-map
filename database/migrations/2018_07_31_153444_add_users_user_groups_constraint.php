@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserGroup extends Migration
+class AddUsersUserGroupsConstraint extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateUserGroup extends Migration
      */
     public function up()
     {
-        Schema::create('user_groups', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name', 100)->unique();
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('user_group_id')->references('id')->on('user_groups');
         });
     }
 
@@ -26,6 +25,8 @@ class CreateUserGroup extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_groups');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign('users_user_group_id_foreign');
+        });
     }
 }
