@@ -22,7 +22,6 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('permission')->default(0);
             $table->string('username', 100)->unique();
             $table->string('short_name', 100);
-            $table->string('phone', 15)->nullable()->default(null);
             $table->string('phone', 15)->nullable();
             $table->string('img', 5)->nullable();
         });

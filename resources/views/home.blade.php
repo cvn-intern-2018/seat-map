@@ -4,10 +4,42 @@
 @section('big-title','Cybozu VN')
 @section('content')
 
+
+
     <link href="{{asset('css/home.css')}}" rel="stylesheet" type="text/css">
     <!-- <input name="_token" type="hidden" value="{{ csrf_token() }}"> -->
     <div class="container home">
+        {{--Add map modal form--}}
+        <div class="modal fade" id="delete-map-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
 
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Delete seat map</h4>
+                    </div>
+                    <div class="modal-body">
+                        Do you really want to delete "<span id="delete-name"></span>"?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" id="delete-confirm" class=" btn btn-danger " data-dismiss="modal"
+                                data-id="" data-name="">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {{----------------------}}
+        <script> $(document).on("click", ".delete-seatmap", function () {
+                document.querySelector("#delete-confirm").dataset.id = this.dataset.id;
+                document.querySelector("#delete-confirm").dataset.name = this.dataset.name;
+                document.querySelector("#delete-name").innerHTML = this.dataset.name;
+
+            }); </script>
 
         <div class="row search-box">
 
@@ -37,7 +69,6 @@
                     </button>
                 </div>
                 {{-------------------}}
-
                 {{--Add map modal form--}}
                 <div class="modal fade" id="add-map-form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
@@ -75,9 +106,8 @@
                             </div>
                         </form>
                     </div>
-                    {{----------------------}}
                 </div>
-
+            {{----------------------}}
         @endauth
         <!--end of col-->
         </div>
@@ -100,19 +130,16 @@
                 @else
                     @foreach ($maps as $map)
                         <div class="col-md-3">
-
                             <div class="panel panel-info">
-
                                 <div class="panel-heading clearfix">
                                     <a href="/seat-map/{{$map->id}}">
-                                        <div id="seatmap-name-{{$map->id}}"
-                                             class="panel-title pull-left ">{{$map->name}}</div>
+                                        <div class="panel-title pull-left ">{{$map->name}}</div>
                                     </a>
                                     @auth
                                         <img data-id="{{$map->id}}" data-name="{{$map->name}}"
-                                             class="delete-button seatmap-button pull-right"
+                                             class="seatmap-button pull-right delete-seatmap" data-toggle="modal"
+                                             data-target="#delete-map-modal"
                                              src="{{asset('images/remove.png')}}">
-
                                         <a href="/seat-map/edit/{{$map->id}}"> <img class="seatmap-button pull-right"
                                                                                     src="{{asset('images/edit.png')}}">
                                         </a>
@@ -124,23 +151,17 @@
                                         </form>
                                         {{---------------------------------}}
                                     @endauth
-
                                 </div>
                                 <a href="/seat-map/{{$map->id}}">
                                     <div class="panel-body">
 
                                         <img alt="{{$map->name}}" class="center-block"
                                              src="{{asset('images/seat-map/'.$map->id.$map->img)}}">
-
                                     </div>
                                 </a>
                             </div>
-
                         </div>
-
                     @endforeach
-
-
         </div>
         <div class="row">
             <div class="centered text-center">
@@ -155,8 +176,6 @@
                 </div>
             </div>
         @endisset
-
-
     </div>
     </div>
     <script src="{{ asset('js/home.js') }}"></script>
