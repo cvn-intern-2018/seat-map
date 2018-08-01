@@ -20,7 +20,8 @@ class UsersTableSeeder extends Seeder
             'email' => 'admin@admin.com',
             'short_name' => 'Admin',
             'permission' => 1,
-            'phone' => '01237015928'
+            'phone' => '01237015928',
+            'img'=> '.jpg',
         ]);
         DB::table('users')->insert([
             'id' => 2,
@@ -31,7 +32,8 @@ class UsersTableSeeder extends Seeder
             'email' => 'user1@user.com',
             'short_name' => 'user1',
             'permission' => 0,
-            'phone' => '01237015928'
+            'phone' => '01237015928',
+            'img'=> '.jpg',
         ]);
         DB::table('users')->insert([
             'id' => 3,
@@ -42,7 +44,8 @@ class UsersTableSeeder extends Seeder
             'email' => 'user2@user.com',
             'short_name' => 'user2',
             'permission' => 0,
-            'phone' => '01237015928'
+            'phone' => '01237015928',
+            'img'=> null,
         ]);
         DB::table('users')->insert([
             'id' => 4,
@@ -53,7 +56,8 @@ class UsersTableSeeder extends Seeder
             'email' => 'user3@user.com',
             'short_name' => 'user3',
             'permission' => 0,
-            'phone' => '01237015928'
+            'phone' => '01237015928',
+            'img'=> null,
         ]);
 
     }

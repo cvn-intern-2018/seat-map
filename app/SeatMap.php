@@ -52,6 +52,8 @@ class SeatMap extends Model
 
 
     /**
+     * Create connection to App\User
+     * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users()
@@ -79,5 +81,17 @@ class SeatMap extends Model
             return asset('images/seat-map/' . $id . '.gif');
         }
         return null;
+    }
+
+    /**
+     * Save seat map name
+     * 
+     * @param string $newName
+     * @return void
+     */
+    public function saveSeatMapName(string $newName)
+    {
+        $this->name = $newName;
+        $this->save();
     }
 }

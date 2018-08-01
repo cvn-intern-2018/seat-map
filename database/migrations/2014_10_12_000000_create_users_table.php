@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('username', 100)->unique();
             $table->string('short_name', 100);
             $table->string('phone', 15)->nullable();
+            $table->string('img', 5)->nullable();
         });
     }
 

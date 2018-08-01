@@ -11,17 +11,12 @@ class SeatmapTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('seat_maps')->insert([
-            'id' => 1,
-            'name' => 'Seat map 1'
-        ]);
-        DB::table('seat_maps')->insert([
-            'id' => 2,
-            'name' => 'Seat map 2'
-        ]);
-        DB::table('seat_maps')->insert([
-            'id' => 3,
-            'name' => 'Seat map 3'
-        ]);
+        for ($i = 1; $i < 5; $i++) {
+            DB::table('seat_maps')->insert([
+                'id' => $i,
+                'name' => 'Seat map '.$i,
+                'img' => '.png'
+            ]);
+        }
     }
 }

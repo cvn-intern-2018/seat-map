@@ -62,7 +62,7 @@
                                     @endif
                             >
                                 <div class="avatar">
-                                    <img src="{{ $avatars[ $user->id ] }}" alt="" class="img-responsive">
+                                    <img src="{{ getUserAvatar($user) }}" alt="" class="img-responsive">
                                 </div>
                                 <div class="name">{{ $user->name }}</div>
                             </div>
@@ -83,7 +83,7 @@
         </div>
         <div class="container">
             <div class="map-area">
-                @include("seat-map.map-viewport")
+                @include("seat-map.map-viewport", ['users' => $users->whereIn('id', $arranged_ids)])
             </div>
         </div>
         <div class="container form-buttons">
