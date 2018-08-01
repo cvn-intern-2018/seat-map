@@ -106,4 +106,16 @@ li.active {
 }
 
 
+#big-title {
+    font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+    font-size: 50px;
+    padding: 10px 10px;
+    text-align: center;
+    text-rendering: optimizeLegibility;
+    letter-spacing: .05em;
+    text-shadow: 4px 4px 0px #d5d5d5, 7px 7px 0px rgba(0, 0, 0, 0.2);
+    cursor: default;
+    font-weight: bold;
+    color: #5e5e5e;
+}
 

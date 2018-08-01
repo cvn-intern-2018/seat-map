@@ -144,8 +144,8 @@ return [
     'attributes' => [
         'SeatmapName' => 'seat map\'s name',
         'SeatmapPic' => 'image of the seat map',
-        'search' => 'The search values'
+        'search' => 'search values'
     ],
-
-
+//Add more erro here
+    'permission' => 'You don\'t have right to do this!!',
 ];

@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title') | Cybozu VN</title>
 
     <!-- Jquery -->
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
@@ -20,7 +20,6 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
-    @yield('scripts')
 
 
 </head>
@@ -32,6 +31,8 @@
 <div id="app">
 
     <main class="py-4">
+
+        <div id = "big-title">@yield('big-title','Cybozu VN')</div>
         <div class="container">
 
             @if (Session::has('notifications'))
@@ -62,4 +63,5 @@
     </main>
 </div>
 </body>
+@yield('scripts')
 </html>

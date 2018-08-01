@@ -1,15 +1,12 @@
 @extends('layouts.app')
 @section('home-active','active')
+@section('title','Home')
+@section('big-title','Cybozu VN')
 @section('content')
+
     <link href="{{asset('css/home.css')}}" rel="stylesheet" type="text/css">
     <!-- <input name="_token" type="hidden" value="{{ csrf_token() }}"> -->
     <div class="container home">
-
-        <form role="form" id="frmDeleteSM" action="/seat-map/delete" method="post">
-            @csrf
-            <input type="hidden" name="SeatmapID" id="deleteID">
-            <input type="hidden" name="SeatmapName" id="deleteName">
-        </form>
 
 
         <div class="row search-box">
@@ -20,64 +17,78 @@
                 <div class=" col-md-offset-2 col-md-7">
                     <input maxlength="100" onClick="this.select();"
                            class="form-control form-control-lg form-control-borderless" type="search" name="search"
-                           placeholder="Search topics or keywords" value="@isset($search)
-                    {{$search}}
-                    @endisset">
+                           placeholder="Search topics or keywords" value="@isset($search){{$search}}@endisset">
+
+
                 </div>
                 <!--end of col-->
                 <div class="col-md-1">
                     <button class="btn btn-md btn-success" type="submit">Search</button>
-
                 </div>
+
                 <!--end of col-->
             </form>
             @auth
+                {{--Add map button--}}
                 <div class="col-md-offset-1 col-md-1 centered text-center">
-                    <button onclick="document.getElementById('id01').style.display='block'"
-                            class="btn btn-md btn-primary add-map-button">Add map
+                    <button
+                            class="btn btn-md btn-primary add-map-button" type="button" data-toggle="modal"
+                            data-target="#add-map-form">Add map
                     </button>
                 </div>
+                {{-------------------}}
 
+                {{--Add map modal form--}}
+                <div class="modal fade" id="add-map-form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <form role="form" class="modal-content animate" action="/seat-map/add" method="post"
+                              enctype="multipart/form-data">
+                            @csrf
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                                aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Remove user from map</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="sm-form">
 
-
-
-                <div id="id01" class="modal">
-
-                    <form role="form" class="modal-content animate" action="/seat-map/add" method="post"
-                          enctype="multipart/form-data">
-                        @csrf
-                        <div class="imgcontainer">
-                            <h2>Add Seat map</h2>
-                            <span onclick="document.getElementById('id01').style.display='none'" class="close"
-                                  title="Close Modal">&times;</span>
-                        </div>
-
-                        <div class="sm-form">
-
-                            <label for="SeatmapName"><b>Seat map's name: </b></label>
-                            <input maxlength="100"
-                                   oninvalid="this.setCustomValidity('Please input the Seat map\'s name here!!!')"
-                                   onvalid="this.setCustomValidity('')" type="text" class="form-control sm-name"
-                                   placeholder="Enter Seatmap's name" name="SeatmapName" required>
-                            <label for="SeatmapPic"><b>Image (Accept .jpg, .png or .gif) : </b></label>
-                            <input type="file" name="SeatmapPic"
-                                   accept=".png, .jpg, .gif" required>
-
-                        </div>
-
-                        <div class="sm-form">
-                            <button type="button" onclick="document.getElementById('id01').style.display='none'"
-                                    class=" btn btn-md btn-danger ">Cancel
-                            </button>
-                            <button class="addbtn btn btn-md btn-success " type="submit"> Add map</button>
-                        </div>
-                    </form>
+                                        <label for="SeatmapName"><b>Seat map's name: </b></label>
+                                        <input maxlength="100"
+                                               oninvalid="this.setCustomValidity('Please input the Seat map\'s name here!!!')"
+                                               oninput="this.setCustomValidity('')" type="text"
+                                               class="form-control sm-name"
+                                               placeholder="Enter Seatmap's name" name="SeatmapName" required>
+                                        <label for="SeatmapPic"><b>Image (Accept .jpg, .png or .gif) : </b></label>
+                                        <input oninvalid="this.setCustomValidity('Hey dude, you forgot to upload the map\'s image!!!')"
+                                               oninput="this.setCustomValidity('')" onchange="loadFile(event)"
+                                               type="file"
+                                               name="SeatmapPic"
+                                               accept=".png, .jpg, .gif" required>
+                                        <img id="img-preview">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button class="addbtn btn btn-md btn-success " type="submit"> Add map</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    {{----------------------}}
                 </div>
-
 
         @endauth
         <!--end of col-->
         </div>
+        @if($maps->count()!=0)
+            @isset($search)
+                <div class="col-md-8 col-md-offset-2"
+                     style="text-align:center; margin-bottom: 20px;  font-size: 15px; color: blue;">
+                    {{$maps->total()}} results have been found for key words: "{{$search}}"
+                </div>
+            @endisset
+        @endif
         <div class="row">
             @isset($maps)
                 @if($maps->count()==0)
@@ -105,7 +116,13 @@
                                         <a href="/seat-map/edit/{{$map->id}}"> <img class="seatmap-button pull-right"
                                                                                     src="{{asset('images/edit.png')}}">
                                         </a>
-
+                                        {{--"Delete seat map"Hidden form --}}
+                                        <form role="form" id="frmDeleteSM" action="/seat-map/delete" method="post">
+                                            @csrf
+                                            <input type="hidden" name="SeatmapID" id="deleteID">
+                                            <input type="hidden" name="SeatmapName" id="deleteName">
+                                        </form>
+                                        {{---------------------------------}}
                                     @endauth
 
                                 </div>
@@ -113,7 +130,7 @@
                                     <div class="panel-body">
 
                                         <img alt="{{$map->name}}" class="center-block"
-                                             src="{{asset('images/seat-map/'.$map->id.'.png')}}">
+                                             src="{{asset('images/seat-map/'.$map->id.$map->img)}}">
 
                                     </div>
                                 </a>

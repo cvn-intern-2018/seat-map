@@ -16,6 +16,7 @@ class CreateSeatMapTable extends Migration
         Schema::create('seat_maps', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable()->default(null);
+            $table->string('img',5);
         });
     }
 

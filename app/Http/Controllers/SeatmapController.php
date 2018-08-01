@@ -14,20 +14,27 @@ use Lang;
 
 class SeatmapController extends Controller
 {
-    /**
-     * Load homepage
-     */
-    public function index()
-    {
-        return view('home');
-    }
+
 
     /**
      * Load detail page
      */
-    public function detail(int $seatmap_id)
+    public function getSeatmapDetail(int $seatmap_id)
     {
-        return 'Detail page.';
+        $map = Map::with('users.group')->findOrFail($seatmap_id);
+        $map_image = Map::getMapImage($seatmap_id);
+        $users = User::with('group')->get();
+        $avatars = User::getUserAvatar($users);
+        return view('detail', [
+            'map' => $map,
+            'arranged_users' => $map->users,
+            'arranged_ids' => $map->users->keyBy('id')->keys()->toArray(),
+            'users' => $users,
+            'avatars' => $avatars,
+            'map_image' => $map_image,
+            'edit_mode' => true,
+        ]);
+
     }
 
     /**
@@ -42,15 +49,17 @@ class SeatmapController extends Controller
             'SeatmapName' => 'required| max:100| string'
         ]);
         if ($request->user()->permission == 1) {
-            $id = Map::addSeatMap($request->SeatmapName);
+            $file = $request->file('SeatmapPic');
+            $img =  '.'.$file->extension();
+            $id = Map::addSeatMap($request->SeatmapName, $img);
             $public = Storage::disk('public_folder');
-            $f = $request->file('SeatmapPic');
-            $public->putFileAs('images/seat-map', $f, $id . '.' . $f->extension());
+            $public->putFileAs('images/seat-map', $file, $id . $img);
             $addSeatmapNoti = $request->SeatmapName . Lang::get('notification.added');
             $notifications = [$addSeatmapNoti];
-            return back()->with(['notifications' => $notifications]);
+            return redirect()->route('home')->with(['notifications' => $notifications]);
         } else {
-            return "update later";
+            $permissionNoti = Lang::get('validation.permission');
+            return back()->with(['notifications' => $permissionNoti]);
         }
 
 
@@ -64,7 +73,7 @@ class SeatmapController extends Controller
     public function deleteSeatmapHandler(Request $request)
     {
         $request->validate([
-            'SeatmapID' => 'required | interger',
+            'SeatmapID' => 'required | integer',
             'SeatmapName' => 'required| max:100| string'
         ]);
         if ($request->user()->permission == 1) {
@@ -76,7 +85,8 @@ class SeatmapController extends Controller
             return back()->with(['notifications' => $notifications]);
 
         } else {
-            return "update later";
+            $permissionNoti = Lang::get('validation.permission');
+            return back()->with(['notifications' => $permissionNoti]);
         }
 
 

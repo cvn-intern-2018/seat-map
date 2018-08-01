@@ -17,7 +17,7 @@
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/login', 'UserController@getLoginView')->name('login');
 Route::get('/logout', 'UserController@logout')->name('logout');
-Route::get('/seat-map/{id}', 'SeatmapController@detail')->name('seatmapDetail');
+Route::get('/seat-map/{id}', 'SeatmapController@getSeatmapDetail')->name('seatmapDetail');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'permission'], function(){
