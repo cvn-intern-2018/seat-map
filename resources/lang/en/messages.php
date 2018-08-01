@@ -21,4 +21,5 @@ return [
         'title' => 'Permission denied',
         'message' => 'You don\'t have right to access this page',
     ],
+
 ];

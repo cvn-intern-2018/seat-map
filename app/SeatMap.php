@@ -35,11 +35,11 @@ class SeatMap extends Model
      * @param $name
      * @return mixed
      */
-    public static function addSeatMap($name)
+    public static function addSeatMap($name, $img)
     {
 
         $id = self::insertGetId(
-            ['name' => $name]
+            ['name' => $name,'img' => $img]
         );
         return $id;
     }
