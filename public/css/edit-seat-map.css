@@ -10,6 +10,18 @@
   margin-bottom: 20px;
 }
 
+.control-panel-container.fix-bar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 5;
+  background-color: white;
+}
+
+.control-panel-container.fix-bar + * {
+  padding-top: 229px;
+}
+
 .control-panel-container .control-panel {
   display: -webkit-box;
   display: -ms-flexbox;

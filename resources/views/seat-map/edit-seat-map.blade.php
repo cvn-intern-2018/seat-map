@@ -26,14 +26,12 @@
         {{ csrf_field() }}
         <input type="hidden" name="seatmap_id" value="{{ $map->id}}" required>
         <input type="hidden" name="seat_data" id="seat_data" required>
-        <div class="container">
-            <div class="form-group">
-                <input type="text" name="seatmap_name" id="seatmap_name" placeholder="Seat map name (required)"
-                        value="{{ $map->name }}">
-            </div>
-        </div>
         <div class="control-panel-container">
             <div class="container">
+                <div class="form-group">
+                    <input type="text" name="seatmap_name" id="seatmap_name" placeholder="Seat map name (required)"
+                            value="{{ $map->name }}">
+                </div>
                 <div class="control-panel">
                     <div class="settings">
                         <div class="form-group">
@@ -89,7 +87,9 @@
         <div class="container form-buttons">
             <div class="row">
                 <div class="col-md-1">
-                    <button class="btn btn-default" type="button">Cancel</button>
+                    <a href="{{ route("seatmapDetail", ["id" => $map->id]) }}">
+                        <button class="btn btn-default" type="button">Cancel</button>
+                    </a>
                 </div>
                 <div class="col-md-1 right">
                     <button id="save_edit" class="btn btn-success" type="submit">Save</button>

@@ -7,11 +7,14 @@ document.addEventListener("DOMContentLoaded", function (e) {
     var seatmap = document.querySelector(".seatmap-container");
     var arrangedUserSeat = document.getElementsByClassName("user-seat");
     var userList = document.querySelectorAll(".user-list .user-select");
+    var controlPanel = document.querySelector(".control-panel-container");
+    var scrollThreshold = 0;
 
     // ================= Initial procedure =========================
     window.onload = function(){
         mapWidth = seatmap.clientWidth;
         mapHeight = seatmap.clientHeight;
+        scrollThreshold = controlPanel.offsetTop;
     }
     document.getElementById("seat_data").value = JSON.stringify(gatherSeatmapSetting());
 
@@ -233,6 +236,19 @@ document.addEventListener("DOMContentLoaded", function (e) {
         }
     });
 
+    /**
+     * Bind listener for scroll screen
+     */
+    window.onscroll = function(e){
+        this.console.log(scrollThreshold);
+        if (window.pageYOffset >= scrollThreshold) {
+            controlPanel.classList.add("fix-bar");
+        }
+        else {
+            controlPanel.classList.remove("fix-bar");
+        }
+
+    };
     // =================== Support function =============================
     /**
      * Gathering seat map setting.
@@ -283,5 +299,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
         seat.querySelector(".info-user .email").innerHTML = event.dataTransfer.getData("email");
         seat.querySelector(".info-user .email").innerHTML = event.dataTransfer.getData("email");
         seat.querySelector(".remove-arranged-user").dataset.id = event.dataTransfer.getData("object_id");
+        seat.querySelector(".remove-arranged-user").dataset.name = event.dataTransfer.getData("name");
     }
 });

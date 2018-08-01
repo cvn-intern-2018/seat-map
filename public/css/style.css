@@ -105,5 +105,14 @@ li.active {
     }
 }
 
-
-
+footer {
+    background-color: #1a76d2;
+    color: white;
+    min-height: 100px;
+    margin-top: 50px;
+    padding: 20px 0;
+}
+footer p.copyright {
+    text-align: center;
+    font-weight: bold;
+}

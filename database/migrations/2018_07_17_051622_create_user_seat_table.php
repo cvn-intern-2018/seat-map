@@ -19,8 +19,8 @@ class CreateUserSeatTable extends Migration
             $table->smallInteger('x');
             $table->smallInteger('y');
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('seat_map_id')->references('id')->on('seat_maps');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('seat_map_id')->references('id')->on('seat_maps')->onDelete('cascade');
         });
     }
 

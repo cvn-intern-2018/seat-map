@@ -72,7 +72,7 @@
                         </div>
                         <div class="arranged-user-action col-xs-12">
                             <button class="btn btn-danger remove-arranged-user" type="button" data-toggle="modal"
-                                    data-target="#remove-confirm" data-id="">
+                                    data-target="#remove-confirm" data-id="" data-name="">
                                 Remove
                             </button>
                         </div>

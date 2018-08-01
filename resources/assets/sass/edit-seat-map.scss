@@ -9,6 +9,16 @@
   box-shadow: 0 2px 2px 0 $gray;
   padding-bottom: 10px;
   margin-bottom: 20px;
+  &.fix-bar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 5;
+    background-color: white;
+    + * {
+      padding-top: 229px;
+    }
+  }
   .control-panel {
     display: flex;
     .settings, .search-user {
