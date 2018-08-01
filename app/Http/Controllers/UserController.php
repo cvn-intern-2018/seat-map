@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
-
+use App\UserGroup;
 class UserController extends Controller
 {
     /**
@@ -15,25 +15,44 @@ class UserController extends Controller
     {
         $arr_users = [];
         $users = User::all();
-        $status = "success";
+        $groups = UserGroup::all();
+        $admin = [];
 
         foreach ($users as $user) {
-            $u = [];
-            $u['name'] = $user->name;
-            $u['email'] = $user->email;
-            $u['phone'] = $user->phone;
-            $u['groupid'] = $user->group_id;
-            $u['password'] = $user->password;
-            $u['username'] = $user->username;
-            $arr_users[$user->id] = json_encode($u);
+            if($user->permission == 0){
+                $userInfor = [];
+                $userInfor['id'] = $user->id;
+                $userInfor['fullname'] = $user->name;
+                $userInfor['email'] = $user->email;
+                $userInfor['phone'] = $user->phone;
+                $userInfor['group'] = UserGroup::where('id', $user->user_group_id)->first()->name;
+                $userInfor['password'] = $user->password;
+                $userInfor['username'] = $user->username;
+                $arr_users[$user->id] = json_encode($userInfor);
+            }else{
+                $admin['id'] = $user->id;
+                $admin['fullname'] = $user->name;
+                $admin['email'] = $user->email;
+                $admin['phone'] = $user->phone;
+                $admin['group'] = UserGroup::where('id', $user->user_group_id)->first()->name;
+                $admin['password'] = $user->password;
+                $admin['username'] = $user->username;
+            }
         }
-        // var_dump(json_encode($arr_users));exit;
-        $param = [
-            'users' => $users,
+
+        // var_dump($arr_users);exit;
+        // $param = [
+        //     'users' => $users,
+        //     'userj' => $arr_users,
+        //     'admin' => json_encode($admin),
+        // ];
+        // var_dump($param);
+        // exit;
+        return view('user-setting', [  'users' => $users,
             'userj' => $arr_users,
-            'status' => $status,
-        ];
-        return view('user-setting', $param);
+            'admin' => json_encode($admin),
+            'groups' => $groups]
+            );
     }
 
 
@@ -70,63 +89,115 @@ class UserController extends Controller
     public function addUserHandler(Request $request)
     {
         
-        $status = [];
-        $status['response'] = "Success";
+        $response = [];
+        $userInforErr = [];
+        $userInfor = [];
+        $response['status'] = "Success";
         $user = new User();
 
+        // check fullname
         if(empty($request->fullname)){
-            $status['fullname'] = "Fullname is required";
-            $status['response'] = "Error";
-        }else {
-            $user->name = $request->name;
+            $userInforErr['fullnameErr'] = "Full name is required";
+            $response['status'] = "Error";
+        } else {
+            $fullname = UserController::test_input($request->fullname);
+            if (!preg_match("/^[a-zA-Z ]*$/", $fullname)) {
+                $userInforErr['fullnameErr'] = "Only letters and white space allowed";
+                $response['status'] = "Error";
+            } else {
+                $userInfor['fullname'] = $fullname;
+                $user->name = $fullname;
+            }
         }
 
-        if(empty($request->username)){
-            $status['username'] = "Username is required";
-            $status['response'] = "Error";
-        }else {
-            $user->username = $request->username;
-        }
-
-        if(empty($request->email)){
-            $status['email'] = "Email is required";
-            $status['response'] = "Error";
-        }else {
-            $user->email = $request->email; 
-        }
-
-        if(empty($request->group_id)){
-            $status['group_id'] = "Group is required";
-            $status['response'] = "Error";
-        }else {
-            $user->group_id = $request->group_id; 
-        }
-
-        if(empty($request->password)){
-            $status['password'] = "Password is required";
-            $status['response'] = "Error";
-        }else {
-            $user->password = $request->password; 
+        // check username
+        if (empty($request->username)) {
+            $userInforErr['usernameErr'] = "Username is required";
+            $response['status'] = "Error";
+        } else {
+            $username = UserController::test_input($request->username);
+            if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
+                $userInforErr['nameErr'] = "Only letters and numbers allowed";
+                $response['status'] = "Error";
+            } else if (User::where('username', '=', $username)->count() > 0) {
+                $userInforErr['usernameErr'] = "Existed";
+                $response['status'] = "Error";
+            } else {
+                $userInfor['username'] = $username;
+                $user->username = $username;
+            }
         }
 
 
+        // check email format
+        if(!empty($request->email)){
+            $email = UserController::test_input($request->email);
+            if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+                $userInforErr['emailErr'] = "Invalid email format";
+                $response['status'] = "Error";
+            }else{
+                $userInfor['email'] = $email;
+                $user->email = $email;
+            }
+        }
 
-<<<<<<< HEAD
-=======
-        $user = new User();
-        $user->name = $name;
-        $user->password = 123;
-        $user->username = "lelelele";
-        $user->short_name = "lele";
-        $user->phone = 123;
-        $user->save();
+        // check phonenumber
+        if (empty($request->phone)) {
+            $userInforErr['phoneErr'] = "Phone number is required";
+            $response['status'] = "Error";
+        } else {
+            $phone = UserController::test_input($request->phone);
+            if (!preg_match("/^[0-9]*$/", $phone)) {
+                $userInforErr['phoneErr'] = "Only numbers allowed";
+            } else {
+                $userInfor['phone'] = $phone;
+                $user->phone = $phone;
+            }
+        }
 
-        $status = [
-            'status' => 'success',
-            'data' => $user
-        ];
->>>>>>> 96587114f5517af675452a2794d620973f83313c
-        return json_encode($status);
+        // check password
+        if (empty($request->password)) {
+            $userInforErr['passwordErr'] = "Password is required";
+            $response['status'] = "Error";
+
+        } else {
+            $password = UserController::test_input($request->password);
+            if (!preg_match("/^[a-zA-Z0-9]*$/", $password)) {
+                $userInforErr['passwordErr'] = "Only letters and numbers allowed";
+                $response['status'] = "Error";
+            } else {
+                $userInfor['password'] = $password;
+                $user->password = $password;
+            }
+        }
+
+        // check groupid
+        if (empty($request->group_id)) {
+            $userInforErr['group_idErr'] = "Group is required";
+            $response['status'] = "Error";
+        } else {
+            $group_id = UserController::test_input($request->group_id);
+            $userInfor['group_id'] = $group_id;
+            $user->user_group_id = $group_id;
+        }
+
+        // check status
+        if ($response['status'] == "Success") {
+            $user->short_name = "";
+            // delete
+            // User::where('username', '=', $username)->delete();
+            // save
+            $user->save();
+        }
+
+        $response['userInfor'] = $userInfor;
+        $response['userInforErr'] = $userInforErr;
+
+        return json_encode($response);
+        
+        
+
+       
 
         // return "status";
      }
@@ -136,92 +207,130 @@ class UserController extends Controller
      */
     public function editUserHandler(Request $request)
     {
-        $status = [];
-        $status['status'] = "Success";
-        $user = new User();
+        $response = [];
+        $userInforErr = [];
+        $userInfor = [];
+        $response['status'] = "Success";
+        // $user = new User();
 
-        // check fullname
-<<<<<<< HEAD
-        if(empty($request->name)){
-            $status['name'] = "Fullname is required";
-=======
-        if (empty($request->name)) {
-            $status['name'] = "Full Name is required";
->>>>>>> 96587114f5517af675452a2794d620973f83313c
-            $status['status'] = "Error";
-        } else {
-            $name = $request->name;
-            if (!preg_match("/^[a-zA-Z ]*$/", $name)) {
-                $status['name'] = "Only letters and white space allowed";
-                $status['status'] = "Error";
+                    // var_dump(JSON.parse($user));
+                    // exit;
+        if(!empty($request->user_id)){
+            // $user = User::where('id', '=', $request->user_id);
+            $user = User::where('id', $request->user_id)->first();
+            // check username
+            if (empty($request->username)) {
+                $userInforErr['usernameErr'] = "Username is required";
+                $response['status'] = "Error";
             } else {
+                if($user->username != $request->username){
+                    $username = UserController::test_input($request->username);
 
-                $user->name = $name;
+                    if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
+                        $userInforErr['nameErr'] = "Only letters and numbers allowed";
+                        $response['status'] = "Error";
+                    } else if (User::where('username', '=', $username)->count() > 0) {
+                        $userInforErr['usernameErr'] = "Existed";
+                        $response['status'] = "Error";
+                    } else {
+                        $userInfor['username'] = $username;
+                        $user->username = $username;
+                    }
+
+                }
+                
             }
-        }
 
-        // check username
-        if (empty($request->username)) {
-            $status['username'] = "Username is required";
-            $status['status'] = "Error";
-        } else {
-            $username = $request->username;
-            if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
-                $status['name'] = "Only letters and numbers allowed";
-                $status['status'] = "Error";
-            } else if (User::where('username', '=', $username)->count() > 1) {
-                $status['username'] = "Existed";
+            // check fullname
+            if(empty($request->fullname)){
+                $userInforErr['fullnameErr'] = "Full name is required";
+                $response['status'] = "Error";
             } else {
-                $user->username = $username;
+                if($user->name != $request->fullname){
+                    $fullname = UserController::test_input($request->fullname);
+                    if (!preg_match("/^[a-zA-Z ]*$/", $fullname)) {
+                        $userInforErr['fullnameErr'] = "Only letters and white space allowed";
+                        $response['status'] = "Error";
+                    } else {
+                        $userInfor['fullname'] = $fullname;
+                        $user->name = $fullname;
+                    }
+                }
+                
             }
-        }
 
-        // check phonenumber
-        if (empty($request->phone)) {
-            $status['phone'] = "Phone number is required";
-        } else {
-            $phone = $request->phone;
-            if (!preg_match("/^[0-9]*/", $phone)) {
-                $status['phone'] = "Only numbers allowed";
+            // check email format
+            if(!empty($request->email)){
+                if($user->email != $request->email){
+                    $email = UserController::test_input($request->email);
+                    if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+                        $userInforErr['emailErr'] = "Invalid email format";
+                        $response['status'] = "Error";
+                    }else{
+                        $userInfor['email'] = $email;
+                        $user->email = $email;
+                    }
+                }
+
+            }
+
+            // check phonenumber
+            if (empty($request->phone)) {
+                $userInforErr['phoneErr'] = "Phone number is required";
+                $response['status'] = "Error";
             } else {
-                $user->phone = $phone;
+                if($user->phone != $request->phone){
+                    $phone = UserController::test_input($request->phone);
+                    if (!preg_match("/^[0-9]*$/", $phone)) {
+                        $userInforErr['phoneErr'] = "Only numbers allowed";
+                    } else {
+                        $userInfor['phone'] = $phone;
+                        $user->phone = $phone;
+                    }                    
+                }
+
             }
-        }
 
-        // check password
-        if (empty($request->password)) {
-            $status['password'] = "Password is required";
-            $status['status'] = "Error";
+            // check password
+            if (empty($request->password)) {
+                $userInforErr['passwordErr'] = "Password is required";
+                $response['status'] = "Error";
 
-        } else {
-            $password = $request->password;
-            if (!preg_match("/^[a-zA-Z0-9]*$/", $password)) {
-                $status['password'] = "Only letters and numbers allowed";
-                $status['status'] = "Error";
             } else {
-                $user->password = $password;
+                if($user->password != $request->password){
+                    $password = UserController::test_input($request->password);
+                    if (!preg_match("/^[a-zA-Z0-9]*$/", $password)) {
+                        $userInforErr['passwordErr'] = "Only letters and numbers allowed";
+                        $response['status'] = "Error";
+                    } else {
+                        $userInfor['password'] = $password;
+                        $user->password = $password;
+                    }
+                }
             }
+
+            // check status
+            if ($response['status'] == "Success") {
+                $user->short_name = "";
+                // delete
+                // User::where('username', '=', $username)->delete();
+                // save
+                $user->save();
+            }
+
+
+
         }
 
-        // check groupid
-        if (empty($request->group_id)) {
-            $status['group_id'] = "Group is required";
-            $status['status'] = "Error";
-        } else {
-            $group_id = $request->group_id;
-            $user->user_group_id = $group_id;
-        }
 
-        // check status
-        if ($status['status'] == "Success") {
-            $user->short_name = "";
-            // delete
-            User::where('username', '=', $username)->delete();
-            // save
-            $user->save();
-        }
 
-        return json_encode($status);
+
+
+        $response['userInfor'] = $userInfor;
+        $response['userInforErr'] = $userInforErr;
+
+        return json_encode($response);
+        
     }
 
     /**
@@ -240,6 +349,14 @@ class UserController extends Controller
         }
 
         return json_encode($status);
+
+    }
+
+    function test_input($data){
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
     }
 
 }
