@@ -102,8 +102,6 @@ class SeatmapController extends Controller
             'map' => $map,
             'arranged_ids' => $arranged_ids,
             'users' => $users,
-            'avatars' => $avatars,
-            'map_image' => $map_image,
             'edit_mode' => true,
         ]);
     }
