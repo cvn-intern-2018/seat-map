@@ -54,7 +54,7 @@
                     <div class="user-list">
                         @foreach ($users as $user)
                             <div class="user-select" data-id="{{ $user->id }}" data-name="{{ $user->name }}"
-                                    data-avatar="{{ $avatars[ $user->id ] }}"
+                                    data-avatar="{{ getUserAvatar($user) }}"
                                     data-group="{{ $user->group->name }}" data-phone="{{ $user->phone }}"
                                     data-email="{{ $user->email }}" draggable="true"
                                     @if (in_array($user->id, $arranged_ids))
@@ -62,7 +62,7 @@
                                     @endif
                             >
                                 <div class="avatar">
-                                    <img src="{{ $avatars[ $user->id ] }}" alt="" class="img-responsive">
+                                    <img src="{{ getUserAvatar($user) }}" alt="" class="img-responsive">
                                 </div>
                                 <div class="name">{{ $user->name }}</div>
                             </div>
@@ -83,7 +83,7 @@
         </div>
         <div class="container">
             <div class="map-area">
-                @include("seat-map.map-viewport")
+                @include("seat-map.map-viewport", ['users' => $users->whereIn('id', $arranged_ids)])
             </div>
         </div>
         <div class="container form-buttons">

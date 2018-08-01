@@ -94,26 +94,35 @@ class SeatmapController extends Controller
 
     /**
      * Load add seat map page
+     * 
+     * @param int $id
+     * @return view
      */
     public function getEditSeatmapPage(int $id)
     {
         $map = Map::with('users.group')->findOrFail($id);
         $map_image = Map::getMapImage($id);
-        $users = User::with('group')->get();
+        $arranged_ids = $map->users->keyBy('id')->keys()->toArray();
+        $users = User::with('group')->whereNotIn('id', $arranged_ids)->get();
+        $users = $map->users->merge($users);
+
+
         $avatars = User::getUserAvatar($users);
         return view('seat-map/edit-seat-map', [
             'map' => $map,
-            'arranged_users' => $map->users,
-            'arranged_ids' => $map->users->keyBy('id')->keys()->toArray(),
+            'arranged_ids' => $arranged_ids,
             'users' => $users,
-            'avatars' => $avatars,
-            'map_image' => $map_image,
             'edit_mode' => true,
         ]);
     }
 
     /**
-     * Handle edit Seatmap request submit
+     * Update new information and settings of seat map and user seats
+     * 
+     * @param Request $request
+     * @return view
+     * 
+     * @throws Exception
      */
     public function updateEditingSeatmap(Request $request)
     {
@@ -122,31 +131,26 @@ class SeatmapController extends Controller
             'seatmap_name' => 'required|max:100',
             'seat_data' => 'nullable|json',
         ]);
+        $seatmap_id = $validatedData['seatmap_id'];
 
         DB::beginTransaction();
         try {
-            $map = Map::findOrFail($validatedData['seatmap_id']);
-            $map->name = $validatedData['seatmap_name'];
-            $map->save();
+            $map = Map::findOrFail($seatmap_id);
+            $map->saveSeatMapName($validatedData['seatmap_name']);
 
-            if (empty($validatedData['seat_data'])) {
-                return redirect()->route('seatmapDetail', [
-                    'id' => $validatedData['seatmap_id'],
-                ]);
-            } else {
-                $user_seat = array_map(function ($item) use ($validatedData) {
+            if (!empty($validatedData['seat_data'])) {
+                $user_seat = array_map(function ($item) use ($seatmap_id) {
                     $new_item = get_object_vars($item);
                     $new_item['x'] = (int)($new_item['x'] * 100);
                     $new_item['y'] = (int)($new_item['y'] * 100);
-                    $new_item['seat_map_id'] = $validatedData['seatmap_id'];
+                    $new_item['seat_map_id'] = $seatmap_id;
                     return $new_item;
                 }, json_decode($validatedData['seat_data']));
-                Seat::where('seat_map_id', $validatedData['seatmap_id'])->delete();
-                Seat::insert($user_seat);
+                Seat::updateUserSeat($seatmap_id, $user_seat);
             }
             DB::commit();
             return redirect()->route('seatmapDetail', [
-                'id' => $validatedData['seatmap_id'],
+                'id' => $seatmap_id,
             ]);
         } catch (Exception $e) {
             DB::rollback();
