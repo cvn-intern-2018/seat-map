@@ -45,11 +45,16 @@
   .user-select {
     display: inline-block;
     width: $avatar-size;
+    height: $avatar-size;
+    cursor: move;
     &[hidden] {
       display: none;
     }
     .avatar img {
       pointer-events: none;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     .name {
       text-align: center;

@@ -16,4 +16,5 @@ let mix = require('laravel-mix');
 mix.sass('resources/assets/sass/seatmap-viewport.scss', 'public/css')
     .sass('resources/assets/sass/edit-seat-map.scss', 'public/css')
     .sass('resources/assets/sass/login.scss', 'public/css')
+    .sass('resources/assets/sass/group-setting.scss', 'public/css')
 ;
