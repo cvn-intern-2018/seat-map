@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\UserGroup;
 
 class UserGroupController extends Controller
 {
@@ -11,7 +13,12 @@ class UserGroupController extends Controller
      */
     public function getGroupSettingView()
     {
-        return 'Group setting view';
+        $users = User::get();
+        $groups = UserGroup::get();
+        return view('group-setting', [
+            'users' => $users,
+            'groups' => $groups,
+        ]);
     }
 
     /**

@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function (e) {
     // ================= Initial data =========================
-    var avatarSize = 80;
+    var avatarSize = 60;
     var mapWidth = 0;
     var mapHeight = 0;
     var waiterSetTimeOut = 0;

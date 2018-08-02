@@ -1,0 +1,70 @@
+@import "variables";
+$column-height: 65vh;
+select[multiple] {
+    width: 100%;
+}
+
+.group-list {
+    max-height: $column-height;
+    overflow-y: auto;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.group-item {
+    border: 1px solid black;
+    border-top: none;
+    input {
+        display: none;
+    }
+    .group-display, .group-button {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .group-button {
+        span {
+            margin-bottom: 5px;
+            &.glyphicon {
+                height: 20px;
+            }
+        }
+        &.edit-button {
+            background-color : #449d44;
+        }
+        &.save-button {
+            background-color : #337ab7;
+            display: none;
+        }
+        &.delete-button {
+            background-color: #d9534f;
+        }
+    }
+
+    &.active {
+        background-color: $gray;
+    }
+    &:last-child {
+        border-bottom: none;
+    }
+    &.edit {
+        input {
+            display: inline-block;
+        }
+        label  {
+            display: none;
+        }
+        .group-button {
+            color: white;
+            &.edit-button {
+                display: none;
+            }
+            &.save-button {
+                display: block;
+            }
+        }
+        
+    }
+}
+
+#member_users, #non_member_users {
+    height: $column-height;
+}

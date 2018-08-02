@@ -1,0 +1,80 @@
+select[multiple] {
+  width: 100%;
+}
+
+.group-list {
+  max-height: 65vh;
+  overflow-y: auto;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.group-item {
+  border: 1px solid black;
+  border-top: none;
+}
+
+.group-item input {
+  display: none;
+}
+
+.group-item .group-display,
+.group-item .group-button {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.group-item .group-button span {
+  margin-bottom: 5px;
+}
+
+.group-item .group-button span.glyphicon {
+  height: 20px;
+}
+
+.group-item .group-button.edit-button {
+  background-color: #449d44;
+}
+
+.group-item .group-button.save-button {
+  background-color: #337ab7;
+  display: none;
+}
+
+.group-item .group-button.delete-button {
+  background-color: #d9534f;
+}
+
+.group-item.active {
+  background-color: #CECECE;
+}
+
+.group-item:last-child {
+  border-bottom: none;
+}
+
+.group-item.edit input {
+  display: inline-block;
+}
+
+.group-item.edit label {
+  display: none;
+}
+
+.group-item.edit .group-button {
+  color: white;
+}
+
+.group-item.edit .group-button.edit-button {
+  display: none;
+}
+
+.group-item.edit .group-button.save-button {
+  display: block;
+}
+
+#member_users,
+#non_member_users {
+  height: 65vh;
+}
+

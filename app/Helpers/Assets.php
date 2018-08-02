@@ -29,5 +29,5 @@ function getSeatmapImages($seatmap) {
  * @return string
  */
 function cssLink($css_file) {
-    return asset('css/', $css_file);
+    return asset('css/'. $css_file.'.css');
 }
