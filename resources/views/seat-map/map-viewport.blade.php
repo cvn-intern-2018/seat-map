@@ -11,9 +11,9 @@
 @endphp
 
 <link rel="stylesheet" href="{{ asset("css/seatmap-viewport.css") }}">
-<div id="seatmap-viewport-{{ $map->id }}" class="seatmap-viewport">
-    <div class="seatmap-container" data-zoom="1">
-        <img src="{{ getSeatmapImages($map) }}" alt="{{ $map->name }}" class="seatmap-image">
+<div  id="seatmap-viewport-{{ $map->id }}" class="seatmap-viewport">
+    <div  class="seatmap-container" data-zoom="1">
+        <img  src="{{ getSeatmapImages($map) }}" alt="{{ $map->name }}" class="seatmap-image">
         @foreach($users as $user)
         <div class="user-seat" id="user-seat-{{ $user->id }}"
             style="top:{{ $user->pivot->Y / 100 }}%;left:{{ $user->pivot->X / 100 }}%"

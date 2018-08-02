@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.vertical')
 @section('title','Home')
 @section('big-title','Cybozu VN')
 @section('content')
-    <div class="container">
+
         @include("seat-map.map-viewport")
-    </div>
+
 
 @endsection
 

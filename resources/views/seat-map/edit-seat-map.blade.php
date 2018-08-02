@@ -22,6 +22,10 @@
         </div>
         @endif
     </div>
+
+
+
+
     <form class="edit-section" method="POST" action="{{ route("seatmapEditHandler") }}">
         {{ csrf_field() }}
         <input type="hidden" name="seatmap_id" value="{{ $map->id}}" required>
@@ -97,6 +101,10 @@
             </div>
         </div>
     </form>
+
+
+
+
     <div class="modal fade" id="remove-confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

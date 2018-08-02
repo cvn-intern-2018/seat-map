@@ -66,8 +66,8 @@
 }
 
 .user-list .user-select .avatar {
-  width: 60px;
-  height: 60px;
+  width: 65px;
+  height: 65px;
 }
 
 .user-list .user-select .avatar img {
@@ -76,6 +76,8 @@
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+  border: 1px solid black;
+  border-radius: 100%;
 }
 
 .user-list .user-select .name {
@@ -84,8 +86,9 @@
 }
 
 .search-user .user-search-avatar .avatar {
-  width: 60px;
-  height: 60px;
+  width: 65px;
+  height: 65px;
+
 }
 
 .search-user .user-search-avatar .avatar img {

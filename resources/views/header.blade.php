@@ -14,8 +14,6 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="/"> <img src="{{asset('images/logo.png')}}" width=130></a>
-
-
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -30,8 +28,8 @@
                         @else
 
                             <li class="@yield('home-active')"><a href="#">Home</a></li>
-                            <li><a href="@yield('groups-active')">Groups</a></li>
-                            <li><a href="@yield('users-active')">Users</a></li>
+                            <li><a href="" class="@yield('groups-active')">Groups</a></li>
+                            <li><a href="" class="@yield('users-active')">Users</a></li>
 
                             <li>
 
