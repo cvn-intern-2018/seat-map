@@ -2,6 +2,9 @@
 @section('title','Home')
 @section('big-title','Cybozu VN')
 @section('content')
-    @include("seat-map.map-viewport")
+    <div class="container">
+        @include("seat-map.map-viewport")
+    </div>
+
 @endsection
 
