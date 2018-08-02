@@ -1,6 +1,7 @@
 .seatmap-viewport {
   width: 100%;
-  overflow-x: auto;
+  max-height: 70vh;
+  overflow: scroll;
 }
 
 .seatmap-viewport .seatmap-container {
@@ -54,11 +55,12 @@
 }
 
 .seatmap-viewport .seatmap-container .user-seat .avatar-container {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   border: 1px solid black;
   border-radius: 100%;
   overflow: hidden;
+  cursor: move;
 }
 
 .seatmap-viewport .seatmap-container .user-seat .avatar-container .avatar {
