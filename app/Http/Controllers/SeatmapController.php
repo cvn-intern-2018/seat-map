@@ -19,22 +19,14 @@ class SeatmapController extends Controller
     /**
      * Load detail page
      */
-    public function getSeatmapDetail(int $seatmap_id)
+    public function getSeatmapDetail(int $id)
     {
-        $map = Map::with('users.group')->findOrFail($seatmap_id);
-        $map_image = Map::getMapImage($seatmap_id);
-        $users = User::with('group')->get();
-        $avatars = User::getUserAvatar($users);
+        $map = Map::with('users.group')->findOrFail($id);
         return view('detail', [
             'map' => $map,
-            'arranged_users' => $map->users,
-            'arranged_ids' => $map->users->keyBy('id')->keys()->toArray(),
-            'users' => $users,
-            'avatars' => $avatars,
-            'map_image' => $map_image,
+            'users' => $map->users,
             'edit_mode' => true,
         ]);
-
     }
 
     /**
@@ -50,7 +42,7 @@ class SeatmapController extends Controller
         ]);
         if ($request->user()->permission == 1) {
             $file = $request->file('SeatmapPic');
-            $img =  '.'.$file->extension();
+            $img = '.' . $file->extension();
             $id = Map::addSeatMap($request->SeatmapName, $img);
             $public = Storage::disk('public_folder');
             $public->putFileAs('images/seat-map', $file, $id . $img);
@@ -94,20 +86,16 @@ class SeatmapController extends Controller
 
     /**
      * Load add seat map page
-     * 
+     *
      * @param int $id
      * @return view
      */
     public function getEditSeatmapPage(int $id)
     {
         $map = Map::with('users.group')->findOrFail($id);
-        $map_image = Map::getMapImage($id);
         $arranged_ids = $map->users->keyBy('id')->keys()->toArray();
         $users = User::with('group')->whereNotIn('id', $arranged_ids)->get();
         $users = $map->users->merge($users);
-
-
-        $avatars = User::getUserAvatar($users);
         return view('seat-map/edit-seat-map', [
             'map' => $map,
             'arranged_ids' => $arranged_ids,
@@ -118,10 +106,10 @@ class SeatmapController extends Controller
 
     /**
      * Update new information and settings of seat map and user seats
-     * 
+     *
      * @param Request $request
      * @return view
-     * 
+     *
      * @throws Exception
      */
     public function updateEditingSeatmap(Request $request)

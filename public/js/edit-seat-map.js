@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
             }
         }
         catch (e) {
-            seatmap.dataset.zoom = 1
+            seatmap.dataset.zoom = 1;
         }
 
         mapWidth = seatmap.clientWidth;
