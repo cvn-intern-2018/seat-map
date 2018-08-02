@@ -19,7 +19,7 @@
 }
 
 .control-panel-container.fix-bar + * {
-  padding-top: 229px;
+  padding-top: 193px;
 }
 
 .control-panel-container .control-panel {
@@ -58,13 +58,16 @@
 
 .user-list .user-select {
   display: inline-block;
-  width: 60px;
-  height: 60px;
   cursor: move;
 }
 
 .user-list .user-select[hidden] {
   display: none;
+}
+
+.user-list .user-select .avatar {
+  width: 60px;
+  height: 60px;
 }
 
 .user-list .user-select .avatar img {
@@ -82,7 +85,15 @@
 
 .search-user .user-search-avatar .avatar {
   width: 60px;
-  height: auto;
+  height: 60px;
+}
+
+.search-user .user-search-avatar .avatar img {
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .search-user .user-search-avatar input {
