@@ -8,6 +8,7 @@ use Illuminate\Database\QueryException;
 
 class UserGroup extends Model
 {
+
     /**
      * Disable timestamps
      */
