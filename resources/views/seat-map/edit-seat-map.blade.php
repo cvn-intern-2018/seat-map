@@ -35,48 +35,12 @@
                     <button class="btn btn-default zoom-in" type="button"><span
                                 class="glyphicon glyphicon-zoom-in"></span></button>
                 </div>
-<<<<<<< HEAD
             </div>
             <div class="search-user col-md-12 ">
                 <div class="user-search-avatar">
                     <div class="  input-search-user">
                         <input placeholder="Input username" class="form-control form-control-lg form-control-borderless"
                                type="text" name="keyword" id="keyword">
-=======
-                <div class="control-panel">
-                    <div class="settings">
-                        <div class="form-group">
-                            <input type="checkbox" name="display_name" id="display_name" checked>
-                            <label for="display_name">Show name</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="checkbox" name="display_group" id="display_group" checked>
-                            <label for="display_group">Show group</label>
-                        </div>
-                        <div class="btn-group">
-                            <button class="btn btn-default zoom-out" type="button"><span
-                                        class="glyphicon glyphicon-zoom-out"></span></button>
-                            <button class="btn btn-default zoom-in" type="button"><span
-                                        class="glyphicon glyphicon-zoom-in"></span></button>
-                        </div>
-                    </div>
-                    <div class="user-list">
-                        @foreach ($users as $user)
-                            <div class="user-select" data-id="{{ $user->id }}" data-name="{{ $user->name }}"
-                                    data-avatar="{{ getUserAvatar($user) }}"
-                                    data-group="{{ $user->group->name }}" data-phone="{{ $user->phone }}"
-                                    data-email="{{ $user->email }}" draggable="true"
-                                    @if (in_array($user->id, $arranged_ids))
-                                    hidden
-                                    @endif
-                            >
-                                <div class="avatar">
-                                <img src="{{ getUserAvatar($user) }}" alt="" class="img-responsive" onerror="this.src='{{ asset("images/user/mys-man.jpg") }}'">
-                                </div>
-                                <div class="name">{{ $user->name }}</div>
-                            </div>
-                        @endforeach
->>>>>>> master
                     </div>
                 </div>
             </div>
