@@ -1,102 +1,98 @@
-@extends("frame")
+@extends("layouts.vertical")
 
 @section("title")
     Edit seat map
 @endsection
+@section("big-title")
+    Edit seat map
+@endsection
 @section("scripts")
-    <link rel="stylesheet" href="{{ asset("/css/edit-seat-map.css") }}">
     <script src="{{ asset("/js/edit-seat-map.js") }}"></script>
 @endsection
-@section("main")
+@section("vertical")
+    <link rel="stylesheet" href="{{ asset("/css/edit-seat-map.css") }}">
+    <div class="control-panel">
+        <div class="row ">
+            <div class="name-form col-md-12">
+                <label for="seatmap_name_holder">Seat map name:</label>
+                <input class="form-control form-control-lg form-control-borderless" type="text" name="seatmap_name_holder"
+                       id="seatmap_name_holder" required
+                       value="{{ $map->name }}">
+            </div>
+            <div class="settings col-md-12">
+                <div class="form-group col-sm-12 col-xs-12 col-md-12 col-lg-6 ">
+                    <input type="checkbox" name="display_name" id="display_name" checked>
+                    <label for="display_name">Show name</label>
+                </div>
+                <div class="form-group col-sm-12 col-xs-12  col-md-12 col-lg-6">
+                    <input type="checkbox" name="display_group" id="display_group" checked>
+                    <label for="display_group">Show group</label>
+                </div>
+                <div class="btn-group col-md-12">
 
-
-    <div class="container">
-        <h1 class="page-title">Edit seat map</h1>
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
+                    <button class="btn btn-default zoom-out" type="button"><span
+                                class="glyphicon glyphicon-zoom-out"></span></button>
+                    <button class="btn btn-default zoom-in" type="button"><span
+                                class="glyphicon glyphicon-zoom-in"></span></button>
+                </div>
+            </div>
+            <div class="search-user col-md-12 ">
+                <div class="user-search-avatar">
+                    <div class="  input-search-user">
+                        <input placeholder="Input username" class="form-control form-control-lg form-control-borderless"
+                               type="text" name="keyword" id="keyword">
+                    </div>
+                </div>
+            </div>
+            <div class="user-list col-sm-offset-2 col-sm-8 col-md-offset-1 col-md-10">
+                @foreach ($users as $user)
+                    <div class=" col-sm-12 col-md-6 col-xs-12 col-lg-6 ">
+                        <div class="user-select" data-id="{{ $user->id }}"
+                             data-name="{{ $user->name }}"
+                             data-avatar="{{ getUserAvatar($user) }}"
+                             data-group="{{ $user->group->name }}" data-phone="{{ $user->phone }}"
+                             data-email="{{ $user->email }}" draggable="true"
+                             @if (in_array($user->id, $arranged_ids))
+                             hidden
+                                @endif
+                        >
+                            <div class="avatar">
+                                <img src="{{ getUserAvatar($user) }}" alt="" class="img-responsive" onerror="this.src='{{ asset("images/user/mys-man.jpg") }}'">
+                            </div>
+                            <div class="name col-md-12">{{ $user->name }}</div>
+                        </div>
+                    </div>
                 @endforeach
-            </ul>
+            </div>
+            <div class="col-md-6 col-xs-12 col-lg-6 col-sm-12 ">
+                <a href="{{ route("seatmapDetail", ["id" => $map->id]) }}">
+                    <button class="btn btn-danger sm-btn" type="button">Cancel</button>
+                </a>
+            </div>
+            <div class="col-md-6 col-xs-12 col-lg-6 col-sm-12">
+                <button id="save_edit" class="btn btn-success sm-btn" type="submit">Save</button>
+            </div>
+
         </div>
-        @endif
     </div>
+
+@endsection
+@section("content")
+
     <form class="edit-section" method="POST" action="{{ route("seatmapEditHandler") }}">
         {{ csrf_field() }}
         <input type="hidden" name="seatmap_id" value="{{ $map->id}}" required>
-        <input type="hidden" name="seat_data" id="seat_data" required>
-        <div class="control-panel-container">
-            <div class="container">
-                <div class="form-group">
-                    <input type="text" name="seatmap_name" id="seatmap_name" placeholder="Seat map name (required)"
-                            value="{{ $map->name }}">
-                </div>
-                <div class="control-panel">
-                    <div class="settings">
-                        <div class="form-group">
-                            <input type="checkbox" name="display_name" id="display_name" checked>
-                            <label for="display_name">Show name</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="checkbox" name="display_group" id="display_group" checked>
-                            <label for="display_group">Show group</label>
-                        </div>
-                        <div class="btn-group">
-                            <button class="btn btn-default zoom-out" type="button"><span
-                                        class="glyphicon glyphicon-zoom-out"></span></button>
-                            <button class="btn btn-default zoom-in" type="button"><span
-                                        class="glyphicon glyphicon-zoom-in"></span></button>
-                        </div>
-                    </div>
-                    <div class="user-list">
-                        @foreach ($users as $user)
-                            <div class="user-select" data-id="{{ $user->id }}" data-name="{{ $user->name }}"
-                                    data-avatar="{{ getUserAvatar($user) }}"
-                                    data-group="{{ $user->group->name }}" data-phone="{{ $user->phone }}"
-                                    data-email="{{ $user->email }}" draggable="true"
-                                    @if (in_array($user->id, $arranged_ids))
-                                    hidden
-                                    @endif
-                            >
-                                <div class="avatar">
-                                <img src="{{ getUserAvatar($user) }}" alt="" class="img-responsive" onerror="this.src='{{ asset("images/user/mys-man.jpg") }}'">
-                                </div>
-                                <div class="name">{{ $user->name }}</div>
-                            </div>
-                        @endforeach
-                    </div>
-                    <div class="search-user">
-                        <div class="user-search-avatar">
-                            <div class="avatar">
-                                <img src="{{ asset("/images/user/mys-man.jpg") }}" alt="" class="img-responsive">
-                            </div>
-                            <div class="input-search-user">
-                                <input type="text" name="keyword" id="keyword">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <input type="hidden" value ="test" name="seat_data" id="seat_data" required>
+        <input type="hidden" value ="test" value ="{{$map->name}} "name="seatmap_name" id="seatmap_name" required>
+        <div class="map-area">
+            @include("seat-map.map-viewport", ['users' => $users->whereIn('id', $arranged_ids)])
         </div>
-        <div class="container">
-            <div class="map-area">
-                @include("seat-map.map-viewport", ['users' => $users->whereIn('id', $arranged_ids)])
-            </div>
-        </div>
-        <div class="container form-buttons">
-            <div class="row">
-                <div class="col-md-1">
-                    <a href="{{ route("seatmapDetail", ["id" => $map->id]) }}">
-                        <button class="btn btn-default" type="button">Cancel</button>
-                    </a>
-                </div>
-                <div class="col-md-1 right">
-                    <button id="save_edit" class="btn btn-success" type="submit">Save</button>
-                </div>
-            </div>
-        </div>
+
     </form>
+
+
+
+
     <div class="modal fade" id="remove-confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
