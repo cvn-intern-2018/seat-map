@@ -146,7 +146,8 @@ function addUser(event){
                     nodeBtn.appendChild(document.createTextNode("Delete"));
                     nodeLi.appendChild(nodeP);
                     nodeLi.appendChild(nodeBtn);
-                    document.querySelector("ul[id=list-of-users]").appendChild(nodeLi);
+                    var items = document.querySelector("ul[id=list-of-users]");
+                    items.insertBefore(nodeLi, items.childNodes[1]);
                     document.getElementById('id01').style.display='none';
                     document.querySelector("form[name=infor] input[name=user_id]").value = JSON.stringify(_result.userInfor.id);
                 }

@@ -97,6 +97,9 @@
         width: 50%;
     }
 
+    img{
+        height: 30%;
+    }
 
 /*    #right > div.flex-container > *{
         width: 150px;

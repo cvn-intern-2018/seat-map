@@ -301,15 +301,15 @@ class UserController extends Controller
 
 
             if(empty($request->changeAvar)){
-                $response['avatr'] = "Avatar is required";
+                $response['avatar'] = "Avatar is required";
                 // $response['status'] = "Error";
             }else{
-                $response['avatr'] = $request->changeAvar;
+                $response['avatar'] = $request->changeAvar;
                 $file = $request->file('changeAvar');
                 $img =  '.'.$file->extension();
                 // $id = User::addAvatar($img);
                 $public = Storage::disk('public_folder');
-                $public->putFileAs('images/user', $file, $user->id . $img);
+                $public->putFileAs('images/user', $file, $user->username . $img);
                 $user->img = $img;
             }
 
@@ -329,7 +329,7 @@ class UserController extends Controller
 
         $response['userInfor'] = $userInfor;
         $response['userInforErr'] = $userInforErr;
-
+        // return json_encode($response);
         return back();
         
     }

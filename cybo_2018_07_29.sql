@@ -29,8 +29,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `seat_maps` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) COLLATE utf32_vietnamese_ci DEFAULT NULL
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf32_vietnamese_ci DEFAULT NULL,
+  `img` varchar(5) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_vietnamese_ci;
 
 -- --------------------------------------------------------
@@ -40,15 +42,21 @@ CREATE TABLE `seat_maps` (
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) COLLATE utf32_vietnamese_ci DEFAULT NULL,
-  `password` varchar(255) COLLATE utf32_vietnamese_ci NOT NULL,
-  `user_group_id` int(11) DEFAULT '1',
-  `email` varchar(100) COLLATE utf32_vietnamese_ci DEFAULT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `user_group_id` int(10) unsigned DEFAULT '1',
+  `email` varchar(100) DEFAULT NULL,
   `permission` tinyint(4) NOT NULL DEFAULT '0',
-  `username` varchar(100) COLLATE utf32_vietnamese_ci NOT NULL,
-  `short_name` varchar(100) COLLATE utf32_vietnamese_ci NOT NULL,
-  `phone` varchar(15) COLLATE utf32_vietnamese_ci NOT NULL
+  `username` varchar(100) NOT NULL,
+  `short_name` varchar(100) NOT NULL,
+  `phone` varchar(15) DEFAULT NULL,
+  `img` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_username_unique` (`username`),
+  UNIQUE KEY `users_email_unique` (`email`),
+  KEY `users_user_group_id_foreign` (`user_group_id`),
+  CONSTRAINT `users_user_group_id_foreign` FOREIGN KEY (`user_group_id`) REFERENCES `user_groups` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_vietnamese_ci;
 
 -- --------------------------------------------------------
@@ -58,8 +66,10 @@ CREATE TABLE `users` (
 --
 
 CREATE TABLE `user_groups` (
-  `name` varchar(100) COLLATE utf32_vietnamese_ci NOT NULL,
-  `id` int(11) NOT NULL
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_groups_name_unique` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_vietnamese_ci;
 
 -- --------------------------------------------------------
@@ -69,11 +79,17 @@ CREATE TABLE `user_groups` (
 --
 
 CREATE TABLE `user_seats` (
-  `seat_map_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `X` smallint(6) NOT NULL,
-  `Y` smallint(6) NOT NULL
+  `user_id` int(10) unsigned NOT NULL,
+  `seat_map_id` int(10) unsigned NOT NULL,
+  `x` smallint(6) NOT NULL,
+  `y` smallint(6) NOT NULL,
+  KEY `user_seats_user_id_foreign` (`user_id`),
+  KEY `user_seats_seat_map_id_foreign` (`seat_map_id`),
+  CONSTRAINT `user_seats_seat_map_id_foreign` FOREIGN KEY (`seat_map_id`) REFERENCES `seat_maps` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `user_seats_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_vietnamese_ci;
+ALTER TABLE `user_seat`
+  ADD PRIMARY KEY (`user_id`,`seat_map_id`);
 
 --
 -- Indexes for dumped tables
