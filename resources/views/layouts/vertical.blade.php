@@ -26,14 +26,14 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-<div  class="col-md-2 full-size" > @include('header2')</div>
+<div  class="col-md-3 col-xs-3 col-sm-3 col-xl-3 col-lg-2" > @include('header2')
+@yield('vertical')</div>
 
-<div  class="col-md-10 full-size">
+<div  class="col-md-9 col-xs-9 col-sm-9 col-xl-9 col-lg-10">
     <div id="app">
 
         <main class="py-4">
 
-            <div id="big-title">@yield('big-title','Cybozu VN')</div>
 
 
                 @if (Session::has('notifications'))
@@ -74,7 +74,7 @@
     </div>
 </div>
 
-
+@include("footer")
 </body>
 @yield('scripts')
 </html>

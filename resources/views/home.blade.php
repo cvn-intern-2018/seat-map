@@ -2,6 +2,9 @@
 @section('home-active','active')
 @section('title','Home')
 @section('big-title','Cybozu VN')
+@section('scripts')  <script src="{{ asset('js/home.js') }}"> </script>
+<script src="{{ asset('js/deleteSeatmap.js') }}"> </script>
+@endsection
 @section('content')
 
 
@@ -34,12 +37,6 @@
             </div>
         </div>
         {{----------------------}}
-        <script> $(document).on("click", ".delete-seatmap", function () {
-                document.querySelector("#delete-confirm").dataset.id = this.dataset.id;
-                document.querySelector("#delete-confirm").dataset.name = this.dataset.name;
-                document.querySelector("#delete-name").innerHTML = this.dataset.name;
-
-            }); </script>
 
         <div class="row search-box">
 
@@ -178,7 +175,10 @@
         @endisset
     </div>
     </div>
-    <script src="{{ asset('js/home.js') }}"></script>
+
+
+
+
 @endsection
 
 

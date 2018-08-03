@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function (e) {
     // ================= Initial data =========================
-    var avatarSize = 80;
+    var zindex=2;
+    var avatarSize = 65;
     var mapWidth = 0;
     var mapHeight = 0;
     var waiterSetTimeOut = 0;
@@ -10,12 +11,18 @@ document.addEventListener("DOMContentLoaded", function (e) {
     var controlPanel = document.querySelector(".control-panel-container");
     var scrollThreshold = 0;
 
+        $(window).on('resize', function(){
+            mapWidth = seatmap.clientWidth;
+            mapHeight = seatmap.clientHeight;
+
+        });
     // ================= Initial procedure =========================
     window.onload = function(){
         mapWidth = seatmap.clientWidth;
         mapHeight = seatmap.clientHeight;
-        scrollThreshold = controlPanel.offsetTop;
+
     }
+
     document.getElementById("seat_data").value = JSON.stringify(gatherSeatmapSetting());
 
     // ================= Function event handler =========================
@@ -23,6 +30,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
      * Handle event start draging arranged users
      */
     function dragArrangedUser(e) {
+        this.style.zIndex= zindex;
+        zindex++;
         e.dataTransfer.setData("object_id", this.id.slice(this.id.lastIndexOf("-")+1));
         var [offsetX, offsetY] = getOffsets(e);
         e.dataTransfer.setData("pointer_x", offsetX - avatarSize / 2);
@@ -38,6 +47,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
         }
         else {
             this.classList.add("active");
+            this.style.zIndex= zindex;
+            zindex++;
         }
     }
 
@@ -201,12 +212,16 @@ document.addEventListener("DOMContentLoaded", function (e) {
     document.getElementById("save_edit").addEventListener("click", function(e){
         e.preventDefault();
         var seatField = document.getElementById("seat_data")
+        var name= document.getElementById("seatmap_name_holder").value;
+        var name_real = document.getElementById("seatmap_name").value = name;
+        var seatField = document.getElementById("seat_data")
         var newData = JSON.stringify(gatherSeatmapSetting());
         if (newData !== seatField.value) {
             seatField.value = newData;
         } else {
             seatField.value = "";
         }
+
         document.querySelector(".edit-section").submit();
     });
 

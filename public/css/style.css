@@ -1,6 +1,8 @@
 
-
-
+#app
+{
+    min-height: 85vh;
+}
 /* Navbar */
 .navbar-nav.navbar-right .btn {
     position: relative;
@@ -20,9 +22,12 @@ li.active {
 footer {
     background-color: #1a76d2;
     color: white;
-    min-height: 100px;
-    margin-top: 50px;
+    min-height: 50px;
     padding: 20px 0;
+    width: 100%;
+    height: 9vh;
+    margin:auto;
+
 }
 footer p.copyright {
     text-align: center;
