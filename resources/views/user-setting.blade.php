@@ -12,7 +12,7 @@
                         <img id="imagePopup" src="#" alt="avatar" />
                         <div class=flex-container>
                             <button onclick="document.getElementById('changeAvarPopup').click()" name="changeAvarPopup" type="button">Change</button>
-                            <input style="display:none;" onchange="changeAvaPopup()" type="file" accept="image/*" id="changeAvarPopup" name="changeAvarPopup"  />
+                            <input onchange="changeAvaPopup()" type="file" accept="image/*" id="changeAvarPopup" name="changeAvarPopup"  />
                             <button onclick="deleteAvaPopup()" type="button" name="deleteAvar">Delete</button>
                       </div>
                 </div>
@@ -29,9 +29,9 @@
                       <input name="email" value="" type="text" placeholder="Enter email" />
                       <p><b>Group:</b></p>
                       <select name="group_id" >
-                          <option value="1">Cybozu</option>
-                          <option value="2">Cyboz</option>
-                          <option value="3">Cybo</option>
+                            @foreach($groups as $group)
+                            <option value="{{$group->id}}">{{ $group->name }}</option>
+                            @endforeach
                       </select>
                       <p><b>Password:</b></p>
                       <input name="password" value="" type="password" placeholder="Enter password" />
@@ -47,12 +47,12 @@
         <!-- display all users -->
         <div id="left">
             <p>Select a user</p>
-            <ul id="list-of-users">
+            <ul id="list-of-users" data-info="{{ session('user_id') }}">
                 <li class="flex-container">
                     <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;" name="addUser">Add a new user</button>
                 </li>
                 <li class="flex-container">
-                    <p class="active" name="name" onclick="displayUser(this)" data-info="{{ $admin }}">Admin</p>
+                    <p name="name" onclick="displayUser(this)" data-info="{{ $admin }}">Admin</p>
                     <button style="visibility: hidden;" name="admin" type="button" >Delete</button>
                 </li>
                 @foreach($users as $user)

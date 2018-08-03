@@ -85,4 +85,34 @@ class User extends Authenticatable
         }
         return $avatars;
     }
+
+    function set($infor){
+        if(!empty($infor->name)){
+        $this->name = $infor->name;            
+        }
+
+        if(!empty($infor->email)){
+        $this->email = $infor->email;            
+        }
+
+        if(!empty($infor->password)){
+        $this->password = $infor->password;            
+        }
+
+        if(!empty($infor->short_name)){
+        $this->short_name = $infor->name;            
+        }
+
+        if(!empty($infor->img)){
+        $this->img = $infor->img;            
+        }
+
+        if(!empty($infor->phone)){
+        $this->phone = $infor->phone;            
+        }
+
+        if(!empty($infor->user_group_id)){
+        $this->phone = $user_group_id;            
+        }        
+    }
 }

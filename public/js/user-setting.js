@@ -3,14 +3,15 @@ function changeAva() {
             var output = document.getElementById("avatar");
     output.src = URL.createObjectURL(event.target.files[0]);
 };
+
 function deleteAva() {
-    document.getElementById('avatar').src = "#";
+    document.getElementById('avatar').src = "";
     document.querySelector("input[id=changeAvar]").value = "";    
 };
+
 function changeAvaPopup() {
             var output = document.getElementById("imagePopup");
     output.src = URL.createObjectURL(event.target.files[0]);
-    // output.src="a";
 };
 
 
@@ -28,21 +29,22 @@ function displayUser(currentItem){
     }
     // change backgroundColor
     currentItem.classList.add("active");
+    document.querySelector("#list-of-users").dataset.info = JSON.parse(infor).id;
     displayUserInfor(infor);
 
 }
 
-
-
 function displayUserInfor(infor) {
     //reset backgroundColor
     infor = JSON.parse(infor);
+    console.log(infor);
     document.querySelector("form[name=infor] img[id=avatar]").src = "images/user/" + infor.username + infor.avatar;
     document.querySelector("form[name=infor] input[name=shortname]").value = infor.shortname;
     document.querySelector("form[name=infor] input[name=fullname]").value = infor.fullname;
     document.querySelector("form[name=infor] input[name=email]").value = infor.email;
     document.querySelector("form[name=infor] input[name=phone]").value = infor.phone;
     document.querySelector("form[name=infor] input[name=user_id]").value = infor.id;
+    console.log(document.querySelector("form[name=infor] input[name=user_id]").value);
     // document.querySelector("form[name=infor] select[name=group_id]").selectedIndex = infor.group_id;
     var sel = document.querySelector("form[name=infor] select[name=group_id]");
     for(var i = 0, j = sel.options.length; i < j; ++i) {
@@ -54,7 +56,6 @@ function displayUserInfor(infor) {
     document.querySelector("form[name=infor] input[name=user_id]").value = infor.id;
 };
 
-
 function discardChanges(){
     var infor;
     var items = document.querySelectorAll("p");
@@ -64,8 +65,6 @@ function discardChanges(){
         }
     });
     displayUserInfor(infor);
-
-
 }
 
 // edit user information
@@ -102,7 +101,6 @@ function hidePopup(){
     document.getElementById('id01').style.display='none'
 }
 
-
 //function to add a user to the list
 function addUser(event){
     event.preventDefault();
@@ -110,13 +108,6 @@ function addUser(event){
     var formData = new FormData(form);
     //confirm
     if(confirm("Do you want to continue?")){
-
-
-        // check if existed in the database
-        // from the database
-        // event.preventDefault();
-        // if (currentItem.name.length == 0) {
-
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -151,10 +142,7 @@ function addUser(event){
                     document.getElementById('id01').style.display='none';
                     document.querySelector("form[name=infor] input[name=user_id]").value = JSON.stringify(_result.userInfor.id);
                 }
-    
-
             }
-
         }
         xmlhttp.open("POST", "/users/add", true);
         xmlhttp.send(formData);
@@ -193,3 +181,23 @@ function deleteUser(currentItem){
 
     }
 };
+
+(function(){
+
+    $(document).ready(function(){
+
+    var infor = document.getElementById("list-of-users").dataset.info;
+ 
+    var items = document.querySelectorAll("p[name=name]");
+    for(i = 0; i < items.length; i++){
+        if(infor == JSON.parse(items[i].dataset.info).id){
+            displayUser(items[i]);
+            return;
+        }
+    }
+    displayUser(items[0]); 
+    })
+
+})($)
+
+// add event

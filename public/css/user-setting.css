@@ -120,6 +120,10 @@
     }
 
     /*style*/
+    input[type=file]{
+        display: none;
+    }
+    
     input[name=nameEntered]{
         text-align: center;
     }
@@ -294,3 +298,5 @@
         background-color: red;
         color: black;
     }
+
+

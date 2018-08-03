@@ -28,7 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 });
 
-Route::get('/users', 'UserController@getUsers');
+Route::get('/users', 'UserController@getUsers')->name('users');
 Route::get('/users/delete/{name}', 'UserController@deleteUserHandler')->name('delete');
 Route::post('/users/edit', 'UserController@editUserHandler')->name('edit');
 Route::post('/users/add', 'UserController@addUserHandler')->name('add');
