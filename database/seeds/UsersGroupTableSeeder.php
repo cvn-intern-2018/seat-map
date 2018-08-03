@@ -11,21 +11,13 @@ class UsersGroupTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('user_groups')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
         DB::table('user_groups')->insert([
             'name' => 'Unassigned users',
             'id' => 1,
         ]);
-        DB::table('user_groups')->insert([
-            'name' => 'Development',
-            'id' => 2,
-        ]);
-        DB::table('user_groups')->insert([
-            'name' => 'Business Support',
-            'id' => 3,
-        ]);
-        DB::table('user_groups')->insert([
-            'name' => 'Sale',
-            'id' => 4,
-        ]);
+        factory(App\UserGroup::class, 4)->create();
     }
 }

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Storage;
+use \Config;
 
 class User extends Authenticatable
 {
@@ -61,28 +62,9 @@ class User extends Authenticatable
         return $this->belongsTo('App\UserGroup', 'user_group_id');
     }
 
-    /**
-     * Get array of user's avatar URL
-     *
-     * @param array|Illuminate\Support\Collection $user_list
-     * @return array
-     */
-    public static function getUserAvatar($user_list)
+    public static function updateUserGroup(int $group_id, array $assign, array $unassign)
     {
-        $avatars = [];
-        foreach ($user_list as $user) {
-            if (Storage::disk('public_folder')->exists('images/user/' . $user->id . '.jpg')) {
-                $avatars[$user->id] = asset('images/user/' . $user->id . '.jpg');
-            } elseif (Storage::disk('public_folder')->exists('images/user/' . $user->id . '.png')) {
-                $avatars[$user->id] = asset('images/user/' . $user->id . '.png');
-            } elseif (Storage::disk('public_folder')->exists('images/user/' . $user->id . '.bmp')) {
-                $avatars[$user->id] = asset('images/user/' . $user->id . '.bmp');
-            } elseif (Storage::disk('public_folder')->exists('images/user/' . $user->id . '.gif')) {
-                $avatars[$user->id] = asset('images/user/' . $user->id . '.gif');
-            } else {
-                $avatars[$user->id] = asset('images/user/mys-man.jpg');
-            }
-        }
-        return $avatars;
+        self::whereIn('id', $assign)->update(['user_group_id' => $group_id]);
+        self::whereIn('id', $unassign)->update(['user_group_id' => Config::get('constants.UNASSIGNED_GROUP_ID')]);
     }
 }

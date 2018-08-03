@@ -29,5 +29,15 @@ function getSeatmapImages($seatmap) {
  * @return string
  */
 function cssLink($css_file) {
-    return asset('css/', $css_file);
+    return asset('css/'. $css_file.'.css');
+}
+
+/**
+ * Get js asset link
+ * 
+ * @param $string $user
+ * @return string
+ */
+function jsLink($css_file) {
+    return asset('js/'. $css_file.'.js');
 }

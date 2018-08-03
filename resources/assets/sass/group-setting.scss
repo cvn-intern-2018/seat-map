@@ -1,0 +1,125 @@
+@import "variables";
+$column-height: 65vh;
+$column-min-height: 40vh;
+select[multiple] {
+    width: 100%;
+}
+
+.group-list {
+    max-height: $column-height;
+    min-height: $column-min-height;
+    overflow-y: auto;
+    border: 1px solid black;
+}
+.add-group-item, .group-item {
+    border-bottom: 1px solid black;
+    border-top: none;
+    display: flex;
+    padding: 0;
+    .group-display, .group-button {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .group-display {
+        flex-basis: 60%;
+        flex-grow: 1;
+        padding: 5px;
+    }
+    .group-button {
+        flex-basis: 40px;
+        flex-shrink: 0;
+        padding: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        span {
+            margin-bottom: 5px;
+            &.glyphicon {
+                height: 20px;
+            }
+        }
+        &.edit-button, &.add-button {
+            background-color : #449d44;
+        }
+        &.save-button {
+            background-color : #337ab7;
+        }
+        &.delete-button, &.cancel-button {
+            background-color: #d9534f;
+        }
+        &.save-button, &.cancel-button{
+            display: none;
+        }
+    }
+}
+.add-group-item {
+    margin-bottom: 5px;
+    input{
+        width: 100%;
+    }
+}
+.group-item {
+    border-bottom: 1px solid black;
+    border-top: none;
+    display: flex;
+    padding: 0;
+    input {
+        display: none;
+    }
+
+    &.active {
+        background-color: $gray;
+    }
+    &.edit {
+        input {
+            display: inline-block;
+        }
+        label  {
+            display: none;
+        }
+        .group-button {
+            color: white;
+            &.edit-button, &.delete-button {
+                display: none;
+            }
+            &.save-button, &.cancel-button {
+                display: flex;
+            }
+        }
+        
+    }
+}
+.arrows{
+    max-height: $column-height;
+    min-height: $column-min-height;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .add-user, .remove-user {
+        background-size: contain;
+        background-position: center center;
+        background-repeat: no-repeat;
+        max-width: 100%;
+        height: 100px;
+        text-align: center;
+        padding: 40px 0;
+        cursor: pointer;
+    }
+    .add-user {
+        background-image: url(/images/left.png)
+    }
+    .remove-user {
+        background-image: url(/images/right.png);
+        &.disable {
+            cursor: not-allowed;
+        }
+    }
+}
+#member_users, #non_member_users {
+    max-height: $column-height;
+    min-height: $column-min-height;
+    option {
+        padding: 3px;
+    }
+}

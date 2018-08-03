@@ -1,7 +1,11 @@
 document.addEventListener("DOMContentLoaded", function (e) {
     // ================= Initial data =========================
+<<<<<<< HEAD
     var zindex=2;
     var avatarSize = 65;
+=======
+    var avatarSize = 60;
+>>>>>>> master
     var mapWidth = 0;
     var mapHeight = 0;
     var waiterSetTimeOut = 0;
