@@ -84,41 +84,33 @@
     }
     
     /*right*/
-    #right > *:nth-child(1) {
-        width: 30%;
-    }
-    #right > *:nth-child(2) {
-        width: 70%;
-    }
-    #right > div div:nth-child(1){
-        height: 150px;
-        border: 1px solid;
-        overflow: hidden;
-    }
-
-    #right > div.flex-container{
-        flex-flow: column;
-        align-items: center;
-        /*justify-content: center;*/
-        padding: 10px;
-
-    }
-
-    #right > div.flex-container > *{
-        width: 150px;
-    }
-
-    #right img{
+    #right > form{
         width: 100%;
-        height: 100%;
     }
 
-    form.flex-container{
-        flex-flow: row wrap;
+    #right > form > div[id=avatarContainer]{
+        flex-flow: column;
         justify-content: center;
+        align-items: center;
+    }
+    #right > form > div[id=avatarContainer] img, #right > form > div[id=avatarContainer] div{
+        width: 50%;
     }
 
-    form.flex-container > *{
+
+/*    #right > div.flex-container > *{
+        width: 150px;
+    }*/
+
+
+    #userinformation{
+        display: flex;
+        flex-flow: row wrap;
+        padding: 20px;
+        /*justify-content: center;*/
+    }
+
+    #userinformation > *{
         margin :10px;
         width: 40%;
 
@@ -129,7 +121,7 @@
         text-align: center;
     }
 
-    button, input[name=inptSubmitPopup], input[name=inptCancelPopup], input[name=changeAvar]{
+    button, input[name=inptSubmitPopup], input[name=inptCancelPopup], input[name=changeAvar], input[name=save], input[name=submit]{
         background-color: #4CAF50;
         color: white;
         padding: 0px 2px 0px 2px;
@@ -142,7 +134,7 @@
         padding: 5px;
     }
 
-    button[name=changeAvar], button[name=deleteAvar]{
+    button[name=changeAvar], button[name=changeAvarPopup], button[name=deleteAvar]{
         padding: 5px;
         margin: 2px;
 
@@ -196,7 +188,14 @@
         padding: 20px;
 
     }
-
+    #avatarPopup{
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #avatarPopup img{
+        height: 100px;
+    }
     /* Center the image and position the close button */
     .container {
         width: 100%;
@@ -284,6 +283,7 @@
         from {transform: scale(0)} 
         to {transform: scale(1)}
     }
+
 
 
     .active{

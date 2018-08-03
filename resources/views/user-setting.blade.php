@@ -1,19 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>
-        User information
-    </title>
+@extends('layouts.app')
+@section('home-active','active')
+@section('title','Home')
+@section('big-title','Cybozu VN')
+@section('content')
     <link href="css/user-setting.css" rel="stylesheet" type="text/css">
-</head>
-
-<body>
+    <script src="js/user-setting.js"></script>
     <div id="id01" class="modal">
-            <form name="inforPopup" class="modal-content animate" action="/users/add" onsubmit="addUser(event)" method="POST" >
+            <form name="inforPopup" class="modal-content animate" action="/users/add" method="POST" enctype="multipart/form-data">
                 @csrf
+                <div name="avatar" id="avatarPopup" class="flex-container">
+                        <img id="imagePopup" src="#" alt="avatar" />
+                        <div class=flex-container>
+                            <button onclick="document.getElementById('changeAvarPopup').click()" name="changeAvarPopup" type="button">Change</button>
+                            <input style="display:none;" onchange="changeAvaPopup()" type="file" accept="image/*" id="changeAvarPopup" name="changeAvarPopup"  />
+                            <button onclick="deleteAvaPopup()" type="button" name="deleteAvar">Delete</button>
+                      </div>
+                </div>
                 <div class="container">
                       <p><b>Full name:</b></p>
                       <input name="fullname" value="" type="text" placeholder="Enter full name" />
+                      <p><b>Short name:</b></p>
+                      <input name="shortname" value="" type="text" placeholder="Enter short name" />                      
                       <p><b>Username:</b></p>
                       <input name="username" value="" type="text" placeholder="Enter username" />
                       <p><b>Phone number:</b></p>
@@ -30,7 +37,7 @@
                       <input name="password" value="" type="password" placeholder="Enter password" />
                       <div >
                           <input name="inptSubmitPopup" type="submit" />
-                          <input onclick="document.getElementById('id01').style.display='none'" name="inptCancelPopup" value="Cancel"/>
+                          <input onclick="hidePopup()" name="inptCancelPopup" value="Cancel"/>
                       </div>
                     </div>
           </form>
@@ -62,264 +69,47 @@
 
         <!-- display information of a user -->
         <div id="right" class="flex-container">
-            <div class="flex-container">
-                <div>
-                    <img id="avatar" src="#" alt="avatar" />
-                </div>
-                <div class=flex-container>
-                    <button onclick="document.getElementById('changeAvar').click()" name="changeAvar" type="button">Change</button>
-                    <input style="display:none;" onchange="changeAvar(event)" type="file" accept="image/*" id="changeAvar" name="changeAvar"  />
-                    <button onclick="deleteAvar()" type="button" name="deleteAvar">Delete</button>
-                </div>
+                <form name="infor" class="flex-container" action="/users/edit" method="POST" enctype="multipart/form-data">@csrf
+                    <div name="avatar" id="avatarContainer" class="flex-container">
+                        <img id="avatar" src="{{asset('images/user/'.json_decode($admin)->username.json_decode($admin)->avatar)}}" alt="avatar" />
+                        <div class=flex-container>
+                            <button onclick="document.getElementById('changeAvar').click()" name="changeAvar" type="button">Change</button>
+                            <input style="display:none;" onchange="changeAva(event)" type="file" accept="image/*" id="changeAvar" name="changeAvar"  />
+                            <button onclick="deleteAva()" type="button" name="deleteAvar">Delete</button>
+                        </div>
 
-            </div>
-            <div>
-                <form name="infor" class="flex-container" action="/users" onsubmit="editUser(event)" method="POST" >@csrf
-                    <p><strong>Full name:</strong></p>
-                    <input type="text" name="fullname" value="{{json_decode($admin)->fullname}}" />
-                    <p><strong>Username:</strong></p>
-                    <input type="text" name="username" value="{{json_decode($admin)->username}}" />
-                    <p><strong>Phone number:</strong></p>
-                    <input type="text" name="phone" value="{{json_decode($admin)->phone}}" />
-                    <p><strong>Email:</strong></p>
-                    <input type="text" name="email" value="{{json_decode($admin)->email}}" />
-                    <p><strong>Group:</strong></p>
+                    </div>
+                    <div id="userinformation"> 
+                        <p><strong>Full name:</strong></p>
+                        <input type="text" name="fullname" value="{{json_decode($admin)->fullname}}" />
+                        <p><strong>Phone number:</strong></p>
+                        <input type="text" name="phone" value="{{json_decode($admin)->phone}}" />
+                        <p><strong>Email:</strong></p>
+                        <input type="text" name="email" value="{{json_decode($admin)->email}}" />
+                        <p><strong>Group:</strong></p>
 
-                    <select name="group_id" />
-                        @foreach($groups as $group)
-                        @if($group->name == json_decode($admin)->group)
-                        <option value="" selected>{{ $group->name }}</option>
-                        @else
-                        <option value="">{{ $group->name }}</option>
-                        @endif
-                        @endforeach
-                    </select>
-                    <p><strong>Password:</strong></p>
-                    <input type="text" name="password" value="{{json_decode($admin)->password}}" />
-                    <input type="text" style="display: none;" value="{{json_decode($admin)->id}}" name="user_id" />
-                    <input type="submit" value="Save" />
-                    <input type="button" onclick="discardChanges()" value="Cancel" />
+                        <select name="group_id" />
+                            @foreach($groups as $group)
+                            @if($group->name == json_decode($admin)->group)
+                            <option value="" selected>{{ $group->name }}</option>
+                            @else
+                            <option value="">{{ $group->name }}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                        <p><strong>Short name:</strong></p>
+                        <input type="text" name="shortname" value="{{json_decode($admin)->shortname}}" />
+                        <input type="text" style="display: none;" value="{{json_decode($admin)->id}}" name="user_id" />
+                        <input name="submit" type="submit" value="Save" />
+                        <input name="save" type="button" onclick="discardChanges()" value="Cancel" />
+                    </div>
                 </form>
             </div>
             
         </div>
     </div>
-
-
-
-</body>
-
-<!-- javascript -->
-<script>
-    //function to add a user to the list
-    function addUser(event){
-        event.preventDefault();
-        var form = document.querySelector("form[name=inforPopup]");
-        var formData = new FormData(form);
-        //confirm
-        if(confirm("Do you want to continue?")){
-
-
-            // check if existed in the database
-            // from the database
-            // event.preventDefault();
-            // if (currentItem.name.length == 0) {
- 
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    // var abc = JSON.parse(this.responseText);
-                    //console.log(this.responseText);
-                    if(JSON.parse(this.responseText).status == "Error"){
-                        var userInforErr = JSON.parse(this.responseText).userInforErr;
-                        // console.log(userInforErr);
-                        alert(JSON.stringify(userInforErr, null, 4));
-                        //alert(JSON.stringify(userInfor, null, 4));
-                    }else{
-                        // alert(this.responseText);
-                        // add on the screen
-                        var nodeLi = document.createElement("li");
-                        nodeLi.className += "flex-container";
-                        var nodeP = document.createElement("p");
-                        nodeP.setAttribute('name', "name");
-                        nodeP.onclick = function(){displayUserInfor(this, '{{ $userj[$user->id] }}')};
-                        // nodeP.appendChild(document.createTextNode(JSON.parse(this.responseText).fullname);
-                        nodeP.innerHTML = JSON.parse(this.responseText).fullname;
-                        var nodeBtn = document.createElement("button");
-                        nodeBtn.setAttribute('name', "{{$user->name}}");
-                        nodeBtn.onclick=function(){deleteUser(this)};
-                        nodeBtn.appendChild(document.createTextNode("Delete"));
-                        nodeLi.appendChild(nodeP);
-                        nodeLi.appendChild(nodeBtn);
-                        document.querySelector("ul[id=list-of-users]").appendChild(nodeLi);
-                        document.getElementById('id01').style.display='none';
-                    }
-        
-
-                }
-                // else{
-                //     alert(this.responseText);
-                // }
-            }
-            xmlhttp.open("POST", "/users/add", true);
-            xmlhttp.send(formData);
-
-            } 
-    };
-
-    // function to delete a user
-    function deleteUser(currentItem){
-        //confirm
-        // console.log(currentItem);
-        if(confirm("Do you want to delete \"" + currentItem.name + "\" ?")){
-            // on the screen
-            var child = currentItem.parentNode;
-            child.parentNode.removeChild(child);
-            // check if existed in the database
-            // from the database
-            // event.preventDefault();
-            if (currentItem.name.length == 0) {
-                return;
-            } else {
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    // var abc = JSON.parse(this.responseText);
-                    //console.log(this.responseText);
-                    alert("Successful");
-                    // alert("successful");
-                }
-            }
-            xmlhttp.open("GET", "/users/delete/{name}?name=" + currentItem.name, true);
-            xmlhttp.send();
-          
-            } 
-        }else{
-
-        }
-    };
-
-    // function for validation 
-    function checkInput(src){
-        var regex = /^[a-zA-Z0-9]+$/;
-        var bool = src.match(regex);
-        if(bool == null){
-            return false;
-        }else{
-            return true;
-        }
-
-
-    };
-
-    // function to display information of a user
-    function displayUser(currentItem){
-        var infor = currentItem.dataset.info;
-        var items = document.querySelectorAll("p[name=name]");
-        for(i = 0; i < items.length; i++){
-            items[i].classList.remove("active");
-        }
-        // change backgroundColor
-        currentItem.classList.add("active");
-        displayUserInfor(infor);
-
-    }
-    function displayUserInfor(infor) {
-        //reset backgroundColor
-        // console.log(this.dataset);
-
-
-
-        // console.log(av);
-        // currentItem.classList.add("active");
-        infor = JSON.parse(infor);
-        document.querySelector("form[name=infor] input[name=username]").value = infor.username;
-        document.querySelector("form[name=infor] input[name=password]").value = infor.password;
-        document.querySelector("form[name=infor] input[name=fullname]").value = infor.fullname;
-        document.querySelector("form[name=infor] input[name=email]").value = infor.email;
-        document.querySelector("form[name=infor] input[name=phone]").value = infor.phone;
-        // document.querySelector("form[name=infor] select[name=group_id]").selectedIndex = infor.group_id;
-        var sel = document.querySelector("form[name=infor] select[name=group_id]");
-        for(var i = 0, j = sel.options.length; i < j; ++i) {
-            if(sel.options[i].innerHTML === infor.group) {
-                sel.selectedIndex = i;
-                break;
-            }
-        }
-        // console.log(infor.group_id);
-        document.querySelector("form[name=infor] input[name=user_id]").value = infor.id;
-
-       
-
-    };
-
-    // testing
-    function editUser(event){
-        event.preventDefault();
-        var form = document.querySelector("form[name=infor]");
-        var formData = new FormData(form);
-        //confirm
-        if(confirm("Do you want to continue?")){
-
-
-            // check if existed in the database
-            // from the database
-            // event.preventDefault();
-            // if (currentItem.name.length == 0) {
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    // var abc = JSON.parse(this.responseText);
-                    //console.log(this.responseText);
-                    if(JSON.parse(this.responseText).status == "Error"){
-
-                        var userInforErr = JSON.parse(this.responseText).userInforErr;
-                        // console.log(userInforErr);
-                        alert(JSON.stringify(userInforErr, null, 4));
-                        //alert(JSON.stringify(userInfor, null, 4));
-                    }
-                    else{
-                        alert(JSON.parse(this.responseText).status);
-                    }
-        
-
-                }
-                // else{
-                //     alert(this.responseText);
-                // }
-            }
-            xmlhttp.open("POST", "/users/edit", true);
-            xmlhttp.send(formData);
-
-            } 
-    };
-
-    function changeAvar(event) {
-        var output = document.getElementById('avatar');
-        output.src = URL.createObjectURL(event.target.files[0]);
-        // console.log(output.src);
-    };
-
-    function deleteAvar(event) {
-        document.getElementById('avatar').src = "#";
-        document.querySelector("input[id=changeAvar]").value = "";    };
-
-    function discardChanges(){
-        var infor;
-        var items = document.querySelectorAll("p");
-        items.forEach(function(element){
-            if(element.classList.contains("active")){
-                infor = element.dataset.info;
-            }
-        });
-        displayUserInfor(infor);
-
-
-    }
-
-</script>
-
-</html>
+    
+@endsection
 
 
 
