@@ -1,49 +1,75 @@
 @import "variables";
 $column-height: 65vh;
+$column-min-height: 40vh;
 select[multiple] {
     width: 100%;
 }
 
 .group-list {
     max-height: $column-height;
+    min-height: $column-min-height;
     overflow-y: auto;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-}
-.group-item {
     border: 1px solid black;
+}
+.add-group-item, .group-item {
+    border-bottom: 1px solid black;
     border-top: none;
-    input {
-        display: none;
-    }
+    display: flex;
+    padding: 0;
     .group-display, .group-button {
         padding-top: 10px;
         padding-bottom: 10px;
     }
+    .group-display {
+        flex-basis: 60%;
+        flex-grow: 1;
+        padding: 5px;
+    }
     .group-button {
+        flex-basis: 40px;
+        flex-shrink: 0;
+        padding: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
         span {
             margin-bottom: 5px;
             &.glyphicon {
                 height: 20px;
             }
         }
-        &.edit-button {
+        &.edit-button, &.add-button {
             background-color : #449d44;
         }
         &.save-button {
             background-color : #337ab7;
-            display: none;
         }
-        &.delete-button {
+        &.delete-button, &.cancel-button {
             background-color: #d9534f;
         }
+        &.save-button, &.cancel-button{
+            display: none;
+        }
+    }
+}
+.add-group-item {
+    margin-bottom: 5px;
+    input{
+        width: 100%;
+    }
+}
+.group-item {
+    border-bottom: 1px solid black;
+    border-top: none;
+    display: flex;
+    padding: 0;
+    input {
+        display: none;
     }
 
     &.active {
         background-color: $gray;
-    }
-    &:last-child {
-        border-bottom: none;
     }
     &.edit {
         input {
@@ -54,11 +80,11 @@ select[multiple] {
         }
         .group-button {
             color: white;
-            &.edit-button {
+            &.edit-button, &.delete-button {
                 display: none;
             }
-            &.save-button {
-                display: block;
+            &.save-button, &.cancel-button {
+                display: flex;
             }
         }
         
@@ -66,5 +92,9 @@ select[multiple] {
 }
 
 #member_users, #non_member_users {
-    height: $column-height;
+    max-height: $column-height;
+    min-height: $column-min-height;
+    option {
+        padding: 3px;
+    }
 }

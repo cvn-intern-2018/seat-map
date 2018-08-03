@@ -11,12 +11,9 @@ class SeatmapTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i < 5; $i++) {
-            DB::table('seat_maps')->insert([
-                'id' => $i,
-                'name' => 'Seat map '.$i,
-                'img' => '.png'
-            ]);
-        }
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('seat_maps')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
+        factory(App\SeatMap::class, 4)->create();
     }
 }
