@@ -27,7 +27,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/seat-map/edit/', 'SeatmapController@updateEditingSeatmap')->name("seatmapEditHandler");
 
         Route::get('/group-setting', 'UserGroupController@getGroupSettingView')->name("groupSetting");
-        Route::post('/group-edit', 'UserGroupController@editGroupHandler');
+        Route::post('/group-setting/edit', 'UserGroupController@editGroupHandler');
+        Route::post('/group-setting/new', 'UserGroupController@addGroupHandler')->name("createNewGroup");
+        Route::post('/group-setting/update-user', 'UserGroupController@updateUserGroupHandler')->name("updateUserGroup");
     });
 });
 Route::get('/users', 'UserController@getUsers');

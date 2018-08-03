@@ -60,7 +60,7 @@
                                     @endif
                             >
                                 <div class="avatar">
-                                    <img src="{{ getUserAvatar($user) }}" alt="" class="img-responsive">
+                                <img src="{{ getUserAvatar($user) }}" alt="" class="img-responsive" onerror="this.src='{{ asset("images/user/mys-man.jpg") }}'">
                                 </div>
                                 <div class="name">{{ $user->name }}</div>
                             </div>

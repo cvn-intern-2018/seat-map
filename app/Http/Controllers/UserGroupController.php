@@ -30,7 +30,13 @@ class UserGroupController extends Controller
      */
     public function addGroupHandler(Request $request)
     {
-        return 'Handle add group request';
+        $validated_data = $request->validate([
+            'group_name' => 'required|max:100|unique:user_groups,name|string'
+        ]);
+        $new_id = Group::addNewGroup($validated_data['group_name']);
+        return redirect()->route('groupSetting')->with([
+            'active_group' => $new_id
+        ]);
     }
 
     /**
@@ -38,12 +44,12 @@ class UserGroupController extends Controller
      */
     public function editGroupHandler(Request $request)
     {
-        $validatedData = $request->validate([
+        $validated_data = $request->validate([
             'group_id' => 'required|int',
             'group_name' => 'required|max:100|string'
         ]);
-        $group = Group::find($validatedData['group_id']);
-        if ($group->updateGroupName($validatedData['group_name'])) {
+        $group = Group::find($validated_data['group_id']);
+        if ($group->updateGroupName($validated_data['group_name'])) {
             return json_encode(['result' => true]);
         }
         return json_encode([
@@ -54,6 +60,18 @@ class UserGroupController extends Controller
         ]);
     }
 
+    public function updateUserGroupHandler(Request $request)
+    {
+        $validated_data = $request->validate([
+            'user_group_id' => 'required|int',
+            'user_group_data' => 'required|json',
+        ]);
+        $data = json_decode($validated_data['user_group_data']);
+        User::updateUserGroup($validated_data['user_group_id'], $data->add, $data->remove);
+        return redirect()->route('groupSetting')->with([
+            'active_group' => $validated_data['user_group_id']
+        ]);
+    }
     /**
      * Handle delete group request submit
      */
