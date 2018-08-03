@@ -25,6 +25,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/seat-map/edit/{id}', 'SeatmapController@getEditSeatmapPage');
         Route::post('/seat-map/delete', 'SeatmapController@deleteSeatmapHandler');
         Route::post('/seat-map/edit/', 'SeatmapController@updateEditingSeatmap')->name("seatmapEditHandler");
+
+        Route::get('/group-setting', 'UserGroupController@getGroupSettingView')->name("groupSetting");
+        Route::post('/group-setting/edit', 'UserGroupController@editGroupHandler');
+        Route::post('/group-setting/new', 'UserGroupController@addGroupHandler')->name("createNewGroup");
+        Route::post('/group-setting/update-user', 'UserGroupController@updateUserGroupHandler')->name("updateUserGroup");
     });
 });
 

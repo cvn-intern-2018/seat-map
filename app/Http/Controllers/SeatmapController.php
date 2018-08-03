@@ -68,12 +68,16 @@ class SeatmapController extends Controller
             'SeatmapID' => 'required | integer',
             'SeatmapName' => 'required| max:100| string'
         ]);
+
         if ($request->user()->permission == 1) {
             $id = $request->SeatmapID;
             $name = $request->SeatmapName;
             Map::deleteSeatMap($id);
             $deletedSeatmapNoti = $name . Lang::get('notification.deleted');
             $notifications = [$deletedSeatmapNoti];
+            if($request->returnHome == 1)
+                return redirect()->route('home');
+            else
             return back()->with(['notifications' => $notifications]);
 
         } else {

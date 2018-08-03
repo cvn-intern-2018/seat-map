@@ -17,14 +17,15 @@
                 </div>
                 <div class="col-xs-12 group-list">
                     <div class="row">
-                        <div class="col-xs-12 add-group-item">
+                        <form class="col-xs-12 add-group-item" method="POST" action="{{ route("createNewGroup") }}">
+                            {{ csrf_field() }}
                             <div class="group-display">
-                                <input type="text">
+                                <input type="text" name="group_name" placeholder="Type new group name" required>
                             </div>
                             <div class="group-button add-button">
                                 <span class="glyphicon glyphicon-plus"></span>
                             </div>
-                        </div>
+                        </form>
                         @foreach ($groups as $group)         
                         <div class="col-xs-12 group-item
                         @if ($group->id == $active_id)
@@ -59,11 +60,10 @@
                 </div>
             </div>
         </div>
-        <form class="col-sm-9">
+        <div class="col-sm-9">
             <div class="row">
                 <div class="col-xs-6">
                     <h4 class="group-title">{{ $groups->get($active_id)->name }}</h4>
-                    <input type="hidden" name="user_group_id" id="user_group_id" value="{{ $active_id }}">
                 </div>
             </div>
             <div class="row">
@@ -81,7 +81,14 @@
                     </select>
                 </div>
                 <div class="col-sm-2">
-                    Action arrow
+                    <div class="arrows">
+                        <div class="add-user">
+                            Add
+                        </div>
+                        <div class="remove-user">
+                            Remove
+                        </div>
+                    </div>
                 </div>
                 <div class="col-sm-5">
                     <select name="non_member_users" id="non_member_users" multiple>
@@ -97,17 +104,20 @@
                     </select>
                 </div>
             </div>
-            <div class="row">
+            <form class="row user-group-setting" method="POST" action="{{ route("updateUserGroup") }}">
+                {{ csrf_field() }}
+                <input type="hidden" name="user_group_id" id="user_group_id" value="{{ $active_id }}">
+                <input type="hidden" name="user_group_data" id="user-group-data">
                 <div class="col-xs-12">
                     <button class="btn btn-success save-group-setting" type="button">Save</button>
                     <button class="btn btn-primary reset-group-setting" type="button">Reset</button>
                     <a href="{{ route("home") }}"><button class="btn btn-default" type="button">Cancel</button></a>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="changeGroupModal" tabindex="-1" role="dialog" aria-labelledby="changeGroupModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -115,11 +125,32 @@
                 aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Change group</h4>
+                <h4 class="modal-title" id="changeGroupModalLabel">Change group</h4>
             </div>
             <div class="modal-body">
-                You has made some change on the current group, do you want to discard all change
-                and move to this group?
+                    You has made some change on the current group, do you want to discard all change
+                    and move to this group?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger discard-group-setting">Discard</button>
+                <button type="button" class="btn btn-primary save-group-setting">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addGroupModal" tabindex="-1" role="dialog" aria-labelledby="addGroupModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" 
+                aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="addGroupModalLabel">Change group</h4>
+            </div>
+            <div class="modal-body">
+                    You has made some change on the current group, do you want to save the change before creating new group?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

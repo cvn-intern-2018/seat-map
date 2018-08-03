@@ -6,6 +6,7 @@
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
+                    <a class="navbar-brand" href="/"> <img src="{{asset('images/logo.png')}}" width=130></a>
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                             data-target="#navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
@@ -13,8 +14,6 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/"> <img src="{{asset('images/logo.png')}}" width=130></a>
-
 
                 </div>
 
@@ -30,8 +29,8 @@
                         @else
 
                             <li class="@yield('home-active')"><a href="#">Home</a></li>
-                            <li class="@yield('groups-active')"><a href="{{ route("groupSetting")}}">Groups</a></li>
-                            <li class="@yield('users-active')"><a href="#">Users</a></li>
+                            <li><a href="" class="@yield('groups-active')">Groups</a></li>
+                            <li><a href="" class="@yield('users-active')">Users</a></li>
 
                             <li>
 

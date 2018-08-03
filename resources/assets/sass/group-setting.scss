@@ -90,7 +90,32 @@ select[multiple] {
         
     }
 }
-
+.arrows{
+    max-height: $column-height;
+    min-height: $column-min-height;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .add-user, .remove-user {
+        background-size: contain;
+        background-position: center center;
+        background-repeat: no-repeat;
+        max-width: 100%;
+        height: 100px;
+        text-align: center;
+        padding: 40px 0;
+        cursor: pointer;
+    }
+    .add-user {
+        background-image: url(/images/left.png)
+    }
+    .remove-user {
+        background-image: url(/images/right.png);
+        &.disable {
+            cursor: not-allowed;
+        }
+    }
+}
 #member_users, #non_member_users {
     max-height: $column-height;
     min-height: $column-min-height;

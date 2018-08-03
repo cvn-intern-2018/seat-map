@@ -24,7 +24,6 @@
 
 </head>
 <body>
-
 @include('header')
 
 
@@ -32,16 +31,16 @@
 
     <main class="py-4">
 
-        <div id = "big-title">@yield('big-title','Cybozu VN')</div>
+        <div id="big-title">@yield('big-title','Cybozu VN')</div>
         <div class="container">
 
             @if (Session::has('notifications'))
                 <div class="alert alert-success">
                     <ul>
-                @foreach (Session::get('notifications') as $notification)
+                        @foreach (Session::get('notifications') as $notification)
 
-                 <li>{{ $notification }}</li>
-                @endforeach
+                            <li>{{ $notification }}</li>
+                        @endforeach
                     </ul>
                 </div>
             @endif
@@ -62,6 +61,7 @@
         @yield('content')
     </main>
 </div>
+
 @include("footer")
 </body>
 @yield('scripts')
