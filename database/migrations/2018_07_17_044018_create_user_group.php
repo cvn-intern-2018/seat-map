@@ -13,9 +13,9 @@ class CreateUserGroup extends Migration
      */
     public function up()
     {
-        Schema::create('user_group', function (Blueprint $table) {
+        Schema::create('user_groups', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->nullable();
+            $table->string('name', 100)->unique();
         });
     }
 
@@ -26,6 +26,6 @@ class CreateUserGroup extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('user_groups');
     }
 }

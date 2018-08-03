@@ -56,15 +56,9 @@ class User extends Authenticatable
         }
     }
 
-
     public function group()
     {
         return $this->belongsTo('App\UserGroup', 'user_group_id');
-    }
-
-    public static function getAllUsersWithGroup()
-    {
-        return self::with('group')->get();
     }
 
     /**

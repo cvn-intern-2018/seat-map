@@ -13,9 +13,10 @@ class CreateSeatMapTable extends Migration
      */
     public function up()
     {
-        Schema::create('seat_map', function (Blueprint $table) {
+        Schema::create('seat_maps', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable()->default(null);
+            $table->string('img', 5);
         });
     }
 
@@ -26,6 +27,6 @@ class CreateSeatMapTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('seat_map');
+        Schema::dropIfExists('seat_maps');
     }
 }

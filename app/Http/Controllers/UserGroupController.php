@@ -3,15 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\UserGroup as Group;
 
 class UserGroupController extends Controller
 {
     /**
      * Load Add/Edit/Delete group page
      */
-    public function getGroupSettingView()
+    public function getGroupSettingView(Request $request)
     {
-        return 'Group setting view';
+        $users = User::get();
+        $groups = Group::get()->keyBy('id');
+        $active_id = $request->session()->get('active_group', $groups->first()->id);
+        $unassigned = $groups->pull(1);
+        return view('group-setting', [
+            'users' => $users,
+            'groups' => $groups,
+            'active_id' => $active_id,
+            'unassigned_group' => $unassigned,
+        ]);
     }
 
     /**
@@ -27,20 +38,20 @@ class UserGroupController extends Controller
      */
     public function editGroupHandler(Request $request)
     {
-        $this->validate($request, [
-            'email' => 'required',
+        $validatedData = $request->validate([
+            'group_id' => 'required|int',
+            'group_name' => 'required|max:100|string'
         ]);
-
-        $post = User::find(1);
-        $post->email = $request->email;
-        $post->save();
-
-        $status = [
-            'status' => 'success',
-            'data' => $post
-        ];
-
-        return json_encode($status);
+        $group = Group::find($validatedData['group_id']);
+        if ($group->updateGroupName($validatedData['group_name'])) {
+            return json_encode(['result' => true]);
+        }
+        return json_encode([
+            'result' => false,
+            'message' => __('validation.unique', [
+                'attribute' => 'group name'
+            ]),
+        ]);
     }
 
     /**

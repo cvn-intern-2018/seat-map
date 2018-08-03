@@ -6,71 +6,59 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Storage;
 
-/**
- * Class SeatMap
- * @package App
- */
 class SeatMap extends Model
 {
     public $timestamps = false;
 
     /**
-     * Get seat map with pagination
-     * @param string $search
-     * @param int $page
+     * get seat maps list with pagination
+     * @param $search
+     * @param $page
      * @return mixed
      */
-    public static function getSeatMap(string $search,int $page)
+    public static function getSeatMap($search, $page)
     {
-
         if ($search) {
             $search = str_replace('%', "/%", $search);
             $search = str_replace('_', "/_", $search);
             $maps = self::where('name', 'like', "%$search%")->orderBy('id', 'desc')->paginate(8);
             return $maps;
         } else {
+
             $maps = self::orderBy('id', 'desc')->paginate(8);
             return $maps;
         }
     }
 
     /**
-     * Add a seat map to database
-     * @param string $name
+     * add an seat map to database
+     * @param $name
      * @return mixed
      */
-    public static function addSeatMap(string $name)
+    public static function addSeatMap($name, $img)
     {
 
         $id = self::insertGetId(
-            ['name' => $name]
+            ['name' => $name,'img' => $img]
         );
         return $id;
     }
 
-    /**
-     * delete a seat map by id
-     * @param int $id
-     */
-    public static function deleteSeatMap(int $id)
+    public static function deleteSeatMap($id)
     {
         self::where('id', $id)->delete();
         return;
     }
 
+
     /**
-     * Add constraint property users to App\SeatMap
-     *
+     * Create connection to App\User
+     * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users()
     {
         return $this->belongsToMany('App\User', 'user_seats')->withPivot('X', 'Y');
-    }
-
-    public static function getMapWithUsers(int $id)
-    {
-        return self::with('users.group')->where('id', $id)->first();
     }
 
     /**
@@ -93,5 +81,17 @@ class SeatMap extends Model
             return asset('images/seat-map/' . $id . '.gif');
         }
         return null;
+    }
+
+    /**
+     * Save seat map name
+     * 
+     * @param string $newName
+     * @return void
+     */
+    public function saveSeatMapName(string $newName)
+    {
+        $this->name = $newName;
+        $this->save();
     }
 }

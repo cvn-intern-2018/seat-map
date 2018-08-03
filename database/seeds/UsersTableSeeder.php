@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Faker\Generator as Faker;
 
 class UsersTableSeeder extends Seeder
 {
@@ -11,6 +12,9 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('users')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
         DB::table('users')->insert([
             'id' => 1,
             'name' => 'Admin',
@@ -20,41 +24,11 @@ class UsersTableSeeder extends Seeder
             'email' => 'admin@admin.com',
             'short_name' => 'Admin',
             'permission' => 1,
-            'phone' => '01237015928'
+            'phone' => '01237015928',
+            'img'=> '.jpg',
         ]);
-        DB::table('users')->insert([
-            'id' => 2,
-            'name' => 'user1',
-            'username' => 'user1',
-            'password' => bcrypt('123456'),
-            'user_group_id' => 1,
-            'email' => 'user1@user.com',
-            'short_name' => 'user1',
-            'permission' => 0,
-            'phone' => '01237015928'
+        factory(App\User::class, 10)->create([
+            'phone' => '0123456789',
         ]);
-        DB::table('users')->insert([
-            'id' => 3,
-            'name' => 'user2',
-            'username' => 'user2',
-            'password' => bcrypt('123456'),
-            'user_group_id' => 1,
-            'email' => 'user2@user.com',
-            'short_name' => 'user2',
-            'permission' => 0,
-            'phone' => '01237015928'
-        ]);
-        DB::table('users')->insert([
-            'id' => 4,
-            'name' => 'user3',
-            'username' => 'user3',
-            'password' => bcrypt('123456'),
-            'user_group_id' => 1,
-            'email' => 'user3@user.com',
-            'short_name' => 'user3',
-            'permission' => 0,
-            'phone' => '01237015928'
-        ]);
-
     }
 }

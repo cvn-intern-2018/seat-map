@@ -13,11 +13,14 @@ class CreateUserSeatTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_seat', function (Blueprint $table) {
-            $table->integer('user_id');
-            $table->integer('seat_map_id');
-            $table->float('x');
-            $table->float('y');
+        Schema::create('user_seats', function (Blueprint $table) {
+            $table->integer('user_id')->unsigned();
+            $table->integer('seat_map_id')->unsigned();
+            $table->smallInteger('x');
+            $table->smallInteger('y');
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('seat_map_id')->references('id')->on('seat_maps')->onDelete('cascade');
         });
     }
 
@@ -28,6 +31,8 @@ class CreateUserSeatTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_seat');
+        Schema::table('user_seats', function (Blueprint $table) {
+            Schema::dropIfExists('user_seats');
+        });
     }
 }

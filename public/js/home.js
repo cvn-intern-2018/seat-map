@@ -1,16 +1,15 @@
 var modal = document.getElementById('id01');
 
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
 
-$('.delete-button').on('click', function () {
-    $name = $(this).data('name');
-    if (confirm('Bạn có chắc rằng bạn muốn xóa seat map này chứ?')) {
-        var id = $(this).data('id');
-        $('#deleteID').val(id);
-        $('#frmDeleteID').submit();
-    }
+
+$('#delete-confirm').on('click', function () {
+
+    $('#deleteID').val($(this).data('id'));
+    $('#deleteName').val($(this).data('name'));
+    $('#frmDeleteSM').submit();
 });
+
+var loadFile = function (event) {
+    var output = document.getElementById('img-preview');
+    output.src = URL.createObjectURL(event.target.files[0]);
+};

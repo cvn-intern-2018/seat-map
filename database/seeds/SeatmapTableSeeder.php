@@ -11,17 +11,9 @@ class SeatmapTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('seat_maps')->insert([
-            'id' => 1,
-            'name' => 'Seat map 1'
-        ]);
-        DB::table('seat_maps')->insert([
-            'id' => 2,
-            'name' => 'Seat map 2'
-        ]);
-        DB::table('seat_maps')->insert([
-            'id' => 3,
-            'name' => 'Seat map 3'
-        ]);
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('seat_maps')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
+        factory(App\SeatMap::class, 4)->create();
     }
 }

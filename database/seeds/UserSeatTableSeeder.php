@@ -14,20 +14,20 @@ class UserSeatTableSeeder extends Seeder
         DB::table('user_seats')->insert([
             'seat_map_id' => 1,
             'user_id' => 1,
-            'X' => 10,
-            'Y' => 50,
+            'X' => 1000,
+            'Y' => 5000,
         ]);
         DB::table('user_seats')->insert([
             'seat_map_id' => 1,
             'user_id' => 2,
-            'X' => 50,
-            'Y' => 50,
+            'X' => 5000,
+            'Y' => 5000,
         ]);
         DB::table('user_seats')->insert([
             'seat_map_id' => 1,
             'user_id' => 3,
-            'X' => 90,
-            'Y' => 50,
+            'X' => 9000,
+            'Y' => 5000,
         ]);
     }
 }

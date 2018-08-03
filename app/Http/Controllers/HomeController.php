@@ -26,8 +26,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $request->validate([
-            'title' => 'bail|required|unique:posts|max:255',
-            'page' => 'r',
+            'search' => 'max:100 | string',
         ]);
         $maps = SeatMap::getSeatMap($request->search, $request->page);
         return view('home', ['maps' => $maps->appends(Input::except('page')), 'search' => $request->search]);
