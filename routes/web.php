@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/group-setting', 'UserGroupController@getGroupSettingView')->name("groupSetting");
         Route::post('/group-setting/edit', 'UserGroupController@editGroupHandler');
         Route::post('/group-setting/new', 'UserGroupController@addGroupHandler')->name("createNewGroup");
+        Route::post('/group-setting/delete', 'UserGroupController@deleteGroupHandler')->name("deleteGroup");
         Route::post('/group-setting/update-user', 'UserGroupController@updateUserGroupHandler')->name("updateUserGroup");
     });
 });

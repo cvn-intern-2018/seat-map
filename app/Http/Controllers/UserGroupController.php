@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\UserGroup as Group;
+use \Config;
 
 class UserGroupController extends Controller
 {
     /**
      * Load Add/Edit/Delete group page
+     * 
+     * @param Request $request
      */
     public function getGroupSettingView(Request $request)
     {
@@ -27,6 +30,9 @@ class UserGroupController extends Controller
 
     /**
      * Handle add group request submit
+     * 
+     * @param Request $request 
+     * @return view group setting page
      */
     public function addGroupHandler(Request $request)
     {
@@ -41,6 +47,9 @@ class UserGroupController extends Controller
 
     /**
      * Handle edit group request submit
+     * 
+     * @param Request $request 
+     * @return view group setting page
      */
     public function editGroupHandler(Request $request)
     {
@@ -60,6 +69,12 @@ class UserGroupController extends Controller
         ]);
     }
 
+    /**
+     * Handle change user's group 
+     * 
+     * @param Request $request 
+     * @return view group setting page
+     */
     public function updateUserGroupHandler(Request $request)
     {
         $validated_data = $request->validate([
@@ -72,11 +87,26 @@ class UserGroupController extends Controller
             'active_group' => $validated_data['user_group_id']
         ]);
     }
+    
     /**
      * Handle delete group request submit
+     * 
+     * @param Request $request 
+     * @return view group setting page
      */
     public function deleteGroupHandler(Request $request)
     {
-        return 'Handle delete group request';
+        $validated_data = $request->validate([
+            'group_id' => 'required|int',
+        ]);
+
+        if ($validated_data['group_id'] == 1) {
+            $validator = \Illuminate\Support\Facades\Validator::make([], []);
+            $validator->errors()->add('group_id', 'Unassigned group cannot be deleted');
+            throw new \Illuminate\Validation\ValidationException($validator);
+        }
+        $group = Group::find($validated_data['group_id']);
+        $group->deleteGroup();
+        return redirect()->route('groupSetting');
     }
 }
