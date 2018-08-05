@@ -9,6 +9,9 @@ use App\UserGroup;
 use Illuminate\Support\Facades\Storage;
 class UserController extends Controller
 {
+    public $response = [];
+    public $userInforErr = [];
+    public $userInfor = [];
     /**
      * Load login form
      */
@@ -36,6 +39,7 @@ class UserController extends Controller
                 $admin['id'] = $user->id;
                 $admin['avatar'] = $user->img;
                 $admin['fullname'] = $user->name;
+                $admin['password'] = $user->password;
                 $admin['email'] = $user->email;
                 $admin['phone'] = $user->phone;
                 $admin['group'] = UserGroup::where('id', $user->user_group_id)->first()->name;
@@ -48,7 +52,10 @@ class UserController extends Controller
             'userj' => $arr_users,
             'admin' => json_encode($admin),
             'groups' => $groups,
-            'user_id' => $request->session('user_id', 1)
+            'user_id' => $request->session('user_id', 1),
+            'old' => $request->session('old', 1),
+            'uv'  => $request->session('uv', 1)
+            // 'abc' => "abc"
             ]);
 
 
@@ -82,121 +89,125 @@ class UserController extends Controller
         return 'User setting view';
     }
 
-    public function check_input($infor){
-        if(empty($infor->name) and 
-            empty($infor->username) and 
-            empty($infor->password) and 
-            empty($infor->email) and
-            empty($infor->fullname) and
-            empty($infor->short_name) and
-            empty($infor->changeAvarPopup)){
-            return false;
+    public function check_request($infor){
+        // check username
+        if(empty($infor->username)){
+            $this->userInfor['username'] = "";
+            $this->userInforErr['usernameErr'] = "Username is required";
         }else{
-            return true;
+            $username = UserController::test_input($infor->username);
+             $this->userInfor['username'] = $username;
+            if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
+                $this->userInforErr['usernameErr'] = "Only letters and numbers allowed";
+            } else if (User::where('username', '=', $username)->count() > 0) {
+                $this->userInforErr['usernameErr'] = "Existed";
+            }
         }
+        // check fullname
+        if(empty($infor->fullname)){
+            $this->userInfor['fullname'] = "";
+            $this->userInforErr['fullnameErr'] = "Fullname is required";
+        }else{
+            $fullname = UserController::test_input($infor->fullname);
+             $this->userInfor['fullname'] = $fullname;
+            // if (!preg_match("/^[a-zA-Z ]*$/", $fullname)) {
+            //     $this->userInforErr['fullnameErr'] = "Only letters and white space allowed";
+            // }
+        }
+        // check password        
+        if(empty($infor->password)){
+            $this->userInfor['password'] = "";
+            $this->userInforErr['passwordErr'] = "Password is required";
+        }else{
+            $password = UserController::test_input($infor->password);
+             $this->userInfor['password'] = $password;
+            // if (!preg_match("/^[a-zA-Z0-9]*$/", $password)) {
+            //     $userInforErr['passwordErr'] = "Only letters and numbers allowed";
+            // }            
+        }
+        // check email
+        if(empty($infor->email)){
+            $this->userInfor['email'] = "";
+            $this->userInforErr['emailErr'] = "Email is required";
+        }else{
+            $email = UserController::test_input($infor->email);
+             $this->userInfor['email'] = $email;
+            if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+                $this->userInforErr['emailErr'] = "Invalid email format";
+            }else if (User::where('email', '=', $email)->count() > 0) {
+                $this->userInforErr['emailErr'] = "Existed";
+            }           
+        }
+        // check short_name
+        if(empty($infor->short_name)){
+            $this->userInfor['shortname'] = "";
+            // $this->userInforErr['shortnameErr'] = "Shortname is required";
+        }else{
+            $short_name = UserController::test_input($infor->short_name);
+             $this->userInfor['shortname'] = $short_name;
+            // if (!preg_match("/^[a-zA-Z]*$/", $short_name)) {
+            //     $this->userInforErr['shortnameErr'] = "Only letters and white space allowed";
+            // }            
+        }
+        // check phonenumber
+        if(empty($infor->phone)){
+            $this->userInfor['phone'] = "";
+            $this->userInforErr['phoneErr'] = "Phonenumber is required";
+        }else{
+            $phone = UserController::test_input($infor->phone);
+             $this->userInfor['phone'] = $phone;
+            if (!preg_match("/^[0-9]*$/", $phone)) {
+
+                $this->userInforErr['phoneErr'] = "Only numbers allowed";
+            }
+        }
+        // check avatar
+        if(empty($infor->avatar)){
+            $this->userInfor['avatar'] = "";
+            // $this->userInfor['avatar'] = "abc";            
+        }else{
+            $file = $infor->file('avatar');
+            $img = '.' . $file->extension();
+            $public = Storage::disk('public_folder');
+            $public->putFileAs('images/user', $file, $infor->username . $img);            
+            $avatar = UserController::test_input($img);
+            $this->userInfor['avatar'] = $avatar;
+            // $this->userInfor['file'] = $infor->avatar;
+        }  
+        if(empty($infor->group_id)){
+            $this->userInfor['group_id'] = 0;
+        }else{
+            $group_id = UserController::test_input($infor->group_id);
+             $this->userInfor['group_id'] = $group_id;
+            if (!preg_match("/^[0-9]*$/", $group_id)) {
+                $this->userInforErr['group_idErr'] = "Only numbers allowed";
+            }
+        }      
     }
     /**
      * Handle add user request submit
      */
     public function addUserHandler(Request $request)
     {
-        
-        $response = [];
-        $userInforErr = [];
-        $userInfor = [];
-        $response['status'] = "Success";
         $user = new User();
-
-
-        if($this->check_input($request)){
-            // check fullname            
-            $fullname = UserController::test_input($request->fullname);
-            if (!preg_match("/^[a-zA-Z]*$/", $fullname)) {
-                $userInforErr['fullnameErr'] = "Only letters and white space allowed";
-                $response['status'] = "Error";
-            } else {
-                $userInfor['fullname'] = $fullname;
-            }
-        
-
-            // check fullname
-            $shortname = UserController::test_input($request->shortname);
-            if (!preg_match("/^[a-zA-Z]*$/", $shortname)) {
-                $userInforErr['shortnameErr'] = "Only letters and white space allowed";
-                $response['status'] = "Error";
-            } else {
-                $userInfor['shortname'] = $shortname;
-            }
-        
-
-            // check username
-            $username = UserController::test_input($request->username);
-            if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
-                $userInforErr['nameErr'] = "Only letters and numbers allowed";
-                $response['status'] = "Error";
-            } else if (User::where('username', '=', $username)->count() > 0) {
-                $userInforErr['usernameErr'] = "Existed";
-                $response['status'] = "Error";
-            } else {
-                $userInfor['username'] = $username;
-            }
-
-
-            // check email format
-            $email = UserController::test_input($request->email);
-            if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-                $userInforErr['emailErr'] = "Invalid email format";
-                $response['status'] = "Error";
-            }else{
-                $userInfor['email'] = $email;
-            }
-
-           // check phonenumber
-            $phone = UserController::test_input($request->phone);
-            if (!preg_match("/^[0-9]*$/", $phone)) {
-                $userInforErr['phoneErr'] = "Only numbers allowed";
-            } else {
-                $userInfor['phone'] = $phone;
-            }
-
-            // check password
-            $password = UserController::test_input($request->password);
-            if (!preg_match("/^[a-zA-Z0-9]*$/", $password)) {
-                $userInforErr['passwordErr'] = "Only letters and numbers allowed";
-                $response['status'] = "Error";
-            } else {
-                $userInfor['password'] = $password;
-            }
-
-            $response['avatarPopup'] = $request->changeAvarPopup;
-            $file = $request->file('changeAvarPopup');
-            $img =  '.'.$file->extension();
-            $public = Storage::disk('public_folder');
-            $public->putFileAs('images/user', $file, $user->username . $img);
-
-            // check groupid
-            $group_id = UserController::test_input($request->group_id);
-            $userInfor['group_id'] = $group_id;
-        }
-
-
+        $this->check_request($request);
         // check status
-        if ($response['status'] == "Success") {
-            $user->set($userInfor);
-            $user->save();
+        // var_dump($request->avatar); exit;
+        if(count($this->userInforErr) == 0){
+            $this->response['status'] = "Success";
+            // $this->userInfor = $request;
+            $user->set($this->userInfor);
+            // $user->save();
+        }else{
+            $this->response['status'] = "Error";
         }
 
-        $response['userInfor'] = $userInfor;
-        $response['userInforErr'] = $userInforErr;
-
-        // var_dump($user->id); exit;
-        return redirect()->route('users')->with(['user_id' => $user->id]);
-        
-        
-
-       
-
-        // return json_encode($response);
+        // var_dump($this->userInforErr); exit;
+        $this->response['userInfor'] = $this->userInfor;
+        $this->response['userInforErr'] = $this->userInforErr;
+        // var_dump($this->userInforErr); exit;
+        // return redirect()->route('users')->with(['user_id' => $user->id]);
+        return json_encode($this->response);
      }
 
     /**
@@ -204,110 +215,52 @@ class UserController extends Controller
      */
     public function editUserHandler(Request $request)
     {
-        $response = [];
-        $userInforErr = [];
-        $userInfor = [];
-        $response['status'] = "Success";
+        $old = "";
+        // $response['status'] = "Success";
         // $user = new User();
         if(!empty($request->user_id)){
+            // var_dump("1");
             $user = User::where('id', $request->user_id)->first();
-            // check fullname
-            if($user->fullname != $request->fullname){
-                if(empty($request->fullname)){
-                    $userInforErr['fullnameErr'] = "Full name is required";
-                    $response['status'] = "Error";
-                } else {       
-                    $userInfor['fullname'] = $request->fullname;
-                    if($user->name != $request->fullname){
-                        $fullname = UserController::test_input($request->fullname);
-                        $user->name = $fullname;
-                    }
-                }
-            }
-
-            // check shortname
-            if($user->shortname != $request->shortname){
-                if(empty($request->shortname)){
-                    $userInforErr['shortnameErr'] = "Short name is required";
-                    $response['status'] = "Error";
-                } else {
-                    $userInfor['shortname'] = $request->shortname;
-                    if($user->short_name != $request->shortname){
-                        $shortname = UserController::test_input($request->shortname);
-                        $user->short_name = $shortname;
-                    }
-                    
-                }
-            }
-
-            // check email format
-            if($user->email != $request->email){
-                if(!empty($request->email)){
-                    $userInfor['email'] = $request->email;
-                    if($user->email != $request->email){
-                        $email = UserController::test_input($request->email);
-                        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-                            $userInforErr['emailErr'] = "Invalid email format";
-                            $response['status'] = "Error";
-                        }else{
-                            $user->email = $email;
-                        }
-                    }
-
-                }
-            }
-
-                // check phonenumber
-            if($user->phone != $request->phone){
-                if (empty($request->phone)) {
-                    $userInforErr['phoneErr'] = "Phone number is required";
-                    $response['status'] = "Error";
-                } else {
-                    $userInfor['phone'] = $request->phone;                
-                    if($user->phone != $request->phone){
-                        $phone = UserController::test_input($request->phone);
-                        if (!preg_match("/^[0-9]*$/", $phone)) {
-                            $userInforErr['phoneErr'] = "Only numbers allowed";
-                        } else {
-                            $user->phone = $phone;
-                        }                    
-                    }
-
-                }
-            }
-
-            // check avatar
-
-                if(empty($request->changeAvar)){
-                    $response['avatar'] = "Avatar is required";
-                    $user->img = "";
-                    // $response['status'] = "Error";
-                }else{
-                    if($user->img != $request->changeAvar){
-                        $file = $request->file('changeAvar');
-                        $img =  '.'.$file->extension();
-                        // $id = User::addAvatar($img);
-                        $public = Storage::disk('public_folder');
-                        $public->putFileAs('images/user', $file, $user->username . $img);
-                        $user->img = $img;
-                    }
-            }   
-
+            $this->check_request($request);
+            // var_dump($request->ava); exit;
             // check status
-            if ($response['status'] == "Success") {
-                // delete
-                // User::where('username', '=', $username)->delete();
-                // save
-                $user->save();
+            if($this->userInforErr['emailErr'] == "Existed"){
+                unset($this->userInforErr['emailErr']);
             }
+            if($this->userInforErr['usernameErr'] == "Existed"){
+                unset($this->userInforErr['usernameErr']);
+            }
+            // var_dump(json_encode($this->userInforErr)); exit;
+            if(count($this->userInforErr) == 0){
+                $this->response['status'] = "Success";
+                // $this->userInfor = $request;
+                // var_dump($this->userInfor); exit;
+                $user->set($this->userInfor);
+                $user->save();
+                return redirect()->route('users')->with(['user_id' => $request->user_id, 'old' => '', 'uv' => '']);                
+            }else{
+                $this->userInfor['id'] = $user->id;
+                $this->userInfor['avatar'] = $user->img;
+                $this->response['status'] = "Error";
+                // var_dump($this->userInforErr); exit;
+                return redirect()->route('users')->with(['user_id' => $request->user_id,
+                                                        'old' => json_encode($this->userInfor),
+                                                        'uv' => $this->userInforErr]);
+
+
+            }                       
         }
 
-        $response['userInfor'] = $userInfor;
-        $response['userInforErr'] = $userInforErr;
+        $this->response['userInfor'] = $this->userInfor;
+        $this->response['userInforErr'] = $this->userInforErr;
 
-        // return json_encode($response);
+        // $abc = "abc";
+        // var_dump($this->userInfor); exit;
+        // return json_encode($this->response);
         // var_dump($request->user_id); exit;
+        // return back()->with(['user_id' => $request->user_id, 'userInforErr' => $this->userInforErr]);
         return redirect()->route('users')->with(['user_id' => $request->user_id]);
+
         
     }
 

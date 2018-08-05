@@ -49,6 +49,10 @@ class User extends Authenticatable
         return null;
     }
 
+    public function getUserById(){
+        return null;
+    }
+
     public function setAttribute($key, $value)
     {
         $isRememberTokenAttribute = $key == $this->getRememberTokenName();
@@ -69,32 +73,53 @@ class User extends Authenticatable
     }
 
     function set($infor){
-        if(!empty($infor->name)){
-        $this->name = $infor->name;            
+        if(!empty($infor['fullname'])){
+            $this->name = $infor['fullname'];
+        }else{
+            $this->name = "";
         }
 
-        if(!empty($infor->email)){
-        $this->email = $infor->email;            
+        if(!empty($infor['email'])){
+            $this->email = $infor['email'];            
+        }else{
+            $this->email = "";
         }
 
-        if(!empty($infor->password)){
-        $this->password = $infor->password;            
+        if(!empty($infor['password'])){
+            $this->password = $infor['password'];            
+        }else{
+            $this->password = "";
         }
 
-        if(!empty($infor->short_name)){
-        $this->short_name = $infor->name;            
+        if(!empty($infor['shortname'])){
+            $this->short_name = $infor['shortname'];            
+        }else{
+            $this->short_name = "";
         }
 
-        if(!empty($infor->img)){
-        $this->img = $infor->img;            
+        if(!empty($infor['avatar'])){
+            $this->img = $infor['avatar']; 
+            // var_dump("abc"); exit;           
+        }else{
+            $this->img = "";
         }
 
-        if(!empty($infor->phone)){
-        $this->phone = $infor->phone;            
+        if(!empty($infor['phone'])){
+            $this->phone = $infor['phone'];            
+        }else{
+            $this->phone = 0;
         }
 
-        if(!empty($infor->user_group_id)){
-        $this->phone = $user_group_id;            
+        if(!empty($infor['group_id'])){
+            $this->user_group_id = $infor['group_id'];            
+        }else{
+            $this->user_group_id = 1;
+        }
+
+        if(!empty($infor['username'])){
+            $this->username = $infor['username'];            
+        }else{
+            $this->username = "";
         }        
     }
 }

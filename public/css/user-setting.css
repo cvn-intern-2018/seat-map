@@ -16,10 +16,23 @@
         height: 400px;
         width: 30%;
         overflow: auto;
+        position: relative;
+    }
+
+    #left > p{
+        /*position: absolute;*/
+        /*top: 0;*/
     }
 
     #right{
         width: 70%;
+    }
+
+    #right input, #right select{
+        text-align: center;
+    }
+    #right input:hover, #right select:hover{
+        cursor: pointer;
     }
 
     .flex-container{
@@ -39,8 +52,8 @@
     }
     #left {
         border: 1px solid;
-        border-right: 0px;
-        border-top: 0px;
+        border-right: 1px;
+        /*border-top: 1px;*/
         border-left: 1px;
     }
 
@@ -49,6 +62,7 @@
     }
     #left > p{
         border-bottom: 0px;
+        margin: 0;
     }
     #left > ul{
         border-right: 0px;
@@ -71,16 +85,43 @@
         text-align: center;
     }
 
+    #left ul p:hover{
+        background-color: yellow;
+        cursor: pointer;
+    }
+
+
+
     #left > ul li p{
         text-align: center;
     }
 
     #left > ul li.flex-container{
         justify-content: space-around;
+        /*align-items: center;*/
+        height: 40px;
+        overflow: hidden;
     }
-    #left > ul li.flex-container > *{
-        width: 30%;
+    #left > ul li > *{
+        /*width: 45%;*/
         margin: 5px;
+    }
+
+    #left > ul li p{
+        width: 70%;
+        overflow: hidden;
+    }
+
+    #left > ul li button{
+        width: 20%;
+        padding: 0;
+        background: white;
+    }
+
+    #left > ul li button img{
+        width: 50%;
+        height: 100%;
+        border: none;
     }
     
     /*right*/
@@ -99,6 +140,8 @@
 
     img{
         height: 30%;
+        border: 1px solid black;
+
     }
 
 /*    #right > div.flex-container > *{
@@ -108,15 +151,32 @@
 
     #userinformation{
         display: flex;
-        flex-flow: row wrap;
-        padding: 20px;
-        /*justify-content: center;*/
+        flex-flow: column wrap;
+        justify-content: center;
+        align-items: center;
     }
 
     #userinformation > *{
-        margin :10px;
-        width: 40%;
+        /*margin :2px;*/
+        width: 90%;
 
+    }
+
+    #userinformation > div{
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+
+
+    }
+
+    #userinformation > div > *{
+        width: 40%;
+        margin: 2px;
+    }
+
+    #userinformation p{
+        margin: 0;
     }
 
     /*style*/
@@ -128,7 +188,7 @@
         text-align: center;
     }
 
-    button, input[name=inptSubmitPopup], input[name=inptCancelPopup], input[name=changeAvar], input[name=save], input[name=submit]{
+    button, input[name=inptSubmitPopup], input[name=inptCancelPopup], input[name=changeAvar], input[name=cancel], input[name=submit]{
         background-color: #4CAF50;
         color: white;
         padding: 0px 2px 0px 2px;
@@ -136,6 +196,14 @@
         cursor: pointer;
         border-radius: 5px;
     }
+
+    button[name=deleteAvar]{
+        background-color: #d9534f;
+    }
+    input[name=cancel]{
+        background-color: #d9534f;
+    }
+
 
     input[type=submit], input[type=reset], button[name=addUser]{
         padding: 5px;
@@ -161,7 +229,7 @@
     /* Extra styles for the cancel button */
     .inptCancelPopup {
         width: auto;
-        padding: 10px 18px;
+        /*padding: 10px 18px;*/
         background-color: #f44336;
     }
 
@@ -249,7 +317,7 @@
         border: none;
         padding: 14px 20px;
         cursor: pointer;
-        width: 100%;
+        width: 50%;
     }
 
     .container input[name=inptCancelPopup]{
@@ -299,4 +367,7 @@
         color: black;
     }
 
-
+    p[name=Error]{
+        color: #9f224e;
+        font-size: 11px;
+    }
