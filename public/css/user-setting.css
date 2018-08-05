@@ -105,6 +105,7 @@
         width: 70%;
         overflow: hidden;
         font-weight: bold;
+        padding: 4px;
     }
 
     #left > ul li button{

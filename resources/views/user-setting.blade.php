@@ -44,13 +44,13 @@
                     <button type="button"></button>
                 </li>
                 <li class="flex-container">
-                    <p name="name" onclick="displayUser(this)" data-info="{{ $admin }}">Admin</p>
+                    <p name="name" onclick="displayUser(this)" data-info="{{ $admin }}"><strong>Admin</strong></p>
                     <button style="visibility: hidden;" name="admin" type="button" ></button>
                 </li>
                 @foreach($users as $user)
                 @if($user->permission == 0)
                 <li class="flex-container">
-                    <p name="name" onclick="displayUser(this)" data-info="{{ $userj[$user->id] }}">{{ $user->name }}</p>
+                    <p name="name" onclick="displayUser(this)" data-info="{{ $userj[$user->id] }}"><strong>{{ $user->name }}</strong></p>
                     <button name="{{ $user->name }}" onclick="deleteUser(this)" type="button" ><img src="{{asset('images/remove.png')}}" alt="delete"/></button>
                 </li>
                 @endif
