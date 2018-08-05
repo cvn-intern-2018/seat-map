@@ -38,7 +38,6 @@
     <div class="flex-container">
         <!-- display all users -->
         <div id="left">
-            <p>Select a user</p>
             <ul id="list-of-users" data-old="{{session('old')}}" data-info="{{ session('user_id') }}" data-old="{{session('mark')}}">
                 <li class="flex-container">
                     <p onclick="document.getElementById('id01').style.display='block'" name="addUser">Add a new user</p>

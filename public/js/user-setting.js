@@ -19,7 +19,7 @@ function displayUser(currentItem){
     // change backgroundColor
     currentItem.classList.add("active");
     if(document.getElementById("list-of-users").dataset.old.length <= 2){
-        var items = document.querySelectorAll("#right p[name=err]");
+        var items = document.querySelectorAll("#right p[name=Error]");
         items.forEach(function(item){
             item.parentNode.removeChild(item);
         })
