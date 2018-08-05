@@ -1,23 +1,12 @@
-function changeAva() {
+function changeAva(event) {
 
-            var output = document.getElementById("avatar");
-    output.src = URL.createObjectURL(event.target.files[0]);
+    var output = document.getElementById("avatar");
+        output.src = URL.createObjectURL(event.target.files[0]);
 };
 
 function deleteAva() {
     document.getElementById('avatar').src = "";
     document.querySelector("input[id=changeAvar]").value = "";    
-};
-
-function changeAvaPopup() {
-            var output = document.getElementById("imagePopup");
-    output.src = URL.createObjectURL(event.target.files[0]);
-};
-
-
-function deleteAvaPopup() {
-    document.getElementById('imagePopup').src = "#";
-    document.querySelector("input[id=changeAvarPopup]").value = "";    
 };
 
 // function to display information of a user
@@ -29,6 +18,12 @@ function displayUser(currentItem){
     }
     // change backgroundColor
     currentItem.classList.add("active");
+    if(document.getElementById("list-of-users").dataset.old.length <= 2){
+        var items = document.querySelectorAll("#right p[name=Error]");
+        items.forEach(function(item){
+            item.parentNode.removeChild(item);
+        })
+    }
     document.querySelector("#list-of-users").dataset.info = JSON.parse(infor).id;
     displayUserInfor(infor);
 
@@ -36,15 +31,25 @@ function displayUser(currentItem){
 
 function displayUserInfor(infor) {
     //reset backgroundColor
+    if(document.getElementById("list-of-users").dataset.old.length > 2){
+        infor = document.getElementById("list-of-users").dataset.old;
+    }
+    // console.log(infor.length <=2);
+    // console.log(infor.length);
+    // if(infor.length <= 2){
+    //     infor = infor;
+    // }
     infor = JSON.parse(infor);
-    console.log(infor);
+    // console.log(infor);
     document.querySelector("form[name=infor] img[id=avatar]").src = "images/user/" + infor.username + infor.avatar;
-    document.querySelector("form[name=infor] input[name=shortname]").value = infor.shortname;
+    document.querySelector("form[name=infor] input[name=short_name]").value = infor.shortname;
     document.querySelector("form[name=infor] input[name=fullname]").value = infor.fullname;
     document.querySelector("form[name=infor] input[name=email]").value = infor.email;
     document.querySelector("form[name=infor] input[name=phone]").value = infor.phone;
     document.querySelector("form[name=infor] input[name=user_id]").value = infor.id;
-    console.log(document.querySelector("form[name=infor] input[name=user_id]").value);
+    document.querySelector("form[name=infor] input[name=username]").value = infor.username;
+    document.querySelector("form[name=infor] input[name=password]").value = infor.password;
+    // console.log(document.querySelector("form[name=infor] input[name=user_id]").value);
     // document.querySelector("form[name=infor] select[name=group_id]").selectedIndex = infor.group_id;
     var sel = document.querySelector("form[name=infor] select[name=group_id]");
     for(var i = 0, j = sel.options.length; i < j; ++i) {
@@ -54,6 +59,8 @@ function displayUserInfor(infor) {
         }
     }
     document.querySelector("form[name=infor] input[name=user_id]").value = infor.id;
+    document.getElementById("list-of-users").dataset.old = "";
+    
 };
 
 function discardChanges(){
@@ -91,6 +98,7 @@ function editUser(event){
                     });
                 }
             }
+            console.log(this.responseText);
         }
         xmlhttp.open("POST", "/users/edit", true);
         xmlhttp.send(formData);
@@ -99,7 +107,7 @@ function editUser(event){
 
 function hidePopup(){
     document.getElementById('id01').style.display='none'
-}
+};
 
 //function to add a user to the list
 function addUser(event){
@@ -107,18 +115,75 @@ function addUser(event){
     var form = document.querySelector("form[name=inforPopup]");
     var formData = new FormData(form);
     //confirm
-    if(confirm("Do you want to continue?")){
+            var child = document.querySelectorAll("form[name=inforPopup] p[name=Error]");
+            for(var i = 0; i < child.length; i++){
+                child[i].parentNode.removeChild(child[i]);
+            }
+            var response = "";
+            // var nodeP = document.createElement("p");
+            // nodeP.setAttribute('name', "Error");            
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 // var abc = JSON.parse(this.responseText);
-                console.log(this.responseText);
-                if(JSON.parse(this.responseText).status == "Error"){
-                    var userInforErr = JSON.parse(this.responseText).userInforErr;
-                    // console.log(userInforErr);
-                    alert(JSON.stringify(userInforErr, null, 4));
-                    //alert(JSON.stringify(userInfor, null, 4));
-                }else{
+                response = JSON.parse(this.responseText);
+            if(response.status == "Error"){
+                    var userInforErr = response.userInforErr;
+                    var child = "";
+                    var item = "";
+                    // child = document.querySelectorAll("form[name=inforPopup] p[name=Error]");
+                    if(userInforErr.fullnameErr){
+                        var nodeP = document.createElement("p");
+                        nodeP.setAttribute('name', "Error");
+                        child = document.querySelector("form[name=inforPopup] input[name=fullname]");                    
+                        nodeP.innerHTML = JSON.stringify(userInforErr.fullnameErr);
+                        item = child.parentNode;
+                        item.insertBefore(nodeP, child.nextSibling);
+                        console.log("2");
+                    }
+                    if(userInforErr.usernameErr){
+                        var nodeP = document.createElement("p");
+                        nodeP.setAttribute('name', "Error");
+                        child = document.querySelector("form[name=inforPopup] input[name=username]");
+                        nodeP.innerHTML = JSON.stringify(userInforErr.usernameErr);
+                        item = child.parentNode;
+                        item.insertBefore(nodeP, child.nextSibling);
+                        console.log("1");
+                    }
+                    if(userInforErr.passwordErr){
+                        var nodeP = document.createElement("p");
+                        nodeP.setAttribute('name', "Error");
+                        nodeP.innerHTML = JSON.stringify(userInforErr.passwordErr);
+                        child = document.querySelector("form[name=inforPopup] input[name=password]");
+                        item = child.parentNode;
+                        item.insertBefore(nodeP, child.nextSibling);
+                    }
+                    if(userInforErr.shortnameErr){
+                        var nodeP = document.createElement("p");
+                        nodeP.setAttribute('name', "Error");                        
+                        child = document.querySelector("form[name=inforPopup] input[name=short_name]");
+                        nodeP.innerHTML = JSON.stringify(userInforErr.shortnameErr);
+                        item = child.parentNode;
+                        item.insertBefore(nodeP, child.nextSibling);
+                    }
+                    if(userInforErr.phoneErr){
+                        var nodeP = document.createElement("p");
+                        nodeP.setAttribute('name', "Error");
+                        nodeP.innerHTML = JSON.stringify(userInforErr.phoneErr);
+                        child = document.querySelector("form[name=inforPopup] input[name=phone]");
+                        item = child.parentNode;
+                        item.insertBefore(nodeP, child.nextSibling);
+                    }
+                    if(userInforErr.emailErr){
+                        var nodeP = document.createElement("p");
+                        nodeP.setAttribute('name', "Error");
+                        nodeP.innerHTML = JSON.stringify(userInforErr.emailErr);
+                        child = document.querySelector("form[name=inforPopup] input[name=email]");
+                        item = child.parentNode;
+                        item.insertBefore(nodeP, child.nextSibling);
+                    }
+
+            }else{
                     console.log(this.responseText);
                     var _result = JSON.parse( this.responseText); 
                     // add on the screen
@@ -127,27 +192,31 @@ function addUser(event){
                     var nodeP = document.createElement("p");
                     nodeP.setAttribute('name', "name");
                     nodeP.onclick = function(){displayUser(this)};
-                    nodeP.dataset.info = JSON.stringify(_result.userInfor);
+                    nodeP.dataset.info = JSON.stringify(response.userInfor);
                     console.log(_result.userInfor);
                     // nodeP.appendChild(document.createTextNode(JSON.parse(this.responseText).fullname);
-                    nodeP.innerHTML = _result.userInfor.fullname;
+                    nodeP.innerHTML = response.userInfor.fullname;
                     var nodeBtn = document.createElement("button");
-                    nodeBtn.setAttribute('name', JSON.stringify(_result.userInfor.fullname));
+                    nodeBtn.setAttribute('name', JSON.stringify(response.userInfor.fullname));
                     nodeBtn.onclick=function(){deleteUser(this)};
                     nodeBtn.appendChild(document.createTextNode("Delete"));
                     nodeLi.appendChild(nodeP);
                     nodeLi.appendChild(nodeBtn);
                     var items = document.querySelector("ul[id=list-of-users]");
-                    items.insertBefore(nodeLi, items.childNodes[1]);
+                    items.insertBefore(nodeLi, items.childNodes[4]);
                     document.getElementById('id01').style.display='none';
-                    document.querySelector("form[name=infor] input[name=user_id]").value = JSON.stringify(_result.userInfor.id);
-                }
+                    document.querySelector("form[name=infor] input[name=user_id]").value = JSON.stringify(response.userInfor.id);             
             }
+
+
+
+
+                    //alert(JSON.stringify(userInfor, null, 4));
+                }
+            console.log(this.responseText);
         }
         xmlhttp.open("POST", "/users/add", true);
-        xmlhttp.send(formData);
-
-        } 
+        xmlhttp.send(formData); 
 };
 
 // function to delete a user
@@ -169,7 +238,7 @@ function deleteUser(currentItem){
             if (this.readyState == 4 && this.status == 200) {
                 // var abc = JSON.parse(this.responseText);
                 //console.log(this.responseText);
-                alert("Successful");
+                // alert("Successful");
                 // alert("successful");
             }
         }
@@ -187,14 +256,15 @@ function deleteUser(currentItem){
     $(document).ready(function(){
 
     var infor = document.getElementById("list-of-users").dataset.info;
- 
     var items = document.querySelectorAll("p[name=name]");
+    // console.log(mark == 0);
     for(i = 0; i < items.length; i++){
         if(infor == JSON.parse(items[i].dataset.info).id){
             displayUser(items[i]);
             return;
         }
     }
+
     displayUser(items[0]); 
     })
 
