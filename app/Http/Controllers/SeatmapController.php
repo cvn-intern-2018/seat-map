@@ -75,10 +75,10 @@ class SeatmapController extends Controller
             Map::deleteSeatMap($id);
             $deletedSeatmapNoti = $name . Lang::get('notification.deleted');
             $notifications = [$deletedSeatmapNoti];
-            if($request->returnHome == 1)
+            if ($request->returnHome == 1)
                 return redirect()->route('home');
             else
-            return back()->with(['notifications' => $notifications]);
+                return back()->with(['notifications' => $notifications]);
 
         } else {
             $permissionNoti = Lang::get('validation.permission');

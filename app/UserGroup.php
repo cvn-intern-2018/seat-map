@@ -18,12 +18,12 @@ class UserGroup extends Model
 
     /**
      * Check if a group name is available in the database
-     * 
+     *
      * @param string $name String that need to check
-     * @param bool  $lock Using table locking on update
-     * @return int 
+     * @param bool $lock Using table locking on update
+     * @return int
      */
-    public static function isValidName(string $name, bool $lock )
+    public static function isValidName(string $name, bool $lock)
     {
         $query = self::where('name', $name);
         if ($lock) {
@@ -39,9 +39,9 @@ class UserGroup extends Model
 
     /**
      * Update new name for group
-     * 
-     * @param string $group_name;
-     * @return bool 
+     *
+     * @param string $group_name ;
+     * @return bool
      */
     public function updateGroupName(string $group_name)
     {
@@ -68,13 +68,13 @@ class UserGroup extends Model
 
     /**
      * Add new group to database
-     * 
+     *
      * @param string $group_name
-     * @return int 
+     * @return int
      */
     public static function addNewGroup(string $group_name)
     {
-        return self::insertGetId (['name' => $group_name]);        
+        return self::insertGetId(['name' => $group_name]);
     }
 
     /**

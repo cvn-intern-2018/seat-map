@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function (e) {
     // ================= Initial data =========================
-    var zindex=2;
+    var zindex = 2;
     var avatarSize = 65;
     var mapWidth = 0;
     var mapHeight = 0;
@@ -11,13 +11,13 @@ document.addEventListener("DOMContentLoaded", function (e) {
     var controlPanel = document.querySelector(".control-panel-container");
     var scrollThreshold = 0;
 
-        $(window).on('resize', function(){
-            mapWidth = seatmap.clientWidth;
-            mapHeight = seatmap.clientHeight;
+    $(window).on('resize', function () {
+        mapWidth = seatmap.clientWidth;
+        mapHeight = seatmap.clientHeight;
 
-        });
+    });
     // ================= Initial procedure =========================
-    window.onload = function(){
+    window.onload = function () {
         mapWidth = seatmap.clientWidth;
         mapHeight = seatmap.clientHeight;
 
@@ -30,25 +30,60 @@ document.addEventListener("DOMContentLoaded", function (e) {
      * Handle event start draging arranged users
      */
     function dragArrangedUser(e) {
-        this.style.zIndex= zindex;
+        this.style.zIndex = zindex;
         zindex++;
-        e.dataTransfer.setData("object_id", this.id.slice(this.id.lastIndexOf("-")+1));
+        e.dataTransfer.setData("object_id", this.id.slice(this.id.lastIndexOf("-") + 1));
         var [offsetX, offsetY] = getOffsets(e);
         e.dataTransfer.setData("pointer_x", offsetX - avatarSize / 2);
         e.dataTransfer.setData("pointer_y", offsetY - avatarSize / 2);
+
     }
 
     /**
      * Handle event clicking on arranged users
      */
     function clickArrangedUser() {
+        this.style.zIndex = zindex;
+        zindex++;
         if (this.classList.contains("active")) {
             this.classList.remove("active");
         }
         else {
+            var top = parseFloat(this.style.top) * mapHeight / 100;
+            var left = parseFloat(this.style.left) * mapWidth / 100;
+            var infoBox = $(this).find(".info-box");
+            setInfoBox(infoBox, top, left);
             this.classList.add("active");
-            this.style.zIndex= zindex;
-            zindex++;
+        }
+    }
+
+    /**
+     * Set position for the user's info-box
+     * @param infoBox : DOM to that infoBox
+     * @param top: position of that user - from top of the map to that user (px)
+     * @param left : position of that user - from the left of the map to that user (px)
+     */
+    function setInfoBox(infoBox, top, left) {
+        var change = 0;
+        if (top < 163) {
+            infoBox.css("bottom", "auto");
+            change = 1;
+        }
+        if (mapHeight - top < 163) {
+            infoBox.css("bottom", "100%");
+            change = 1;
+        }
+        if (left < 150) {
+            infoBox.css("left", "220%");
+            change = 1;
+        }
+        if (mapWidth - left < 150) {
+            infoBox.css("left", "-120%")
+            change = 1;
+        }
+        if (change == 0) {
+            infoBox.css("bottom", "100%");
+            infoBox.css("left", "50%");
         }
     }
 
@@ -93,19 +128,21 @@ document.addEventListener("DOMContentLoaded", function (e) {
     }
 
     /**
-     * Bind listener for drop on seat map 
+     * Bind listener for drop on seat map
      */
     seatmap.addEventListener("drop", function (e) {
+
         e.preventDefault();
 
         var [realX, realY] = getOffsets(e);
         if (e.target !== this) {
             var parent = e.target.closest(".user-seat");
-            realX += parseFloat(parent.style.left) * mapWidth / 100 - avatarSize / 2 ;
-            realY += parseFloat(parent.style.top) * mapHeight / 100 - avatarSize / 2 ;
+            realX += parseFloat(parent.style.left) * mapWidth / 100 - avatarSize / 2;
+            realY += parseFloat(parent.style.top) * mapHeight / 100 - avatarSize / 2;
+
         }
-        
         if (e.dataTransfer.getData("type") === "new") {
+
             // Clone object
             var newSeat = document.querySelector(".user-seat-template").cloneNode(true);
             setAttributesNewSeat(newSeat, e);
@@ -124,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
             // Remove in user list
             document.querySelector(".user-list .user-select[data-id=\"" + e.dataTransfer.getData("object_id") + "\"]")
-            .setAttribute("hidden", "");
+                .setAttribute("hidden", "");
 
         }
         else {
@@ -132,8 +169,14 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 var obj = document.getElementById("user-seat-" + e.dataTransfer.getData("object_id"));
                 var pointerX = parseFloat(e.dataTransfer.getData("pointer_x"));
                 var pointerY = parseFloat(e.dataTransfer.getData("pointer_y"));
+                var left = realX - pointerX;
+                var top = realY - pointerY;
                 obj.style.left = ((realX - pointerX) / mapWidth * 100) + "%";
-                obj.style.top = ((realY - pointerY) / mapHeight * 100) + "%" ;
+                obj.style.top = ((realY - pointerY) / mapHeight * 100) + "%";
+                var infoBox = $(obj).find(".info-box");
+                setInfoBox(infoBox, top, left);
+
+
             }
         }
     });
@@ -209,10 +252,10 @@ document.addEventListener("DOMContentLoaded", function (e) {
     /**
      * Bind listener for click save button
      */
-    document.getElementById("save_edit").addEventListener("click", function(e){
+    document.getElementById("save_edit").addEventListener("click", function (e) {
         e.preventDefault();
         var seatField = document.getElementById("seat_data")
-        var name= document.getElementById("seatmap_name_holder").value;
+        var name = document.getElementById("seatmap_name_holder").value;
         var name_real = document.getElementById("seatmap_name").value = name;
         var seatField = document.getElementById("seat_data")
         var newData = JSON.stringify(gatherSeatmapSetting());
@@ -228,7 +271,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     /**
      * Bind listener for toggle checkbox option
      */
-    document.getElementById("display_name").addEventListener("click", function(e){
+    document.getElementById("display_name").addEventListener("click", function (e) {
         if (this.checked == true) {
             if (seatmap.classList.contains("hide-name")) {
                 seatmap.classList.remove("hide-name");
@@ -239,7 +282,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
             }
         }
     });
-    document.getElementById("display_group").addEventListener("click", function(e){
+    document.getElementById("display_group").addEventListener("click", function (e) {
         if (this.checked == true) {
             if (seatmap.classList.contains("hide-group")) {
                 seatmap.classList.remove("hide-group");
@@ -254,7 +297,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     /**
      * Bind listener for scroll screen
      */
-    window.onscroll = function(e){
+    window.onscroll = function (e) {
         this.console.log(scrollThreshold);
         if (window.pageYOffset >= scrollThreshold) {
             controlPanel.classList.add("fix-bar");
@@ -264,6 +307,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         }
 
     };
+
     // =================== Support function =============================
     /**
      * Gathering seat map setting.
@@ -271,9 +315,9 @@ document.addEventListener("DOMContentLoaded", function (e) {
     function gatherSeatmapSetting() {
         var seatData = [];
         if (arrangedUserSeat.length !== 0) {
-            Array.from(arrangedUserSeat).forEach(function(el){
+            Array.from(arrangedUserSeat).forEach(function (el) {
                 seatData.push({
-                    user_id: parseFloat(el.id.slice(el.id.lastIndexOf("-")+1)),
+                    user_id: parseFloat(el.id.slice(el.id.lastIndexOf("-") + 1)),
                     x: parseFloat(el.style.left),
                     y: parseFloat(el.style.top)
                 });
@@ -284,8 +328,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
     /**
      * Get offsets by browser
-     * 
-     * @param {Event} event 
+     *
+     * @param {Event} event
      * @returns [offsetX, offsetY]
      */
     function getOffsets(event) {

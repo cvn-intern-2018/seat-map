@@ -39,7 +39,7 @@ class SeatMap extends Model
     {
 
         $id = self::insertGetId(
-            ['name' => $name,'img' => $img]
+            ['name' => $name, 'img' => $img]
         );
         return $id;
     }
@@ -53,7 +53,7 @@ class SeatMap extends Model
 
     /**
      * Create connection to App\User
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users()
@@ -85,7 +85,7 @@ class SeatMap extends Model
 
     /**
      * Save seat map name
-     * 
+     *
      * @param string $newName
      * @return void
      */

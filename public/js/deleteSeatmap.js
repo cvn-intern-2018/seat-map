@@ -1,4 +1,3 @@
-
 $('#delete-confirm').on('click', function () {
 
     $('#deleteID').val($(this).data('id'));

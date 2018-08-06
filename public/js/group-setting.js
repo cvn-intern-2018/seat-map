@@ -50,7 +50,7 @@
             $("form.user-group-setting").submit();
 
         }
-        
+
         /**
          * Update group name by AJAX / announce errors
          */
@@ -70,7 +70,7 @@
                     group_name: group_name
                 },
                 dataType: "json",
-                complete: function (response){
+                complete: function (response) {
                     var data = JSON.parse(response.responseText);
                     if (response.status === 200 
                         && data.hasOwnProperty("result") && data.result == true) {
@@ -78,9 +78,9 @@
                         group_item.querySelector("label").innerHTML = group_name;
                         document.querySelector("h4.group-title").innerHTML = group_name;
                     } else {
-                        var timeOutId =10;
-                        var timeOutId = setTimeout(function(){
-                            $(`#time-out-${timeOutId}`).fadeOut(function(){
+                        var timeOutId = 10;
+                        var timeOutId = setTimeout(function () {
+                            $(`#time-out-${timeOutId}`).fadeOut(function () {
                                 $(this).remove();
                             });
                         }, 5000);
@@ -114,13 +114,13 @@
         $(".group-list .group-item").click(function(){
             var [added, removed] = getMembershipUpdate();
             // console.log(added, removed);
-            if ( added.length === 0 && removed.length === 0 ) {
+            if (added.length === 0 && removed.length === 0) {
                 updateUserSelectPanel(this);
                 disableRemoveOnUnassignedGroup();
             } else {
                 $("#changeGroupModal .discard-group-setting").data("group_id", $(this).data("group"));
                 $("#changeGroupModal .save-group-setting").data("group_id", $(this).data("group"));
-                $("#changeGroupModal").modal("show");    
+                $("#changeGroupModal").modal("show");
             }
         });
 
@@ -171,7 +171,7 @@
             if ( added.length === 0 && removed.length === 0 ) {
                 handleAddGroupForm();
             } else {
-                $("#addGroupModal").modal("show");  
+                $("#addGroupModal").modal("show");
             }
         });
 
@@ -187,7 +187,7 @@
         /**
          * Bind event handler for group changing popup buttons
          */
-        
+
         // Bind event for discard button on popup on group changing
         $("#changeGroupModal .discard-group-setting").click(function(){
             $("#changeGroupModal").modal("hide");
@@ -196,7 +196,7 @@
             $("#changeGroupModal").modal("hide"); 
             disableRemoveOnUnassignedGroup();
         });
-        
+
         // Bind event for save button on popup on group changing
         $("#changeGroupModal .save-group-setting").click(function(){
             handleMembershipUpdateForm();
@@ -236,14 +236,14 @@
         /**
          * Bind event handler for arrow buttons
          */
-        $(".arrows .add-user").click(function(){
+        $(".arrows .add-user").click(function () {
             var newUser = $(`#non_member_users`).val();
             newUser.forEach(id => {
                 $(`#non_member_users option[value="${id}"]`).attr("hidden", "hidden");
                 $(`#member_users option[value="${id}"]`).removeAttr("hidden");
             });
         });
-        $(".arrows .remove-user").click(function(){
+        $(".arrows .remove-user").click(function () {
             var newUser = $(`#member_users`).val();
             newUser.forEach(id => {
                 $(`#member_users option[value="${id}"]`).attr("hidden", "hidden");
@@ -255,7 +255,7 @@
         $(".user-group-setting .reset-group-setting").click(function(){
             updateUserSelectPanel($(".group-list .group-item.active"));
         })
-        
+
 
         //======================= Support function ======================
         /**
@@ -263,20 +263,21 @@
          */
         function getMembershipUpdate(){
             var group_id = $("#user_group_id").val();
-            var selected = Array.from(document.querySelectorAll(`#member_users option`)).filter(function(el){
+            var selected = Array.from(document.querySelectorAll(`#member_users option`)).filter(function (el) {
                 return ($(el).data("group") != group_id) &&
                     !el.hasAttribute("hidden");
-                }).map(function (el) {
-                    return $(el).val();
-                });
+            }).map(function (el) {
+                return $(el).val();
+            });
             var removed = Array.from(document.querySelectorAll(`#non_member_users option[data-group="${group_id}"]`))
-                .filter(function(el){
+                .filter(function (el) {
                     return !(el.hasAttribute("hidden"));
                 }).map(function (el) {
                     return $(el).val();
                 });
             return [selected, removed];
         }
+
         /**
          * Update user group panel base on group item el
          */

@@ -28,9 +28,9 @@
                             </li>
                         @else
 
-                            <li class="@yield('home-active')"><a href="#">Home</a></li>
-                            <li><a href="" class="@yield('groups-active')">Groups</a></li>
-                            <li><a href="" class="@yield('users-active')">Users</a></li>
+                            <li class="@yield('home-active')"><a href="/">Home</a></li>
+                            <li><a href="{{route('groupSetting')}}" class="@yield('groups-active')">Groups</a></li>
+                            <li><a href="{{route('users')}}" class="@yield('users-active')">Users</a></li>
 
                             <li>
 

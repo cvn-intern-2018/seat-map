@@ -7,7 +7,9 @@
     Edit seat map
 @endsection
 @section("scripts")
+
     <script src="{{ asset("/js/edit-seat-map.js") }}"></script>
+
 @endsection
 @section("vertical")
     <link rel="stylesheet" href="{{ asset("/css/edit-seat-map.css") }}">
@@ -15,7 +17,8 @@
         <div class="row ">
             <div class="name-form col-md-12">
                 <label for="seatmap_name_holder">Seat map name:</label>
-                <input class="form-control form-control-lg form-control-borderless" type="text" name="seatmap_name_holder"
+                <input maxlength="100" class="form-control form-control-lg form-control-borderless" type="text"
+                       name="seatmap_name_holder"
                        id="seatmap_name_holder" required
                        value="{{ $map->name }}">
             </div>
@@ -57,7 +60,8 @@
                                 @endif
                         >
                             <div class="avatar">
-                                <img src="{{ getUserAvatar($user) }}" alt="" class="img-responsive" onerror="this.src='{{ asset("images/user/mys-man.jpg") }}'">
+                                <img src="{{ getUserAvatar($user) }}" alt="" class="img-responsive"
+                                     onerror="this.src='{{ asset("images/user/mys-man.jpg") }}'">
                             </div>
                             <div class="name col-md-12">{{ $user->name }}</div>
                         </div>
@@ -82,8 +86,8 @@
     <form class="edit-section" method="POST" action="{{ route("seatmapEditHandler") }}">
         {{ csrf_field() }}
         <input type="hidden" name="seatmap_id" value="{{ $map->id}}" required>
-        <input type="hidden" value ="test" name="seat_data" id="seat_data" required>
-        <input type="hidden" value ="test" value ="{{$map->name}} "name="seatmap_name" id="seatmap_name" required>
+        <input type="hidden" value="test" name="seat_data" id="seat_data" required>
+        <input type="hidden" value="test" value="{{$map->name}} " name="seatmap_name" id="seatmap_name" required>
         <div class="map-area">
             @include("seat-map.map-viewport", ['users' => $users->whereIn('id', $arranged_ids)])
         </div>
