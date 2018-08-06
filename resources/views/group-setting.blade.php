@@ -54,7 +54,11 @@
                             </div>
                         </div>
                         @endforeach
-                        <div class="col-xs-12 group-item" data-group="{{ $unassigned_group->id }}">
+                        <div class="col-xs-12 group-item
+                        @if ($groups->count() == 0)
+                        active
+                        @endif
+                        " data-group="{{ $unassigned_group->id }}">
                             <div class="group-display">
                                 <label for="group-name"> {{ $unassigned_group->name }}</label>
                             </div>
@@ -66,7 +70,13 @@
         <div class="col-sm-9">
             <div class="row">
                 <div class="col-xs-6">
-                    <h4 class="group-title">{{ $groups->get($active_id)->name }}</h4>
+                    <h4 class="group-title">
+                        @if ($groups->count() == 0) 
+                        {{ $unassigned_group->name }}
+                        @else
+                        {{ $groups->get($active_id)->name }}
+                        @endif
+                    </h4>
                 </div>
             </div>
             <div class="row">
@@ -175,6 +185,22 @@
         </button>
         <button type="button" class="btn btn-primary save-group-setting">
             Save changes
+        </button>
+    @endslot
+@endcomponent
+@component("components.modal", [
+    "id" => "deleteGroupModalWithNoChange"
+])
+    @slot("title")
+        Delete group
+    @endslot
+    @slot("message")
+        <p>You are about to delete a group. Do you really want to delete it?</p>
+        <p>Users in the deleted group will be moved to <strong>Unassigned group.</strong></p>
+    @endslot
+    @slot("buttons")
+        <button type="button" class="btn btn-danger delete-group-setting">
+            Delete
         </button>
     @endslot
 @endcomponent

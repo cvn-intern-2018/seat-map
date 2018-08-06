@@ -34,7 +34,7 @@ class UserGroup extends Model
         if ($count == 0) {
             return 0;
         }
-        return  $count == 1 && $result->first()->id;
+        return $result->first()->id;
     }
 
     /**
@@ -45,11 +45,10 @@ class UserGroup extends Model
      */
     public function updateGroupName(string $group_name)
     {
-        DB::beginTransaction();
-        $applyLock = true;
+        // DB::beginTransaction();
         try {
-            $check_result = self::isValidName($group_name, $applyLock);
-            if ($check_result == 0 ) {
+            $check_result = self::isValidName($group_name, true);
+            if ($check_result == 0) {
                 $this->name = $group_name;
                 $this->save();
                 DB::commit();
