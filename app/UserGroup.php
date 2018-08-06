@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
+use App\User;
+use \Config;
 
 class UserGroup extends Model
 {
@@ -76,4 +78,17 @@ class UserGroup extends Model
         return self::insertGetId(['name' => $group_name]);
     }
 
+    /**
+     * Delete a group
+     * 
+     * @param int $group_id
+     */
+    public function deleteGroup()
+    {
+        User::where('user_group_id', $this->id)->update([
+            'user_group_id' => Config::get('constants.UNASSIGNED_GROUP_ID'),
+        ]);
+        $this->delete();
+    }
+    
 }

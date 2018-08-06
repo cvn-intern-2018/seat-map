@@ -29,32 +29,34 @@
                             @foreach ($groups as $group)
                                 <div class="col-xs-12 group-item
                         @if ($group->id == $active_id)
-                                        active
-@endif
-                                        " data-group="{{ $group->id }}">
-                                    <div class="group-display">
-                                        <input type="hidden" name="group_id" value="{{ $group->id }}">
-                                        <input type="text" name="group_name" value="{{ $group->name }}">
-                                        <label for="group-name"> {{ $group->name }}</label>
-                                    </div>
-                                    <div class="group-button edit-button">
-                                        <span class="glyphicon glyphicon-pencil"></span>
-                                    </div>
-                                    <div class="group-button save-button">
-                                        <span class="glyphicon glyphicon-floppy-disk"></span>
-                                    </div>
-                                    <div class="group-button delete-button">
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                    </div>
-                                    <div class="group-button cancel-button">
-                                        <span class="glyphicon glyphicon-remove"></span>
-                                    </div>
-                                </div>
-                            @endforeach
-                            <div class="col-xs-12 group-item" data-group="{{ $unassigned_group->id }}">
-                                <div class="group-display">
-                                    <label for="group-name"> {{ $unassigned_group->name }}</label>
-                                </div>
+                        active
+                        @endif
+                        " data-group="{{ $group->id }}">
+                            <div class="group-display">
+                                <input type="hidden" name="group_id" value="{{ $group->id }}">
+                                <input type="text" name="group_name" value="{{ $group->name }}">
+                                <label for="group-name"> {{ $group->name }}</label>
+                            </div>
+                            <div class="group-button edit-button">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </div>
+                            <div class="group-button save-button">
+                                <span class="glyphicon glyphicon-floppy-disk"></span>
+                            </div>
+                            <form class="group-button delete-button delete-group-item"
+                            method="POST" action="{{ route("deleteGroup") }}">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="group_id" value="{{ $group->id }}">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </form>
+                            <div class="group-button cancel-button">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </div>
+                        </div>
+                        @endforeach
+                        <div class="col-xs-12 group-item" data-group="{{ $unassigned_group->id }}">
+                            <div class="group-display">
+                                <label for="group-name"> {{ $unassigned_group->name }}</label>
                             </div>
                         </div>
                     </div>
@@ -119,48 +121,63 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="changeGroupModal" tabindex="-1" role="dialog" aria-labelledby="changeGroupModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="changeGroupModalLabel">Change group</h4>
-                </div>
-                <div class="modal-body">
-                    You has made some change on the current group, do you want to discard all change
-                    and move to this group?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger discard-group-setting">Discard</button>
-                    <button type="button" class="btn btn-primary save-group-setting">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="addGroupModal" tabindex="-1" role="dialog" aria-labelledby="addGroupModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="addGroupModalLabel">Change group</h4>
-                </div>
-                <div class="modal-body">
-                    You has made some change on the current group, do you want to save the change before creating new
-                    group?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger discard-group-setting">Discard</button>
-                    <button type="button" class="btn btn-primary save-group-setting">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
+@component("components.modal", [
+    "id" => "changeGroupModal"
+])
+    @slot("title")
+        Setting changed
+    @endslot
+    @slot("message")
+        You has made some change on the current group, do you want to discard all change
+        and move to this groups
+    @endslot
+    @slot("buttons")
+        <button type="button" class="btn btn-danger discard-group-setting">
+            Discard
+        </button>
+        <button type="button" class="btn btn-primary save-group-setting">
+            Save changes
+        </button>
+    @endslot
+@endcomponent
+@component("components.modal", [
+    "id" => "addGroupModal"
+])
+    @slot("title")
+        Setting changed
+    @endslot
+    @slot("message")
+        You has made some change on the current group, do you want to save the 
+        change or discard all change and create new group?
+    @endslot
+    @slot("buttons")
+        <button type="button" class="btn btn-danger discard-group-setting">
+            Discard
+        </button>
+        <button type="button" class="btn btn-primary save-group-setting">
+            Save changes
+        </button>
+    @endslot
+@endcomponent
+@component("components.modal", [
+    "id" => "deleteGroupModal"
+])
+    @slot("title")
+        Setting changed
+    @endslot
+    @slot("message")
+        <p>You has made some change on the current group, do you want to save the 
+        change or discard all change and delete group?</p>
+        <p>Users in the deleted group will be moved to <strong>Unassigned group.</strong></p>
+    @endslot
+    @slot("buttons")
+        <button type="button" class="btn btn-danger discard-group-setting">
+            Discard
+        </button>
+        <button type="button" class="btn btn-primary save-group-setting">
+            Save changes
+        </button>
+    @endslot
+@endcomponent
 @endsection

@@ -165,10 +165,12 @@ class UserController extends Controller
             }
         }
         // check avatar
-        if (empty($infor->avatar)) {
-            $this->userInfor['avatar'] = "";
+        if(empty($infor->avatar)){
+            // $this->userInfor['avatar'] = "";
+            $this->userInfor['checkAvatar'] = $infor->checkAvatar;
             // $this->userInfor['avatar'] = "abc";            
-        } else {
+        }else{
+            $this->userInfor['checkAvatar'] = 0;
             $file = $infor->file('avatar');
             $img = '.' . $file->extension();
             $public = Storage::disk('public_folder');
@@ -201,12 +203,12 @@ class UserController extends Controller
             $this->response['status'] = "Success";
             // $this->userInfor = $request;
             $user->set($this->userInfor);
-            // $user->save();
-        } else {
+            $user->save();
+        }else{
             $this->response['status'] = "Error";
         }
 
-        // var_dump($this->userInforErr); exit;
+        // var_dump($this->userInfor); exit;
         $this->response['userInfor'] = $this->userInfor;
         $this->response['userInforErr'] = $this->userInforErr;
         // var_dump($this->userInforErr); exit;
@@ -226,9 +228,11 @@ class UserController extends Controller
             // var_dump("1");
             $user = User::where('id', $request->user_id)->first();
             $this->check_request($request);
-            // var_dump($request->ava); exit;
+
+            // var_dump($request); exit;
             // check status
-            if ($this->userInforErr['emailErr'] == "Existed") {
+
+            if($this->userInforErr['emailErr'] == "Existed"){
                 unset($this->userInforErr['emailErr']);
             }
             if ($this->userInforErr['usernameErr'] == "Existed") {
@@ -237,16 +241,19 @@ class UserController extends Controller
             // var_dump(json_encode($this->userInforErr)); exit;
             if (count($this->userInforErr) == 0) {
                 $this->response['status'] = "Success";
-                // $this->userInfor = $request;
-                // var_dump($this->userInfor); exit;
                 $user->set($this->userInfor);
                 $user->save();
                 return redirect()->route('users')->with(['user_id' => $request->user_id, 'old' => '', 'uv' => '']);
             } else {
                 $this->userInfor['id'] = $user->id;
-                $this->userInfor['avatar'] = $user->img;
+                if($this->userInfor['checkAvatar'] == 1){
+                    $this->userInfor['avatar'] = "";
+                }else{
+                    $this->userInfor['avatar'] = $user->img;
+                }
                 $this->response['status'] = "Error";
                 // var_dump($this->userInforErr); exit;
+                // var_dump($this->userInfor); exit;
                 return redirect()->route('users')->with(['user_id' => $request->user_id,
                     'old' => json_encode($this->userInfor),
                     'uv' => $this->userInforErr]);

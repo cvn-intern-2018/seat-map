@@ -39,8 +39,7 @@
     <div class="flex-container">
         <!-- display all users -->
         <div id="left">
-            <ul id="list-of-users" data-old="{{session('old')}}" data-info="{{ session('user_id') }}"
-                data-old="{{session('mark')}}">
+            <ul id="list-of-users" data-old="{{session('old')}}" data-info="{{ session('user_id') }}" >
                 <li class="flex-container">
                     <p onclick="document.getElementById('id01').style.display='block'" name="addUser">Add a new user</p>
                     <button type="button"></button>
@@ -65,20 +64,16 @@
 
         <!-- display information of a user -->
         <div id="right" class="flex-container">
-            <form name="infor" class="flex-container" action="/users/edit" method="POST"
-                  enctype="multipart/form-data">@csrf
-                <div name="avatar" id="avatarContainer" class="flex-container">
-                    <img name="ava" id="avatar"
-                         src="{{asset('images/user/'.json_decode($admin)->username.json_decode($admin)->avatar)}}"
-                         alt="avatar"/>
-                    <div class=flex-container>
-                        <button onclick="document.getElementById('changeAvar').click()" name="changeAvar" type="button">
-                            Change
-                        </button>
-                        <input style="display:none;" onchange="changeAva(event)" type="file" accept="image/*"
-                               id="changeAvar" name="avatar"
-                               value="{{asset('images/user/'.json_decode($admin)->username.json_decode($admin)->avatar)}}"/>
-                        <button onclick="deleteAva()" type="button" name="deleteAvar">Delete</button>
+                <form name="infor" class="flex-container" action="/users/edit" method="POST" enctype="multipart/form-data">@csrf
+                    <div name="avatar" id="avatarContainer" class="flex-container">
+                        <img name="ava" id="avatar" src="{{asset('images/user/'.json_decode($admin)->username.json_decode($admin)->avatar)}}" alt="avatar" />
+                        <div class=flex-container>
+                            <button onclick="document.getElementById('changeAvar').click()" name="changeAvar" type="button">Change</button>
+                            <input type="hidden" value="0" name="checkAvatar" />
+                            <input style="" onchange="changeAva(event)" type="file" accept="image/*" id="changeAvar" name="avatar" value="{{asset('images/user/'.json_decode($admin)->username.json_decode($admin)->avatar)}}"  />
+                            <button onclick="deleteAva()" type="button" name="deleteAvar">Delete</button>
+                        </div>
+
                     </div>
 
                 </div>

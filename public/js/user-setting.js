@@ -1,12 +1,15 @@
 function changeAva(event) {
 
     var output = document.getElementById("avatar");
-    output.src = URL.createObjectURL(event.target.files[0]);
+        output.src = URL.createObjectURL(event.target.files[0]);
+    // document.querySelector("input[name=checkAvatar]").value = 0;
 };
 
 function deleteAva() {
     document.getElementById('avatar').src = "";
     document.querySelector("input[id=changeAvar]").value = "";
+    document.querySelector("input[name=checkAvatar]").value = 1;
+
 };
 
 // function to display information of a user
@@ -71,6 +74,11 @@ function discardChanges() {
             infor = element.dataset.info;
         }
     });
+    items = document.querySelectorAll("p[name=Error]");
+    items.forEach(function(item){
+        item.parentNode.removeChild(item);
+    })
+    document.querySelector("input[name=checkAvatar]").value = 0;
     displayUserInfor(infor);
 }
 

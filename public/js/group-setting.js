@@ -142,11 +142,14 @@
         });
 
         // Delete group name button
-        $(".group-button.delete-button").click(function () {
-
-            /**
-             * Todo: submit a delete request
-             */
+        $(".group-button.delete-button").click(function(){
+            var [added, removed] = getGroupUpdate();
+            
+            if ( added.length === 0 && removed.length === 0 ) {
+                this.closest("form.delete-group-item").submit();
+            } else {
+                $("#deleteGroupModal").modal("show");  
+            }
         });
 
         // Auto save new name on field loses focus
@@ -191,6 +194,28 @@
         $("#changeGroupModal .save-group-setting").click(function () {
             handleFormUserGroup();
         });
+
+        /**
+         * Bind event handler for group deleting form
+         */
+        $("form.delete-group-item").click(function () {
+            var [added, removed] = getGroupUpdate();
+            
+            if ( added.length === 0 && removed.length === 0 ) {
+                this.submit();
+            } else {
+                $("#deleteGroupModal").find(".discard-group-setting")
+                .data("id", $(this).find(`input[name="group_id"]`).val());
+                $("#deleteGroupModal").modal("show");  
+            }
+        });
+
+        $("#deleteGroupModal .save-group-setting").click(function(){
+            handleFormUserGroup();
+        });
+        $("#deleteGroupModal .discard-group-setting").click(function(){
+            document.select
+        })
 
         /**
          * Bind event handler for arrow buttons

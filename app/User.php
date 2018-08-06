@@ -102,8 +102,14 @@ class User extends Authenticatable
         if (!empty($infor['avatar'])) {
             $this->img = $infor['avatar'];
             // var_dump("abc"); exit;           
-        } else {
-            $this->img = "";
+        }
+        else{
+            if($infor['checkAvatar'] == 0){
+
+            }else{
+                $this->img = "";  
+            }
+
         }
 
         if (!empty($infor['phone'])) {
