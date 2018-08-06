@@ -78,7 +78,7 @@ function discardChanges(){
 }
 
 function hidePopup(){
-    document.getElementById('id01').style.display='none';
+    document.getElementById('id01').style.display='none'
 };
 
 //function to add a user
@@ -205,9 +205,6 @@ function deleteUser(currentItem){
                     alert(JSON.parse(this.responseText).status);
                 }
             }
-            xmlhttp.open("GET", "/users/delete/{name}?name=" + currentItem.name, true);
-            xmlhttp.send();
-
         }
         xmlhttp.open("GET", "/users/delete/{name}?name=" + currentItem.name, true);
         xmlhttp.send();
