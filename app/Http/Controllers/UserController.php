@@ -163,9 +163,11 @@ class UserController extends Controller
         }
         // check avatar
         if(empty($infor->avatar)){
-            $this->userInfor['avatar'] = "";
+            // $this->userInfor['avatar'] = "";
+            $this->userInfor['checkAvatar'] = $infor->checkAvatar;
             // $this->userInfor['avatar'] = "abc";            
         }else{
+            $this->userInfor['checkAvatar'] = 0;
             $file = $infor->file('avatar');
             $img = '.' . $file->extension();
             $public = Storage::disk('public_folder');
@@ -225,6 +227,7 @@ class UserController extends Controller
 
             // var_dump($request); exit;
             // check status
+
             if($this->userInforErr['emailErr'] == "Existed"){
                 unset($this->userInforErr['emailErr']);
             }
@@ -234,16 +237,19 @@ class UserController extends Controller
             // var_dump(json_encode($this->userInforErr)); exit;
             if(count($this->userInforErr) == 0){
                 $this->response['status'] = "Success";
-                // $this->userInfor = $request;
-                // var_dump($this->userInfor); exit;
                 $user->set($this->userInfor);
                 $user->save();
                 return redirect()->route('users')->with(['user_id' => $request->user_id, 'old' => '', 'uv' => '']);                
             }else{
                 $this->userInfor['id'] = $user->id;
-                $this->userInfor['avatar'] = $user->img;
+                if($this->userInfor['checkAvatar'] == 1){
+                    $this->userInfor['avatar'] = "";
+                }else{
+                    $this->userInfor['avatar'] = $user->img;
+                }
                 $this->response['status'] = "Error";
                 // var_dump($this->userInforErr); exit;
+                // var_dump($this->userInfor); exit;
                 return redirect()->route('users')->with(['user_id' => $request->user_id,
                                                         'old' => json_encode($this->userInfor),
                                                         'uv' => $this->userInforErr]);
