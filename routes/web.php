@@ -30,11 +30,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/group-setting/edit', 'UserGroupController@editGroupHandler');
         Route::post('/group-setting/new', 'UserGroupController@addGroupHandler')->name("createNewGroup");
         Route::post('/group-setting/update-user', 'UserGroupController@updateUserGroupHandler')->name("updateUserGroup");
+
+        Route::get('/users', 'UserController@getUsers')->name('users');
+        Route::get('/users/delete/{name}', 'UserController@deleteUserHandler')->name('delete');
+        Route::post('/users/edit', 'UserController@editUserHandler')->name('edit');
+        Route::post('/users/add', 'UserController@addUserHandler')->name('add');        
     });
 });
 
-Route::get('/users', 'UserController@getUsers')->name('users');
-Route::get('/users/delete/{name}', 'UserController@deleteUserHandler')->name('delete');
-Route::post('/users/edit', 'UserController@editUserHandler')->name('edit');
-Route::post('/users/add', 'UserController@addUserHandler')->name('add');
+
 Auth::routes();

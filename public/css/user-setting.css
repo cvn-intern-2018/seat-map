@@ -13,7 +13,7 @@
         width: 100%;
     }
     #left{
-        height: 400px;
+        height: 700px;
         width: 30%;
         overflow: auto;
     }
@@ -24,18 +24,26 @@
 
     #right input, #right select{
         text-align: center;
+        border: 1px solid #ccc;
+        margin: 4px;
+        padding: 12px 20px;
     }
     #right input:hover, #right select:hover{
+        /*cursor: pointer;*/
+    }
+
+    input[name=submit]:hover, input[name=cancel]:hover, input[name=inptSubmitPopup]:hover, input[name=inptCancelPopup]:hover{
+        opacity: 0.5;
         cursor: pointer;
     }
 
-    .flex-container{
+    .flex-container_{
         display: flex;
         flex-flow: row nowrap;
 
     }
 
-    .flex-container > *{
+    .flex-container_ > *{
         width: 49%;
         /*margin: 5px;*/
     }
@@ -90,7 +98,7 @@
         text-align: center;
     }
 
-    #left > ul li.flex-container{
+    #left > ul li.flex-container_{
         justify-content: space-around;
         /*align-items: center;*/
         height: 40px;
@@ -125,22 +133,22 @@
         width: 100%;
     }
 
-    #right > form > div[id=avatarContainer]{
+    #right > form > div[id=avatarcontainer_]{
         flex-flow: column;
         justify-content: center;
         align-items: center;
     }
-    #right > form > div[id=avatarContainer] img, #right > form > div[id=avatarContainer] div{
+    #right > form > div[id=avatarcontainer_] img, #right > form > div[id=avatarcontainer_] div{
         width: 50%;
     }
 
-    img{
+    #right img{
         height: 30%;
         border: 1px solid black;
 
     }
 
-/*    #right > div.flex-container > *{
+/*    #right > div.flex-container_ > *{
         width: 150px;
     }*/
 
@@ -150,6 +158,7 @@
         flex-flow: column wrap;
         justify-content: center;
         align-items: center;
+        padding: 4px;
     }
 
     #userinformation > *{
@@ -212,7 +221,7 @@
     }
 
     button:hover {
-        opacity: 0.8;
+        opacity: 0.5;
     }
 
     /*display a pop-up*/
@@ -268,7 +277,7 @@
         height: 100px;
     }
     /* Center the image and position the close button */
-    .container {
+    .container_ {
         width: 100%;
         height: 100%;
         display: flex;
@@ -277,28 +286,28 @@
         align-items: center;
     }
 
-    .container > *{
+    .container_ > *{
         width: 100%;
         margin: 4px 0px 4px 0px;
     }
 
-    .container p{
+    .container_ p{
         margin: 4px 0px 0px 0px;
     }
 
-    .container div{
+    .container_ div{
         display: flex;
         justify-content: center;
     }
 
-    .container div > *{
+    .container_ div > *{
         margin: 1px;
         width: 25%;
         padding: 2px;
         margin: 10px;
     }
 
-    .container input{
+    .container_ input{
         width: 100%;
         padding: 12px 20px;
         margin: 4px;
@@ -307,7 +316,7 @@
         box-sizing: border-box;
     }
 
-    .container input[name=inptCancelPopup], .container input[name=inptSubmitPopup]{
+    .container_ input[name=inptCancelPopup], .container_ input[name=inptSubmitPopup]{
         background-color: #4CAF50;
         color: white;
         border: none;
@@ -316,7 +325,7 @@
         width: 50%;
     }
 
-    .container input[name=inptCancelPopup]{
+    .container_ input[name=inptCancelPopup]{
         background-color: #f44336;
         text-align: center;
     }

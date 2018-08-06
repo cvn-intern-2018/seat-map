@@ -12,6 +12,7 @@ class UserController extends Controller
     public $response = [];
     public $userInforErr = [];
     public $userInfor = [];
+
     /**
      * Load login form
      */
@@ -49,17 +50,17 @@ class UserController extends Controller
         }
 
         return view('user-setting', [  'users' => $users,
-            'userj' => $arr_users,
+            'arr_users' => $arr_users,
             'admin' => json_encode($admin),
             'groups' => $groups,
             'user_id' => $request->session('user_id', 1),
-            'old' => $request->session('old', 1),
-            'uv'  => $request->session('uv', 1)
-            // 'abc' => "abc"
+            'prv_data' => $request->session('prv_data', 1),
+            'prv_error'  => $request->session('prv_error', 1)
             ]);
 
 
     }
+
 
 
     /**
@@ -90,6 +91,7 @@ class UserController extends Controller
     }
 
     public function check_request($infor){
+
         // check username
         if(empty($infor->username)){
             $this->userInfor['username'] = "";
@@ -97,12 +99,13 @@ class UserController extends Controller
         }else{
             $username = UserController::test_input($infor->username);
              $this->userInfor['username'] = $username;
-            if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
-                $this->userInforErr['usernameErr'] = "Only letters and numbers allowed";
-            } else if (User::where('username', '=', $username)->count() > 0) {
+             if (User::where('username', '=', $username)->count() > 0) {
                 $this->userInforErr['usernameErr'] = "Existed";
+            } else if (strlen($username) > 50) {
+                $this->userInforErr['usernameErr'] = "The username may not be greater than 50 characters";
             }
         }
+
         // check fullname
         if(empty($infor->fullname)){
             $this->userInfor['fullname'] = "";
@@ -110,21 +113,20 @@ class UserController extends Controller
         }else{
             $fullname = UserController::test_input($infor->fullname);
              $this->userInfor['fullname'] = $fullname;
-            // if (!preg_match("/^[a-zA-Z ]*$/", $fullname)) {
-            //     $this->userInforErr['fullnameErr'] = "Only letters and white space allowed";
-            // }
+            if (strlen($fullname) > 50) {
+                $this->userInforErr['fullnameErr'] = "The fullname may not be greater than 50 characters";
+            }
         }
+
         // check password        
         if(empty($infor->password)){
             $this->userInfor['password'] = "";
             $this->userInforErr['passwordErr'] = "Password is required";
         }else{
             $password = UserController::test_input($infor->password);
-             $this->userInfor['password'] = $password;
-            // if (!preg_match("/^[a-zA-Z0-9]*$/", $password)) {
-            //     $userInforErr['passwordErr'] = "Only letters and numbers allowed";
-            // }            
+             $this->userInfor['password'] = $password;        
         }
+
         // check email
         if(empty($infor->email)){
             $this->userInfor['email'] = "";
@@ -136,19 +138,23 @@ class UserController extends Controller
                 $this->userInforErr['emailErr'] = "Invalid email format";
             }else if (User::where('email', '=', $email)->count() > 0) {
                 $this->userInforErr['emailErr'] = "Existed";
+            }else if (strlen($email) > 50) {
+                $this->userInforErr['emailErr'] = "The email may not be greater than 50 characters";
             }           
         }
+
         // check short_name
         if(empty($infor->short_name)){
             $this->userInfor['shortname'] = "";
             // $this->userInforErr['shortnameErr'] = "Shortname is required";
         }else{
             $short_name = UserController::test_input($infor->short_name);
-             $this->userInfor['shortname'] = $short_name;
-            // if (!preg_match("/^[a-zA-Z]*$/", $short_name)) {
-            //     $this->userInforErr['shortnameErr'] = "Only letters and white space allowed";
-            // }            
-        }
+             $this->userInfor['shortname'] = $short_name;          
+            if (strlen($short_name) > 50) {
+                $this->userInforErr['shortnameErr'] = "The shortname may not be greater than 50 characters";
+            }
+        } 
+
         // check phonenumber
         if(empty($infor->phone)){
             $this->userInfor['phone'] = "";
@@ -159,13 +165,14 @@ class UserController extends Controller
             if (!preg_match("/^[0-9]*$/", $phone)) {
 
                 $this->userInforErr['phoneErr'] = "Only numbers allowed";
+            }else if (strlen($phone) > 50) {
+                $this->userInforErr['phoneErr'] = "The phonenumber may not be greater than 50 characters";
             }
         }
+
         // check avatar
         if(empty($infor->avatar)){
-            // $this->userInfor['avatar'] = "";
             $this->userInfor['checkAvatar'] = $infor->checkAvatar;
-            // $this->userInfor['avatar'] = "abc";            
         }else{
             $this->userInfor['checkAvatar'] = 0;
             $file = $infor->file('avatar');
@@ -174,18 +181,20 @@ class UserController extends Controller
             $public->putFileAs('images/user', $file, $infor->username . $img);            
             $avatar = UserController::test_input($img);
             $this->userInfor['avatar'] = $avatar;
-            // $this->userInfor['file'] = $infor->avatar;
         }  
+
+        // check group_id
         if(empty($infor->group_id)){
             $this->userInfor['group_id'] = 0;
         }else{
             $group_id = UserController::test_input($infor->group_id);
-             $this->userInfor['group_id'] = $group_id;
+                $this->userInfor['group_id'] = $group_id;
             if (!preg_match("/^[0-9]*$/", $group_id)) {
                 $this->userInforErr['group_idErr'] = "Only numbers allowed";
             }
         }      
     }
+
     /**
      * Handle add user request submit
      */
@@ -193,22 +202,16 @@ class UserController extends Controller
     {
         $user = new User();
         $this->check_request($request);
-        // check status
-        // var_dump($request->avatar); exit;
         if(count($this->userInforErr) == 0){
             $this->response['status'] = "Success";
-            // $this->userInfor = $request;
             $user->set($this->userInfor);
             $user->save();
         }else{
             $this->response['status'] = "Error";
         }
 
-        // var_dump($this->userInfor); exit;
         $this->response['userInfor'] = $this->userInfor;
         $this->response['userInforErr'] = $this->userInforErr;
-        // var_dump($this->userInforErr); exit;
-        // return redirect()->route('users')->with(['user_id' => $user->id]);
         return json_encode($this->response);
      }
 
@@ -217,29 +220,28 @@ class UserController extends Controller
      */
     public function editUserHandler(Request $request)
     {
-        $old = "";
-        // $response['status'] = "Success";
-        // $user = new User();
+        $prv_data = "";
         if(!empty($request->user_id)){
-            // var_dump("1");
             $user = User::where('id', $request->user_id)->first();
             $this->check_request($request);
-
-            // var_dump($request); exit;
-            // check status
-
+            // $this->response['userInfor'] = $this->userInfor;
+            // $this->response['userInforErr'] = $this->userInforErr;
+            // var_dump($request->user_id);
+            // var_dump($this->response); exit;
             if($this->userInforErr['emailErr'] == "Existed"){
                 unset($this->userInforErr['emailErr']);
             }
             if($this->userInforErr['usernameErr'] == "Existed"){
                 unset($this->userInforErr['usernameErr']);
             }
-            // var_dump(json_encode($this->userInforErr)); exit;
+                // $this->response['userInfor'] = $this->userInfor;
+                // $this->response['userInforErr'] = $this->userInforErr;
+                // var_dump($this->response); exit;
             if(count($this->userInforErr) == 0){
                 $this->response['status'] = "Success";
                 $user->set($this->userInfor);
                 $user->save();
-                return redirect()->route('users')->with(['user_id' => $request->user_id, 'old' => '', 'uv' => '']);                
+                return redirect()->route('users')->with(['user_id' => $request->user_id, 'prv_data' => '', 'prv_error' => '']);                
             }else{
                 $this->userInfor['id'] = $user->id;
                 if($this->userInfor['checkAvatar'] == 1){
@@ -248,24 +250,15 @@ class UserController extends Controller
                     $this->userInfor['avatar'] = $user->img;
                 }
                 $this->response['status'] = "Error";
-                // var_dump($this->userInforErr); exit;
-                // var_dump($this->userInfor); exit;
                 return redirect()->route('users')->with(['user_id' => $request->user_id,
-                                                        'old' => json_encode($this->userInfor),
-                                                        'uv' => $this->userInforErr]);
-
-
+                                                        'prv_data' => json_encode($this->userInfor),
+                                                        'prv_error' => $this->userInforErr]);
             }                       
         }
 
         $this->response['userInfor'] = $this->userInfor;
         $this->response['userInforErr'] = $this->userInforErr;
 
-        // $abc = "abc";
-        // var_dump($this->userInfor); exit;
-        // return json_encode($this->response);
-        // var_dump($request->user_id); exit;
-        // return back()->with(['user_id' => $request->user_id, 'userInforErr' => $this->userInforErr]);
         return redirect()->route('users')->with(['user_id' => $request->user_id]);
 
         
@@ -276,23 +269,20 @@ class UserController extends Controller
      */
     public function deleteUserHandler(Request $request)
     {
-        $status = [];
-        $status['status'] = "successful";
 
         if (empty($request->name)) {
-
+            $this->response['status'] = "Error";
         } else {
             User::where('name', $request->name)->delete();
-
+            $this->response['status'] = "Success";
         }
-
-        return json_encode($status);
+        return json_encode($this->response);
     }
 
-    function test_input($data){
+    public function test_input($data){
         $data = trim($data);
         $data = stripslashes($data);
-        $data = htmlspecialchars($data);
+        // $data = htmlspecialchars($data);
         return $data;
     }
 

@@ -8,7 +8,7 @@
     <div id="id01" class="modal">
             <form name="inforPopup" class="modal-content animate" onsubmit="addUser(event)" action="/users/add" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="container">
+                <div class="container_">
                       <p><b>Full name:</b></p>
                       <input name="fullname" value="le van duc" type="text" placeholder="Enter full name" />
                       <p><b>Short name:</b></p>
@@ -35,23 +35,23 @@
           </form>
 
     </div>
-    <div class="flex-container">
+    <div class="flex-container_">
         <!-- display all users -->
         <div id="left">
-            <ul id="list-of-users" data-old="{{session('old')}}" data-info="{{ session('user_id') }}" >
-                <li class="flex-container">
+            <ul id="list-of-users" data-prv_data="{{session('prv_data')}}" data-info="{{ session('user_id') }}" >
+                <li class="flex-container_">
                     <p onclick="document.getElementById('id01').style.display='block'" name="addUser">Add a new user</p>
                     <button type="button"></button>
                 </li>
-                <li class="flex-container">
+                <li class="flex-container_">
                     <p name="name" onclick="displayUser(this)" data-info="{{ $admin }}"><strong>Admin</strong></p>
                     <button style="visibility: hidden;" name="admin" type="button" ></button>
                 </li>
                 @foreach($users as $user)
                 @if($user->permission == 0)
-                <li class="flex-container">
-                    <p name="name" onclick="displayUser(this)" data-info="{{ $userj[$user->id] }}"><strong>{{ $user->name }}</strong></p>
-                    <button name="{{ $user->name }}" onclick="deleteUser(this)" type="button" ><img src="{{asset('images/remove.png')}}" alt="delete"/></button>
+                <li class="flex-container_">
+                    <p name="name" onclick="displayUser(this)" data-info="{{ $arr_users[$user->id] }}"><strong>{{ $user->name }}</strong></p>
+                    <button  type="button" ><img name="{{ $user->name }}" onclick="deleteUser(this)" src="{{asset('images/remove.png')}}" alt="delete"/></button>
                 </li>
                 @endif
                 @endForeach
@@ -60,28 +60,28 @@
         </div>
 
         <!-- display information of a user -->
-        <div id="right" class="flex-container">
-                <form name="infor" class="flex-container" action="/users/edit" method="POST" enctype="multipart/form-data">@csrf
-                    <div name="avatar" id="avatarContainer" class="flex-container">
-                        <img name="ava" id="avatar" src="{{asset('images/user/'.json_decode($admin)->username.json_decode($admin)->avatar)}}" alt="avatar" />
-                        <div class=flex-container>
+        <div id="right" class="flex-container_">
+                <form name="infor" class="flex-container_" action="/users/edit" method="POST" enctype="multipart/form-data">@csrf
+                    <div name="avatar" id="avatarcontainer_" class="flex-container_">
+                        <img name="ava" id="avatar" src="{{asset('images/user/'.json_decode($admin)->username.json_decode($admin)->avatar)}}" alt="avatar"/>
+                        <div class=flex-container_>
                             <button onclick="document.getElementById('changeAvar').click()" name="changeAvar" type="button">Change</button>
                             <input type="hidden" value="0" name="checkAvatar" />
-                            <input style="" onchange="changeAva(event)" type="file" accept="image/*" id="changeAvar" name="avatar" value="{{asset('images/user/'.json_decode($admin)->username.json_decode($admin)->avatar)}}"  />
-                            <button onclick="deleteAva()" type="button" name="deleteAvar">Delete</button>
+                            <input style="" onchange="changeAvatar(event)" type="file" accept="image/*" id="changeAvar" name="avatar" value="{{asset('images/user/'.json_decode($admin)->username.json_decode($admin)->avatar)}}"  />
+                            <button onclick="deleteAvatar()" type="button" name="deleteAvar">Delete</button>
                         </div>
 
                     </div>
                     <div id="userinformation"> 
                         <p><strong>Full name:</strong></p>
                         <input type="text" name="fullname" value="" />
-                        <?php if(isset(session('uv')['fullnameErr'])){echo "<p name=\"Error\">".(session('uv'))['fullnameErr']."</p>";} ?>
+                        <?php if(isset(session('prv_error')['fullnameErr'])){echo "<p name=\"Error\">".(session('prv_error'))['fullnameErr']."</p>";} ?>
                         <p><strong>Phone number:</strong></p>
                         <input type="text" name="phone" value="{{json_decode($admin)->phone}}" />
-                        <?php if(isset(session('uv')['phoneErr'])){echo "<p name=\"Error\">".(session('uv'))['phoneErr']."</p>";} ?>
+                        <?php if(isset(session('prv_error')['phoneErr'])){echo "<p name=\"Error\">".(session('prv_error'))['phoneErr']."</p>";} ?>
                         <p><strong>Email:</strong></p>
                         <input type="text" name="email" value="{{json_decode($admin)->email}}" />
-                        <?php if(isset(session('uv')['emailErr'])){echo "<p name=\"Error\">".(session('uv'))['emailErr']."</p>";} ?>
+                        <?php if(isset(session('prv_error')['emailErr'])){echo "<p name=\"Error\">".(session('prv_error'))['emailErr']."</p>";} ?>
                         <p><strong>Group:</strong></p>
                         <select name="group_id" />
                             @foreach($groups as $group)
