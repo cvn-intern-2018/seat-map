@@ -197,12 +197,12 @@ class UserController extends Controller
             $this->response['status'] = "Success";
             // $this->userInfor = $request;
             $user->set($this->userInfor);
-            // $user->save();
+            $user->save();
         }else{
             $this->response['status'] = "Error";
         }
 
-        // var_dump($this->userInforErr); exit;
+        // var_dump($this->userInfor); exit;
         $this->response['userInfor'] = $this->userInfor;
         $this->response['userInforErr'] = $this->userInforErr;
         // var_dump($this->userInforErr); exit;
@@ -222,7 +222,8 @@ class UserController extends Controller
             // var_dump("1");
             $user = User::where('id', $request->user_id)->first();
             $this->check_request($request);
-            // var_dump($request->ava); exit;
+
+            // var_dump($request); exit;
             // check status
             if($this->userInforErr['emailErr'] == "Existed"){
                 unset($this->userInforErr['emailErr']);

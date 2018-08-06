@@ -71,6 +71,10 @@ function discardChanges(){
             infor = element.dataset.info;
         }
     });
+    items = document.querySelectorAll("p[name=Error]");
+    items.forEach(function(item){
+        item.parentNode.removeChild(item);
+    })
     displayUserInfor(infor);
 }
 
