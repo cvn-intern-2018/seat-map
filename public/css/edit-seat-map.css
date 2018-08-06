@@ -1,20 +1,23 @@
-.user-seat{
+.user-seat {
     z-index: 1;
 }
-.user-select
-{
+
+.user-select {
     background-color: transparent;
 }
-.sm-btn
-{
+.user-list > * {
+    min-height: 0;
+}
+.sm-btn {
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
-.control-panel a:hover
-{
+
+.control-panel a:hover {
     text-decoration: none !important;
 }
+
 .control-panel-container {
     -webkit-box-shadow: 0 2px 2px 0 #CECECE;
     box-shadow: 0 2px 2px 0 #CECECE;
@@ -22,7 +25,6 @@
     margin-bottom: 20px;
 
 }
-
 
 label, input[type="checkbox" i] {
     cursor: pointer;
@@ -114,12 +116,10 @@ label, input[type="checkbox" i] {
     font-weight: bold;
 }
 
-
-
 .delete-form {
     display: none;
 }
-.sm-btn
-{
+
+.sm-btn {
     margin-bottom: 10px;
 }

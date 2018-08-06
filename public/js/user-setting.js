@@ -13,7 +13,7 @@ function deleteAvatar() {
 };
 
 // function to display information of a user
-function displayUser(currentItem){
+function displayUser(currentItem) {
     var infor = currentItem.dataset.info;
     var items = document.querySelectorAll("p[name=name]");
     // reset
@@ -24,7 +24,7 @@ function displayUser(currentItem){
     currentItem.classList.add("active");
     if(document.getElementById("list-of-users").dataset.prv_data.length <= 2){
         var items = document.querySelectorAll("#right p[name=Error]");
-        items.forEach(function(item){
+        items.forEach(function (item) {
             item.parentNode.removeChild(item);
         })
     }
@@ -50,8 +50,8 @@ function displayUserInfor(infor) {
     document.querySelector("form[name=infor] input[name=username]").value = infor.username;
     document.querySelector("form[name=infor] input[name=password]").value = infor.password;
     var sel = document.querySelector("form[name=infor] select[name=group_id]");
-    for(var i = 0, j = sel.options.length; i < j; ++i) {
-        if(sel.options[i].innerHTML === infor.group) {
+    for (var i = 0, j = sel.options.length; i < j; ++i) {
+        if (sel.options[i].innerHTML === infor.group) {
             sel.selectedIndex = i;
             break;
         }
@@ -64,8 +64,8 @@ function displayUserInfor(infor) {
 function discardChanges(){
     var infor;
     var items = document.querySelectorAll("p");
-    items.forEach(function(element){
-        if(element.classList.contains("active")){
+    items.forEach(function (element) {
+        if (element.classList.contains("active")) {
             infor = element.dataset.info;
         }
     });
@@ -78,7 +78,7 @@ function discardChanges(){
 }
 
 function hidePopup(){
-    document.getElementById('id01').style.display='none'
+    document.getElementById('id01').style.display='none';
 };
 
 //function to add a user
@@ -204,8 +204,10 @@ function deleteUser(currentItem){
                     node.parentNode.removeChild(node);
                     alert(JSON.parse(this.responseText).status);
                 }
-
             }
+            xmlhttp.open("GET", "/users/delete/{name}?name=" + currentItem.name, true);
+            xmlhttp.send();
+
         }
         xmlhttp.open("GET", "/users/delete/{name}?name=" + currentItem.name, true);
         xmlhttp.send();

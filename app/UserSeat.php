@@ -9,7 +9,7 @@ class UserSeat extends Model
 {
     /**
      * Delete all user seat on map with given ID and insert new list
-     * 
+     *
      * @param int $map_id
      * @param int $new_data
      * @return void

@@ -26,49 +26,46 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-<div  class="col-md-3 col-xs-3 col-sm-3 col-xl-3 col-lg-2" > @include('header2')
-@yield('vertical')</div>
+        <div class="col-md-3 col-xs-3 col-sm-3 col-xl-3 col-lg-2"> @include('header_vertical')
+            @yield('vertical')</div>
 
-<div  class="col-md-9 col-xs-9 col-sm-9 col-xl-9 col-lg-10">
-    <div id="app">
+        <div class="col-md-9 col-xs-9 col-sm-9 col-xl-9 col-lg-10">
+            <div id="app">
 
-        <main class="py-4">
-
-
-
-                @if (Session::has('notifications'))
-                    <div class="alert alert-success">
-                        <ul>
-                            @foreach (Session::get('notifications') as $notification)
-
-                                <li>{{ $notification }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                <main class="py-4">
 
 
+                    @if (Session::has('notifications'))
+                        <div class="alert alert-success">
+                            <ul>
+                                @foreach (Session::get('notifications') as $notification)
 
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                                    <li>{{ $notification }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
+
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
 
 
 
-            @yield('content')
-        </main>
-    </div>
-</div>
 
-
+                    @yield('content')
+                </main>
+            </div>
+        </div>
 
 
     </div>

@@ -45,7 +45,7 @@
                 </li>
                 <li class="flex-container_">
                     <p name="name" onclick="displayUser(this)" data-info="{{ $admin }}"><strong>Admin</strong></p>
-                    <button style="visibility: hidden;" name="admin" type="button" ></button>
+                    <button style="visibility: hidden;" name="admin" type="button"></button>
                 </li>
                 @foreach($users as $user)
                 @if($user->permission == 0)
@@ -87,27 +87,30 @@
                             @foreach($groups as $group)
                             @if($group->name == json_decode($admin)->group)
                             <option value="{{$group->id}}" selected>{{ $group->name }}</option>
-                            @else
+                        @else
                             <option value="{{$group->id}}">{{ $group->name }}</option>
                             @endif
                             @endforeach
-                        </select>
-                        <p><strong>Short name:</strong></p>
-                        <input type="text" name="short_name" value="{{json_decode($admin)->shortname}}" />
-                        <input type="text" style="display: none;" value="{{json_decode($admin)->username}}" name="username" />
-                        <input type="text" style="display: none;" value="{{json_decode($admin)->password}}" name="password" />                        
-                        <input type="text" style="display: none;" value="{{json_decode($admin)->id}}" name="user_id" />
-                        <div>
-                          <input name="submit" type="submit" value="Save" />
-                          <input name="cancel" type="button" onclick="discardChanges()" value="Cancel" />
-                        </div>
-                    </div>
-                </form>
-            </div>
-            
+                            </select>
+                            <p><strong>Short name:</strong></p>
+                            <input type="text" name="short_name" value="{{json_decode($admin)->shortname}}"/>
+                            <input type="text" style="display: none;" value="{{json_decode($admin)->username}}"
+                                   name="username"/>
+                            <input type="text" style="display: none;" value="{{json_decode($admin)->password}}"
+                                   name="password"/>
+                            <input type="text" style="display: none;" value="{{json_decode($admin)->id}}"
+                                   name="user_id"/>
+                            <div>
+                                <input name="submit" type="submit" value="Save"/>
+                                <input name="cancel" type="button" onclick="discardChanges()" value="Cancel"/>
+                            </div>
+                </div>
+            </form>
         </div>
+
     </div>
-    
+    </div>
+
 @endsection
 
 

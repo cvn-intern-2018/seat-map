@@ -1,135 +1,137 @@
 
-#delete-name
-{
-  word-break: break-word;
-}
-.map-name
-{
-  text-overflow: ellipsis;
-  max-width: 100%;
-  overflow: hidden;
-}
-.seatmap-button
-{
-  height:40px;
-}
-.seatmap-button:hover
-{
-  position: sticky;
-  transform: scale(1.2);
-  cursor: pointer;
-  z-index: 101;
+#delete-name {
+    word-break: break-word;
 }
 
-.panel-heading
-{
-  font-size:25px;
+.map-name {
+    text-overflow: ellipsis;
+    max-width: 100%;
+    overflow: hidden;
 }
+
+.seatmap-button {
+    height: 40px;
+}
+
+.seatmap-button:hover {
+    position: sticky;
+    transform: scale(1.2);
+    cursor: pointer;
+    z-index: 101;
+}
+.dragscroll
+{
+    cursor: -webkit-grab; cursor: grab;
+}
+.panel-heading {
+    font-size: 25px;
+}
+
 .seatmap-viewport {
- width:100%;
-max-height: 80vh;
-  overflow: scroll;
+    width: 100%;
+    max-height: 80vh;
+    overflow: scroll;
 }
 
 .seatmap-viewport .seatmap-container {
-  position: relative;
+    position: relative;
 }
 
 .seatmap-viewport .seatmap-container[data-zoom="2"] {
-  width: 200%;
+    width: 200%;
 }
 
 .seatmap-viewport .seatmap-container[data-zoom="3"] {
-  width: 400%;
+    width: 400%;
 }
 
 .seatmap-viewport .seatmap-container[data-zoom="4"] {
-  width: 800%;
+    width: 800%;
 }
 
 .seatmap-viewport .seatmap-container.hide-name .seat-display > .name {
-  display: none;
+    display: none;
 }
 
 .seatmap-viewport .seatmap-container.hide-group .info-box .group-line {
-  display: none;
+    display: none;
 }
 
 .seatmap-viewport .seatmap-container .seatmap-image {
-  width: 100%;
-  pointer-events: none;
+    width: 100%;
+    pointer-events: none;
 }
 
 .seatmap-viewport .seatmap-container .seat-display {
-  position: relative;
-  cursor: pointer;
-  width: 85px;
+    position: relative;
+    cursor: pointer;
+    width: 85px;
 }
 
 .seatmap-viewport .seatmap-container .seat-display > .name {
-  background-color: rgba(0, 0, 0, 0.7);
-  text-align: center;
-  position: absolute;
-  width: 100%;
-  color:white;
-  font-size:12px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  border-radius:15px;
-  padding:3px;
+    background-color: rgba(0, 0, 0, 0.7);
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    color: white;
+    font-size: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border-radius: 15px;
+    padding: 3px;
 }
 
 .seatmap-viewport .seatmap-container .seat-display .arranged-user-action {
-  text-align: center;
+    text-align: center;
 }
 
 .seatmap-viewport .seatmap-container .user-seat {
-  position: absolute;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+    position: absolute;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 .seatmap-viewport .seatmap-container .user-seat .avatar-container {
-  margin-left: auto;
-  margin-right: auto;
-  width: 65px;
-  height: 65px;
-  border: 1px solid black;
-  border-radius: 100%;
-  overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    width: 65px;
+    height: 65px;
+    border: 1px solid black;
+    border-radius: 100%;
+    overflow: hidden;
 
 }
 
 .seatmap-viewport .seatmap-container .user-seat .avatar-container .avatar {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  pointer-events: none;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .seatmap-viewport .seatmap-container .user-seat .info-box {
-  display: none;
+    display: none;
 
 }
 
 .seatmap-viewport .seatmap-container .user-seat.active .info-box {
 
-  display: block;
-  position: absolute;
-  width: 300px;
-  bottom: 100%;
-  left: 50%;
-  -webkit-transform: translate(-50%);
-          transform: translate(-50%);
-  padding: 10px;
-  background-color: white;
-  border: 1px solid black;
-  border-radius: 7px;
+    display: block;
+    position: absolute;
+    width: 300px;
+    bottom: 100%;
+    left: 50%;
+    -webkit-transform: translate(-50%);
+    transform: translate(-50%);
+    padding: 10px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 7px;
 }
 

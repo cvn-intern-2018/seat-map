@@ -1,193 +1,193 @@
 select[multiple] {
-  width: 100%;
+    width: 100%;
 }
 
 .group-list {
-  max-height: 65vh;
-  min-height: 40vh;
-  overflow-y: auto;
-  border: 1px solid black;
+    max-height: 65vh;
+    min-height: 40vh;
+    overflow-y: auto;
+    border: 1px solid black;
 }
 
 .add-group-item,
 .group-item {
-  border-bottom: 1px solid black;
-  border-top: none;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  padding: 0;
+    border-bottom: 1px solid black;
+    border-top: none;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 0;
 }
 
 .add-group-item .group-display,
 .add-group-item .group-button,
 .group-item .group-display,
 .group-item .group-button {
-  padding-top: 10px;
-  padding-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .add-group-item .group-display,
 .group-item .group-display {
-  -ms-flex-preferred-size: 60%;
-      flex-basis: 60%;
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
-  padding: 5px;
+    -ms-flex-preferred-size: 60%;
+    flex-basis: 60%;
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    padding: 5px;
 }
 
 .add-group-item .group-button,
 .group-item .group-button {
-  -ms-flex-preferred-size: 40px;
-      flex-basis: 40px;
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
-  padding: 5px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  color: white;
+    -ms-flex-preferred-size: 40px;
+    flex-basis: 40px;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    padding: 5px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: white;
 }
 
 .add-group-item .group-button span,
 .group-item .group-button span {
-  margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 
 .add-group-item .group-button span.glyphicon,
 .group-item .group-button span.glyphicon {
-  height: 20px;
+    height: 20px;
 }
 
 .add-group-item .group-button.edit-button,
 .add-group-item .group-button.add-button,
 .group-item .group-button.edit-button,
 .group-item .group-button.add-button {
-  background-color: #449d44;
+    background-color: #449d44;
 }
 
 .add-group-item .group-button.save-button,
 .group-item .group-button.save-button {
-  background-color: #337ab7;
+    background-color: #337ab7;
 }
 
 .add-group-item .group-button.delete-button,
 .add-group-item .group-button.cancel-button,
 .group-item .group-button.delete-button,
 .group-item .group-button.cancel-button {
-  background-color: #d9534f;
+    background-color: #d9534f;
 }
 
 .add-group-item .group-button.save-button,
 .add-group-item .group-button.cancel-button,
 .group-item .group-button.save-button,
 .group-item .group-button.cancel-button {
-  display: none;
+    display: none;
 }
 
 .add-group-item {
-  margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 
 .add-group-item input {
-  width: 100%;
+    width: 100%;
 }
 
 .group-item {
-  border-bottom: 1px solid black;
-  border-top: none;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  padding: 0;
+    border-bottom: 1px solid black;
+    border-top: none;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 0;
 }
 
 .group-item input {
-  display: none;
+    display: none;
 }
 
 .group-item.active {
-  background-color: #CECECE;
+    background-color: #CECECE;
 }
 
 .group-item.edit input {
-  display: inline-block;
+    display: inline-block;
 }
 
 .group-item.edit label {
-  display: none;
+    display: none;
 }
 
 .group-item.edit .group-button {
-  color: white;
+    color: white;
 }
 
 .group-item.edit .group-button.edit-button,
 .group-item.edit .group-button.delete-button {
-  display: none;
+    display: none;
 }
 
 .group-item.edit .group-button.save-button,
 .group-item.edit .group-button.cancel-button {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
 }
 
 .arrows {
-  max-height: 65vh;
-  min-height: 40vh;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+    max-height: 65vh;
+    min-height: 40vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
 }
 
 .arrows .add-user,
 .arrows .remove-user {
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-  max-width: 100%;
-  height: 100px;
-  text-align: center;
-  padding: 40px 0;
-  cursor: pointer;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    max-width: 100%;
+    height: 100px;
+    text-align: center;
+    padding: 40px 0;
+    cursor: pointer;
 }
 
 .arrows .add-user {
-  background-image: url(/images/left.png);
+    background-image: url(/images/left.png);
 }
 
 .arrows .remove-user {
-  background-image: url(/images/right.png);
+    background-image: url(/images/right.png);
 }
 
 .arrows .remove-user.disable {
-  cursor: not-allowed;
+    cursor: not-allowed;
 }
 
 #member_users,
 #non_member_users {
-  max-height: 65vh;
-  min-height: 40vh;
+    max-height: 65vh;
+    min-height: 40vh;
 }
 
 #member_users option,
 #non_member_users option {
-  padding: 3px;
+    padding: 3px;
 }
 

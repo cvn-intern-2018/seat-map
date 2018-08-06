@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\UserGroup;
 use Illuminate\Support\Facades\Storage;
+
 class UserController extends Controller
 {
     public $response = [];
@@ -24,7 +25,7 @@ class UserController extends Controller
         $admin = [];
 
         foreach ($users as $user) {
-            if($user->permission == 0){
+            if ($user->permission == 0) {
                 $userInfor = [];
                 $userInfor['id'] = $user->id;
                 $userInfor['fullname'] = $user->name;
@@ -36,7 +37,7 @@ class UserController extends Controller
                 $userInfor['username'] = $user->username;
                 $userInfor['shortname'] = $user->short_name;
                 $arr_users[$user->id] = json_encode($userInfor);
-            }else{
+            } else {
                 $admin['id'] = $user->id;
                 $admin['avatar'] = $user->img;
                 $admin['fullname'] = $user->name;
@@ -57,8 +58,6 @@ class UserController extends Controller
             'prv_data' => $request->session('prv_data', 1),
             'prv_error'  => $request->session('prv_error', 1)
             ]);
-
-
     }
 
 
@@ -91,12 +90,11 @@ class UserController extends Controller
     }
 
     public function check_request($infor){
-
         // check username
-        if(empty($infor->username)){
+        if (empty($infor->username)) {
             $this->userInfor['username'] = "";
             $this->userInforErr['usernameErr'] = "Username is required";
-        }else{
+        } else {
             $username = UserController::test_input($infor->username);
              $this->userInfor['username'] = $username;
              if (User::where('username', '=', $username)->count() > 0) {
@@ -107,10 +105,10 @@ class UserController extends Controller
         }
 
         // check fullname
-        if(empty($infor->fullname)){
+        if (empty($infor->fullname)) {
             $this->userInfor['fullname'] = "";
             $this->userInforErr['fullnameErr'] = "Fullname is required";
-        }else{
+        } else {
             $fullname = UserController::test_input($infor->fullname);
              $this->userInfor['fullname'] = $fullname;
             if (strlen($fullname) > 50) {
@@ -119,35 +117,35 @@ class UserController extends Controller
         }
 
         // check password        
-        if(empty($infor->password)){
+        if (empty($infor->password)) {
             $this->userInfor['password'] = "";
             $this->userInforErr['passwordErr'] = "Password is required";
-        }else{
+        } else {
             $password = UserController::test_input($infor->password);
              $this->userInfor['password'] = $password;        
         }
 
         // check email
-        if(empty($infor->email)){
+        if (empty($infor->email)) {
             $this->userInfor['email'] = "";
             $this->userInforErr['emailErr'] = "Email is required";
-        }else{
+        } else {
             $email = UserController::test_input($infor->email);
-             $this->userInfor['email'] = $email;
-            if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+            $this->userInfor['email'] = $email;
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $this->userInforErr['emailErr'] = "Invalid email format";
-            }else if (User::where('email', '=', $email)->count() > 0) {
+            } else if (User::where('email', '=', $email)->count() > 0) {
                 $this->userInforErr['emailErr'] = "Existed";
-            }else if (strlen($email) > 50) {
+            } else if (strlen($email) > 50) {
                 $this->userInforErr['emailErr'] = "The email may not be greater than 50 characters";
             }           
         }
 
         // check short_name
-        if(empty($infor->short_name)){
+        if (empty($infor->short_name)) {
             $this->userInfor['shortname'] = "";
             // $this->userInforErr['shortnameErr'] = "Shortname is required";
-        }else{
+        } else {
             $short_name = UserController::test_input($infor->short_name);
              $this->userInfor['shortname'] = $short_name;          
             if (strlen($short_name) > 50) {
@@ -156,12 +154,12 @@ class UserController extends Controller
         } 
 
         // check phonenumber
-        if(empty($infor->phone)){
+        if (empty($infor->phone)) {
             $this->userInfor['phone'] = "";
             $this->userInforErr['phoneErr'] = "Phonenumber is required";
-        }else{
+        } else {
             $phone = UserController::test_input($infor->phone);
-             $this->userInfor['phone'] = $phone;
+            $this->userInfor['phone'] = $phone;
             if (!preg_match("/^[0-9]*$/", $phone)) {
 
                 $this->userInforErr['phoneErr'] = "Only numbers allowed";
@@ -178,7 +176,7 @@ class UserController extends Controller
             $file = $infor->file('avatar');
             $img = '.' . $file->extension();
             $public = Storage::disk('public_folder');
-            $public->putFileAs('images/user', $file, $infor->username . $img);            
+            $public->putFileAs('images/user', $file, $infor->username . $img);
             $avatar = UserController::test_input($img);
             $this->userInfor['avatar'] = $avatar;
         }  
@@ -186,13 +184,13 @@ class UserController extends Controller
         // check group_id
         if(empty($infor->group_id)){
             $this->userInfor['group_id'] = 0;
-        }else{
+        } else {
             $group_id = UserController::test_input($infor->group_id);
-                $this->userInfor['group_id'] = $group_id;
+            $this->userInfor['group_id'] = $group_id;
             if (!preg_match("/^[0-9]*$/", $group_id)) {
                 $this->userInforErr['group_idErr'] = "Only numbers allowed";
             }
-        }      
+        }
     }
 
     /**
@@ -202,7 +200,9 @@ class UserController extends Controller
     {
         $user = new User();
         $this->check_request($request);
-        if(count($this->userInforErr) == 0){
+        // check status
+        // var_dump($request->avatar); exit;
+        if (count($this->userInforErr) == 0) {
             $this->response['status'] = "Success";
             $user->set($this->userInfor);
             $user->save();
@@ -213,7 +213,7 @@ class UserController extends Controller
         $this->response['userInfor'] = $this->userInfor;
         $this->response['userInforErr'] = $this->userInforErr;
         return json_encode($this->response);
-     }
+    }
 
     /**
      * Handle edit user request submit
@@ -231,7 +231,7 @@ class UserController extends Controller
             if($this->userInforErr['emailErr'] == "Existed"){
                 unset($this->userInforErr['emailErr']);
             }
-            if($this->userInforErr['usernameErr'] == "Existed"){
+            if ($this->userInforErr['usernameErr'] == "Existed") {
                 unset($this->userInforErr['usernameErr']);
             }
                 // $this->response['userInfor'] = $this->userInfor;
@@ -261,7 +261,7 @@ class UserController extends Controller
 
         return redirect()->route('users')->with(['user_id' => $request->user_id]);
 
-        
+
     }
 
     /**

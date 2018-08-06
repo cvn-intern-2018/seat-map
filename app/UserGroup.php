@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
+use App\User;
+use \Config;
 
 class UserGroup extends Model
 {
@@ -16,12 +18,12 @@ class UserGroup extends Model
 
     /**
      * Check if a group name is available in the database
-     * 
+     *
      * @param string $name String that need to check
-     * @param bool  $lock Using table locking on update
-     * @return int 
+     * @param bool $lock Using table locking on update
+     * @return int
      */
-    public static function isValidName(string $name, bool $lock )
+    public static function isValidName(string $name, bool $lock)
     {
         $query = self::where('name', $name);
         if ($lock) {
@@ -32,22 +34,21 @@ class UserGroup extends Model
         if ($count == 0) {
             return 0;
         }
-        return  $count == 1 && $result->first()->id;
+        return $result->first()->id;
     }
 
     /**
      * Update new name for group
-     * 
-     * @param string $group_name;
-     * @return bool 
+     *
+     * @param string $group_name ;
+     * @return bool
      */
     public function updateGroupName(string $group_name)
     {
-        DB::beginTransaction();
-        $applyLock = true;
+        // DB::beginTransaction();
         try {
-            $check_result = self::isValidName($group_name, $applyLock);
-            if ($check_result == 0 ) {
+            $check_result = self::isValidName($group_name, true);
+            if ($check_result == 0) {
                 $this->name = $group_name;
                 $this->save();
                 DB::commit();
@@ -67,13 +68,26 @@ class UserGroup extends Model
 
     /**
      * Add new group to database
-     * 
+     *
      * @param string $group_name
-     * @return int 
+     * @return int
      */
     public static function addNewGroup(string $group_name)
     {
-        return self::insertGetId (['name' => $group_name]);        
+        return self::insertGetId(['name' => $group_name]);
+    }
+
+    /**
+     * Delete a group
+     * 
+     * @param int $group_id
+     */
+    public function deleteGroup()
+    {
+        User::where('user_group_id', $this->id)->update([
+            'user_group_id' => Config::get('constants.UNASSIGNED_GROUP_ID'),
+        ]);
+        $this->delete();
     }
     
 }

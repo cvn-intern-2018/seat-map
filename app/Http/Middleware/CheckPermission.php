@@ -11,14 +11,14 @@ class CheckPermission
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        if (! Auth::check() ) {
-            return redirect('login')    ;
+        if (!Auth::check()) {
+            return redirect('login');
         }
         if (Auth::user()->permission != Config::get('constants.ROLE.ADMIN')) {
             return abort(403);

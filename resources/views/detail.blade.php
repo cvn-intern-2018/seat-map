@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-<link href="{{ asset("/css/detail.css") }}" rel="stylesheet">
+    <link href="{{ asset("/css/detail.css") }}" rel="stylesheet">
     <div class="container-fluid">
         @auth
             <div class="delete-form row">

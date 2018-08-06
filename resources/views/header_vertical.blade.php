@@ -25,9 +25,9 @@
         .navbar-collapse.collapse.in {
             display: block !important;
         }
-        .full-size
-        {
-            padding:0;
+
+        .full-size {
+            padding: 0;
         }
     </style>
     <nav class="navbar navbar-default">
