@@ -70,11 +70,10 @@
 }
 
 /*The preview image*/
-#img-preview
-{
+#img-preview {
     width: 100%;
 }
-#delete-name
-{
+
+#delete-name {
     word-break: break-word;
 }

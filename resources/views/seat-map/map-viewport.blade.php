@@ -18,11 +18,12 @@
         </div>
     </div>
     <div class="panel-body">
-        <div id="seatmap-viewport-{{ $map->id }}" class="seatmap-viewport">
+        <div id="seatmap-viewport-{{ $map->id }}" class="dragscroll seatmap-viewport">
 
 
-            <div class="seatmap-container" data-zoom="1">
-                <img src="{{ getSeatmapImages($map) }}" alt="{{ $map->name }}" class="seatmap-image">
+            <div class=" seatmap-container" data-zoom="1">
+
+                <img src="{{ getSeatmapImages($map) }}"  alt="{{ $map->name }}" class="  seatmap-image">
                 @foreach($users as $user)
                     <div class="user-seat" id="user-seat-{{ $user->id }}"
                          style="top:{{ $user->pivot->Y / 100 }}%;left:{{ $user->pivot->X / 100 }}%"
@@ -39,7 +40,8 @@
                             <div class="info-box container">
                                 <div class="row">
                                     <div class="info-avatar col-xs-4">
-                                        <img src="{{ getUserAvatar($user) }}" alt="" class="img-responsive" onerror="this.src='{{ asset("images/user/mys-man.jpg") }}'">
+                                        <img src="{{ getUserAvatar($user) }}" alt="" class="img-responsive"
+                                             onerror="this.src='{{ asset("images/user/mys-man.jpg") }}'">
                                     </div>
                                     <div class="info-user col-xs-8">
                                         <p class="name-line"><label>Name:</label> <span
@@ -72,13 +74,15 @@
                     <div class="user-seat-template" id="" style="top:0;left:0" draggable="true" hidden>
                         <div class="seat-display">
                             <div class="avatar-container">
-                                <img src="" alt="" class="avatar" onerror="this.src='{{ asset("images/user/mys-man.jpg") }}'">
+                                <img src="" alt="" class="avatar"
+                                     onerror="this.src='{{ asset("images/user/mys-man.jpg") }}'">
                             </div>
                             <div class="name"></div>
                             <div class="info-box container">
                                 <div class="row">
                                     <div class="info-avatar col-xs-4">
-                                        <img src="" alt="" class="img-responsive" onerror="this.src='{{ asset("images/user/mys-man.jpg") }}'">
+                                        <img src="" alt="" class="img-responsive"
+                                             onerror="this.src='{{ asset("images/user/mys-man.jpg") }}'">
                                     </div>
                                     <div class="info-user col-xs-8">
                                         <p><label>Name:</label><span class="name"></span></p>
@@ -103,3 +107,4 @@
     </div>
 </div>
 <script src="{{ asset('js/deleteSeatmap.js') }}"></script>
+<script src="{{ asset("/js/drag-to-scroll.js") }}"></script>

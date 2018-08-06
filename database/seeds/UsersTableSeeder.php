@@ -25,7 +25,7 @@ class UsersTableSeeder extends Seeder
             'short_name' => 'Admin',
             'permission' => 1,
             'phone' => '01237015928',
-            'img'=> '.jpg',
+            'img' => '.jpg',
         ]);
         factory(App\User::class, 10)->create([
             'phone' => '0123456789',

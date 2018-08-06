@@ -72,6 +72,7 @@ class UserGroupController extends Controller
             'active_group' => $validated_data['user_group_id']
         ]);
     }
+
     /**
      * Handle delete group request submit
      */

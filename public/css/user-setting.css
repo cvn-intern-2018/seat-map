@@ -1,369 +1,376 @@
 /*remove default settings*/
-    *{
-        margin: 0;
-        padding: 0;
-    }
+* {
+    margin: 0;
+    padding: 0;
+}
 
-    ul{
-        list-style: none;
-    }
+ul {
+    list-style: none;
+}
 
-    /*layout*/
-    body > div{
-        width: 100%;
-    }
-    #left{
-        height: 400px;
-        width: 30%;
-        overflow: auto;
-    }
+/*layout*/
+body > div {
+    width: 100%;
+}
 
-    #right{
-        width: 70%;
-    }
+#left {
+    height: 400px;
+    width: 30%;
+    overflow: auto;
+}
 
-    #right input, #right select{
-        text-align: center;
-    }
-    #right input:hover, #right select:hover{
-        cursor: pointer;
-    }
+#right {
+    width: 70%;
+}
 
-    .flex-container{
-        display: flex;
-        flex-flow: row nowrap;
+#right input, #right select {
+    text-align: center;
+}
 
-    }
+#right input:hover, #right select:hover {
+    cursor: pointer;
+}
 
-    .flex-container > *{
-        width: 49%;
-        /*margin: 5px;*/
-    }
+.flex-container {
+    display: flex;
+    flex-flow: row nowrap;
 
-    /*border*/
-    #right{
-        border: 1px solid;
-    }
-    #left {
-        border: 1px solid;
-        border-right: 1px;
-        /*border-top: 1px;*/
-        border-left: 1px;
-    }
+}
 
-    #left > *{
-        border: 1px solid;
-    }
-    #left > p{
-        border-bottom: 0px;
-        margin: 0;
-    }
-    #left > ul{
-        border-right: 0px;
-        border-top: 0px;
-    }
-    #left > ul li{
-        border-top: 1px solid;
-    }
+.flex-container > * {
+    width: 49%;
+    /*margin: 5px;*/
+}
 
-    #left > ul li p{
-        border: 1px solid;
-        border-radius: 5px;
-        border-color: grey; 
-    }
+/*border*/
+#right {
+    border: 1px solid;
+}
 
-    /*left*/
-    #left > p{
-        font-weight: bold;
-        width: 50%;
-        text-align: center;
-    }
+#left {
+    border: 1px solid;
+    border-right: 1px;
+    /*border-top: 1px;*/
+    border-left: 1px;
+}
 
-    #left ul p:hover{
-        background-color: yellow;
-        cursor: pointer;
-    }
+#left > * {
+    border: 1px solid;
+}
 
+#left > p {
+    border-bottom: 0px;
+    margin: 0;
+}
 
+#left > ul {
+    border-right: 0px;
+    border-top: 0px;
+}
 
-    #left > ul li p{
-        text-align: center;
-    }
+#left > ul li {
+    border-top: 1px solid;
+}
 
-    #left > ul li.flex-container{
-        justify-content: space-around;
-        /*align-items: center;*/
-        height: 40px;
-        overflow: hidden;
-    }
-    #left > ul li > *{
-        /*width: 45%;*/
-        margin: 5px;
-    }
+#left > ul li p {
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: grey;
+}
 
-    #left > ul li p{
-        width: 70%;
-        overflow: hidden;
-        font-weight: bold;
-        padding: 4px;
-    }
+/*left*/
+#left > p {
+    font-weight: bold;
+    width: 50%;
+    text-align: center;
+}
 
-    #left > ul li button{
-        width: 20%;
-        padding: 0;
-        background: white;
-    }
+#left ul p:hover {
+    background-color: yellow;
+    cursor: pointer;
+}
 
-    #left > ul li button img{
-        /*width: 50%;*/
-        height: 100%;
-        border: none;
-    }
-    
-    /*right*/
-    #right > form{
-        width: 100%;
-    }
+#left > ul li p {
+    text-align: center;
+}
 
-    #right > form > div[id=avatarContainer]{
-        flex-flow: column;
-        justify-content: center;
-        align-items: center;
-    }
-    #right > form > div[id=avatarContainer] img, #right > form > div[id=avatarContainer] div{
-        width: 50%;
-    }
+#left > ul li.flex-container {
+    justify-content: space-around;
+    /*align-items: center;*/
+    height: 40px;
+    overflow: hidden;
+}
 
-    img{
-        height: 30%;
-        border: 1px solid black;
+#left > ul li > * {
+    /*width: 45%;*/
+    margin: 5px;
+}
 
-    }
+#left > ul li p {
+    width: 70%;
+    overflow: hidden;
+    font-weight: bold;
+    padding: 4px;
+}
+
+#left > ul li button {
+    width: 20%;
+    padding: 0;
+    background: white;
+}
+
+#left > ul li button img {
+    /*width: 50%;*/
+    height: 100%;
+    border: none;
+}
+
+/*right*/
+#right > form {
+    width: 100%;
+}
+
+#right > form > div[id=avatarContainer] {
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#right > form > div[id=avatarContainer] img, #right > form > div[id=avatarContainer] div {
+    width: 50%;
+}
+
+img {
+    height: 30%;
+    border: 1px solid black;
+
+}
 
 /*    #right > div.flex-container > *{
         width: 150px;
     }*/
 
+#userinformation {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+}
 
-    #userinformation{
-        display: flex;
-        flex-flow: column wrap;
-        justify-content: center;
-        align-items: center;
+#userinformation > * {
+    /*margin :2px;*/
+    width: 90%;
+
+}
+
+#userinformation > div {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+
+}
+
+#userinformation > div > * {
+    width: 40%;
+    margin: 2px;
+}
+
+#userinformation p {
+    margin: 0;
+}
+
+/*style*/
+input[type=file] {
+    display: none;
+}
+
+input[name=nameEntered] {
+    text-align: center;
+}
+
+button, input[name=inptSubmitPopup], input[name=inptCancelPopup], input[name=changeAvar], input[name=cancel], input[name=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 0px 2px 0px 2px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button[name=deleteAvar] {
+    background-color: #d9534f;
+}
+
+input[name=cancel] {
+    background-color: #d9534f;
+}
+
+input[type=submit], input[type=reset], button[name=addUser] {
+    padding: 5px;
+}
+
+button[name=changeAvar], button[name=changeAvarPopup], button[name=deleteAvar] {
+    padding: 5px;
+    margin: 2px;
+
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+/*display a pop-up*/
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Full-width input fields */
+
+/* Extra styles for the cancel button */
+.inptCancelPopup {
+    width: auto;
+    /*padding: 10px 18px;*/
+    background-color: #f44336;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    /*display: block;*/
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    border: 1px solid #888;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+    padding: 20px;
+
+}
+
+#avatarPopup {
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#avatarPopup img {
+    height: 100px;
+}
+
+/* Center the image and position the close button */
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-flow: column wrap;
+    align-items: center;
+}
+
+.container > * {
+    width: 100%;
+    margin: 4px 0px 4px 0px;
+}
+
+.container p {
+    margin: 4px 0px 0px 0px;
+}
+
+.container div {
+    display: flex;
+    justify-content: center;
+}
+
+.container div > * {
+    margin: 1px;
+    width: 25%;
+    padding: 2px;
+    margin: 10px;
+}
+
+.container input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 4px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.container input[name=inptCancelPopup], .container input[name=inptSubmitPopup] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    cursor: pointer;
+    width: 50%;
+}
+
+.container input[name=inptCancelPopup] {
+    background-color: #f44336;
+    text-align: center;
+}
+
+/* The Close Button (x) */
+.close {
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: #000;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: red;
+    cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+    from {
+        -webkit-transform: scale(0)
     }
-
-    #userinformation > *{
-        /*margin :2px;*/
-        width: 90%;
-
+    to {
+        -webkit-transform: scale(1)
     }
+}
 
-    #userinformation > div{
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: center;
-
-
+@keyframes animatezoom {
+    from {
+        transform: scale(0)
     }
-
-    #userinformation > div > *{
-        width: 40%;
-        margin: 2px;
+    to {
+        transform: scale(1)
     }
+}
 
-    #userinformation p{
-        margin: 0;
-    }
+.active {
+    background-color: red;
+    color: black;
+}
 
-    /*style*/
-    input[type=file]{
-        display: none;
-    }
-    
-    input[name=nameEntered]{
-        text-align: center;
-    }
-
-    button, input[name=inptSubmitPopup], input[name=inptCancelPopup], input[name=changeAvar], input[name=cancel], input[name=submit]{
-        background-color: #4CAF50;
-        color: white;
-        padding: 0px 2px 0px 2px;
-        border: none;
-        cursor: pointer;
-        border-radius: 5px;
-    }
-
-    button[name=deleteAvar]{
-        background-color: #d9534f;
-    }
-    input[name=cancel]{
-        background-color: #d9534f;
-    }
-
-
-    input[type=submit], input[type=reset], button[name=addUser]{
-        padding: 5px;
-    }
-
-    button[name=changeAvar], button[name=changeAvarPopup], button[name=deleteAvar]{
-        padding: 5px;
-        margin: 2px;
-
-    }
-
-    button:hover {
-        opacity: 0.8;
-    }
-
-    /*display a pop-up*/
-    body {font-family: Arial, Helvetica, sans-serif;}
-
-    /* Full-width input fields */
-
-
-
-    /* Extra styles for the cancel button */
-    .inptCancelPopup {
-        width: auto;
-        /*padding: 10px 18px;*/
-        background-color: #f44336;
-    }
-
-
-
-
-    /* The Modal (background) */
-    .modal {
-        display: none; /* Hidden by default */
-        /*display: block;*/
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    }
-
-    /* Modal Content/Box */
-    .modal-content {
-        background-color: #fefefe;
-        border: 1px solid #888;
-        position: fixed;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        width: 30%;
-        padding: 20px;
-
-    }
-    #avatarPopup{
-        flex-flow: column;
-        justify-content: center;
-        align-items: center;
-    }
-    #avatarPopup img{
-        height: 100px;
-    }
-    /* Center the image and position the close button */
-    .container {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        flex-flow: column wrap;
-        align-items: center;
-    }
-
-    .container > *{
-        width: 100%;
-        margin: 4px 0px 4px 0px;
-    }
-
-    .container p{
-        margin: 4px 0px 0px 0px;
-    }
-
-    .container div{
-        display: flex;
-        justify-content: center;
-    }
-
-    .container div > *{
-        margin: 1px;
-        width: 25%;
-        padding: 2px;
-        margin: 10px;
-    }
-
-    .container input{
-        width: 100%;
-        padding: 12px 20px;
-        margin: 4px;
-        display: inline-block;
-        border: 1px solid #ccc;
-        box-sizing: border-box;
-    }
-
-    .container input[name=inptCancelPopup], .container input[name=inptSubmitPopup]{
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        padding: 14px 20px;
-        cursor: pointer;
-        width: 50%;
-    }
-
-    .container input[name=inptCancelPopup]{
-        background-color: #f44336;
-        text-align: center;
-    }
-
-
-
-    /* The Close Button (x) */
-    .close {
-        position: absolute;
-        right: 25px;
-        top: 0;
-        color: #000;
-        font-size: 35px;
-        font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-        color: red;
-        cursor: pointer;
-    }
-
-    /* Add Zoom Animation */
-    .animate {
-        -webkit-animation: animatezoom 0.6s;
-        animation: animatezoom 0.6s
-    }
-
-    @-webkit-keyframes animatezoom {
-        from {-webkit-transform: scale(0)} 
-        to {-webkit-transform: scale(1)}
-    }
-        
-    @keyframes animatezoom {
-        from {transform: scale(0)} 
-        to {transform: scale(1)}
-    }
-
-
-
-
-    .active{
-        background-color: red;
-        color: black;
-    }
-
-    p[name=Error]{
-        color: #9f224e;
-        font-size: 11px;
-    }
+p[name=Error] {
+    color: #9f224e;
+    font-size: 11px;
+}

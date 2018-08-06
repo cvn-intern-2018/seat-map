@@ -16,12 +16,12 @@ class UserGroup extends Model
 
     /**
      * Check if a group name is available in the database
-     * 
+     *
      * @param string $name String that need to check
-     * @param bool  $lock Using table locking on update
-     * @return int 
+     * @param bool $lock Using table locking on update
+     * @return int
      */
-    public static function isValidName(string $name, bool $lock )
+    public static function isValidName(string $name, bool $lock)
     {
         $query = self::where('name', $name);
         if ($lock) {
@@ -32,14 +32,14 @@ class UserGroup extends Model
         if ($count == 0) {
             return 0;
         }
-        return  $count == 1 && $result->first()->id;
+        return $count == 1 && $result->first()->id;
     }
 
     /**
      * Update new name for group
-     * 
-     * @param string $group_name;
-     * @return bool 
+     *
+     * @param string $group_name ;
+     * @return bool
      */
     public function updateGroupName(string $group_name)
     {
@@ -47,7 +47,7 @@ class UserGroup extends Model
         $applyLock = true;
         try {
             $check_result = self::isValidName($group_name, $applyLock);
-            if ($check_result == 0 ) {
+            if ($check_result == 0) {
                 $this->name = $group_name;
                 $this->save();
                 DB::commit();
@@ -67,13 +67,13 @@ class UserGroup extends Model
 
     /**
      * Add new group to database
-     * 
+     *
      * @param string $group_name
-     * @return int 
+     * @return int
      */
     public static function addNewGroup(string $group_name)
     {
-        return self::insertGetId (['name' => $group_name]);        
+        return self::insertGetId(['name' => $group_name]);
     }
-    
+
 }
