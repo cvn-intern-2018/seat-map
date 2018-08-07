@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('home-active','active')
+@section('users-active','active')
 @section('title','Home')
 @section('big-title','Cybozu VN')
 @section('content')
@@ -30,7 +30,7 @@
                       <input name="password" value="123" type="password" placeholder="Enter password" />
                       <div >
                           <input name="inptSubmitPopup" type="submit" value="Save" readonly/>
-                          <input onclick="hidePopup()" name="inptCancelPopup" value="Cancel" readonly/>
+                          <input name="inptCancelPopup" value="Cancel" readonly/>
                       </div>
                     </div>
           </form>
@@ -41,7 +41,7 @@
         <div id="left">
             <ul id="list-of-users" data-prv_data="{{session('prv_data')}}" data-info="{{ session('user_id') }}" >
                 <li class="flex-container_">
-                    <p onclick="document.getElementById('id01').style.display='block'" name="addUser">Add a new user</p>
+                    <p name="addUser">Add a new user</p>
                     <div></div>
                 </li>
                 <li class="flex-container_">

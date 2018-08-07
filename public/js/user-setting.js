@@ -77,8 +77,14 @@ function discardChanges(){
     displayUserInfor(infor);
 }
 
+// function to hide a pop-up
 function hidePopup(){
-    document.getElementById('id01').style.display='none'
+    document.getElementById('id01').style.display='none';
+};
+
+// function to show a pop-up
+function showPopup(){
+    document.getElementById('id01').style.display='block';
 };
 
 //function to add a user
@@ -164,11 +170,10 @@ function addUser(event){
                 nodeImg.onclick = function(){deleteUser(this)};
                 nodeImg.setAttribute('src', "images\/remove.png");
                 nodeImg.setAttribute('alt', "delete");
-                var nodeBtn = document.createElement("button");
-                nodeBtn.appendChild(nodeImg);
-                nodeBtn.setAttribute('type', "button");
+                var nodeDiv = document.createElement("div");
+                nodeDiv.appendChild(nodeImg);
                 nodeLi.appendChild(nodeP);
-                nodeLi.appendChild(nodeBtn);
+                nodeLi.appendChild(nodeDiv);
                 var items = document.querySelector("ul[id=list-of-users]");
                 items.insertBefore(nodeLi, items.childNodes[4]);
                 document.getElementById('id01').style.display='none';
@@ -230,4 +235,14 @@ function deleteUser(currentItem){
     })
 
 })($)
+
+
+// addEventListener
+window.onload = function(){
+    // hide pop-up
+    document.querySelector("input[name=inptCancelPopup]").addEventListener("click", hidePopup);
+    // show pop-up
+    document.querySelector("#left p[name=addUser]").addEventListener("click", showPopup);    
+}
+
 
