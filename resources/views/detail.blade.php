@@ -2,8 +2,6 @@
 @section('title','Home')
 @section('big-title','Cybozu VN')
 @section('scripts')
-    <script src="{{ asset('js/deleteSeatmap.js') }}"></script>
-    <script src="{{ asset("/js/detail.js") }}"></script>
 @endsection
 
 @section('content')

@@ -2,8 +2,10 @@ var zindex = 2;
 var seatmap = document.querySelector(".seatmap-container");
 var mapWidth = seatmap.clientWidth;
 var mapHeight = seatmap.clientHeight;
+var waiterSetTimeOut = 0;
+var arrangedUserSeat = document.getElementsByClassName("user-seat");
 /**
- *
+ *Bind listener for "Click on arranged user" to view info-box
  */
 $('.user-seat').click(
     function () {
@@ -19,10 +21,9 @@ $('.user-seat').click(
         mapHeight = seatmap.clientHeight;
         var top = parseFloat(this.style.top) * mapHeight / 100;
         var left = parseFloat(this.style.left) * mapWidth / 100;
-        if (top < 163) $(this).find(".info-box").css("bottom", "auto");
-        if (mapHeight - top < 163) $(this).find(".info-box").css("bottom", "100%");
-        if (left < 150) $(this).find(".info-box").css("left", "220%");
-        if (mapWidth - left < 150) $(this).find(".info-box").css("left", "-120%");
+        var infoBox = $(this).find(".info-box");
+        setInfoBox(infoBox, top, left)
+        ';'
     }
 )
 
@@ -56,14 +57,34 @@ function setInfoBox(infoBox, top, left) {
     }
 }
 
+
 /**
- *
+ * Bind listener for "filter user name" input
  */
-$('.user-seat').click(
-    function () {
-        var top = parseFloat(this.style.top) * mapHeight / 100;
-        var left = parseFloat(this.style.left) * mapWidth / 100;
-        var infoBox = $(this).find(".info-box");
-        setInfoBox(infoBox, top, left);
-    }
-)
+document.querySelector("#filter-name").addEventListener("keyup", function () {
+    clearTimeout(waiterSetTimeOut);
+    var _this = this;
+    waiterSetTimeOut = setTimeout(function () {
+        var key = _this.value;
+        if (key !== "") {
+            Array.from(arrangedUserSeat).forEach(function (el) {
+                el.style.display = "none";
+            });
+            Array.from(arrangedUserSeat).filter(function (el) {
+                var name = $(el.querySelector(".name")).html();
+                name = name.toLowerCase();
+                key = key.toLowerCase();
+                if (name.indexOf(key) !== -1) {
+                    return true;
+                }
+                return false;
+            }).forEach(function (el) {
+                el.style.display = "";
+            })
+        } else {
+            Array.from(arrangedUserSeat).forEach(function (el) {
+                el.style.display = "";
+            });
+        }
+    }, 500);
+})

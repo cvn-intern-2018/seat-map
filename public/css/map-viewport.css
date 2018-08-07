@@ -1,7 +1,4 @@
-.seat-map
-{
-    margin:10px;
-}
+
 #delete-name {
     word-break: break-word;
 }
@@ -15,7 +12,10 @@
 .seatmap-button {
     height: 40px;
 }
-
+.filter
+{
+    margin:10px;
+}
 .seatmap-button:hover {
     position: sticky;
     transform: scale(1.2);
@@ -120,7 +120,7 @@
 
 .seatmap-viewport .seatmap-container .user-seat .info-box {
     display: none;
-
+    word-wrap:break-word;
 }
 
 .seatmap-viewport .seatmap-container .user-seat.active .info-box {

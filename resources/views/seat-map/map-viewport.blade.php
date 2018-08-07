@@ -10,8 +10,18 @@
      */
 @endphp
 
-<div class="seat-map">
-    <link rel="stylesheet" href="{{ asset("css/seatmap-viewport.css") }}">
+
+<div class="col-md-12 filter">
+    <div class="col-md-2 pull-right">
+        <input placeholder="Input username to filter on map"
+               class="form-control form-control-sm form-control-borderless"
+               type="text" name="filter" id="filter-name">
+    </div>
+
+</div>
+
+<div class="seat-map col-md-12">
+    <link rel="stylesheet" href="{{ asset("css/map-viewport.css") }}">
     <div class="  panel panel-default">
         <div class="panel-heading">
             <div class="map-name">
@@ -37,6 +47,7 @@
                                     <img src="{{ getUserAvatar($user) }}" alt="" class="avatar"
                                          onerror="this.src='{{ asset("images/user/mys-man.jpg") }}'">
                                 </div>
+
                                 <div class="name">{{ $user->short_name }}</div>
                                 <div class="info-box container">
                                     <div class="row">
@@ -58,7 +69,7 @@
                                     @isset($edit_mode)
                                         <div class="row">
                                             <div class="arranged-user-action col-xs-12">
-                                                <button  class="btn btn-danger remove-arranged-user" type="button"
+                                                <button class="btn btn-danger remove-arranged-user" type="button"
                                                         data-toggle="modal"
                                                         data-target="#remove-confirm" data-id="{{ $user->id }}"
                                                         data-name="{{ $user->name }}">
@@ -72,7 +83,7 @@
                         </div>
                     @endforeach
                     @isset($edit_mode)
-         
+
                         <div class="user-seat-template" id="" style="top:0;left:0" draggable="true" hidden>
                             <div class="seat-display">
                                 <div class="avatar-container">
@@ -80,6 +91,7 @@
                                          onerror="this.src='{{ asset("images/user/mys-man.jpg") }}'">
                                 </div>
                                 <div class="name"></div>
+                                <div class="group-name"></div>
                                 <div class="info-box container">
                                     <div class="row">
                                         <div class="info-avatar col-xs-4">
@@ -109,5 +121,9 @@
         </div>
     </div>
 </div>
+
 <script src="{{ asset('js/deleteSeatmap.js') }}"></script>
 <script src="{{ asset("/js/drag-to-scroll.js") }}"></script>
+@if(!isset($edit_mode))
+    <script src="{{ asset("/js/map-viewport.js") }}"></script>
+@endif
