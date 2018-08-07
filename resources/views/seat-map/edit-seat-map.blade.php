@@ -12,7 +12,7 @@
 @endsection
 @section("vertical")
     <link rel="stylesheet" href="{{ asset("/css/edit-seat-map.css") }}">
-    <div class="control-panel">
+    <div class="control-panel col-md-12">
         <div class="row ">
             <div class="name-form col-md-12">
                 <label for="seatmap_name_holder">Seat map name:</label>
@@ -22,16 +22,15 @@
                        value="{{ $map->name }}">
             </div>
             <div class="settings col-md-12">
-                <div class="form-group col-sm-12 col-xs-12 col-md-12 col-lg-6 ">
+                <div class="form-group col-md-12 col-lg-6 ">
                     <input type="checkbox" name="display_name" id="display_name" checked>
-                    <label for="display_name">Show name</label>
+                    <label for="display_name">show name</label>
                 </div>
-                <div class="form-group col-sm-12 col-xs-12  col-md-12 col-lg-6">
+                <div class="form-group  col-md-12 col-lg-6">
                     <input type="checkbox" name="display_group" id="display_group" checked>
-                    <label for="display_group">Show group</label>
+                    <label for="display_group">show group</label>
                 </div>
                 <div class="btn-group col-md-12">
-
                     <button class="btn btn-default zoom-out col-md-6" type="button"><span
                                 class="glyphicon glyphicon-zoom-out"></span></button>
                     <button class="btn btn-default zoom-in col-md-6" type="button"><span
@@ -46,9 +45,11 @@
                     </div>
                 </div>
             </div>
-            <div class="user-list col-sm-offset-2 col-sm-8 col-md-offset-1 col-md-10">
+
+            <div class="user-list col-md-offset-1 col-md-10">
+
                 @foreach ($users as $user)
-                    <div class=" col-sm-12 col-md-6 col-xs-12 col-lg-6 ">
+                    <div class="user-container">
                         <div class="user-select" data-id="{{ $user->id }}"
                              data-name="{{ $user->name }}"
                              data-avatar="{{ getUserAvatar($user) }}"
@@ -62,7 +63,7 @@
                                 <img src="{{ getUserAvatar($user) }}" alt="" class="img-responsive"
                                      onerror="this.src='{{ asset("images/user/mys-man.jpg") }}'">
                             </div>
-                            <div  class="name col-md-12">{{ $user->short_name }}</div>
+                            <div class="name col-md-12">{{ $user->short_name }}</div>
                         </div>
                     </div>
                 @endforeach

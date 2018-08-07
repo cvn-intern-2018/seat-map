@@ -1,7 +1,6 @@
 <header>
 
     <style>
-
         .navbar-header {
             float: none;
         }
@@ -24,10 +23,6 @@
 
         .navbar-collapse.collapse.in {
             display: block !important;
-        }
-
-        .full-size {
-            padding: 0;
         }
     </style>
     <nav class="navbar navbar-default">

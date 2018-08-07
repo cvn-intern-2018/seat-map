@@ -1,13 +1,19 @@
+.full-size
+{
+    padding:0;
+}
 .user-seat {
     z-index: 1;
 }
 
-.user-select {
-    background-color: transparent;
+.user-select
+{
+    display: table;
+    margin: 0 auto;
+    margin-bottom: 5px;
+    cursor: pointer;
 }
-.user-list > * {
-    min-height: 0;
-}
+
 .sm-btn {
     display: block;
     margin-left: auto;
@@ -78,11 +84,6 @@ label, input[type="checkbox" i] {
     height: 40vh;
 }
 
-.user-list .user-select {
-    display: inline-block;
-    cursor: move;
-
-}
 
 .user-list .user-select[hidden] {
     display: none;

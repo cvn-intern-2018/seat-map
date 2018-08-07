@@ -10,14 +10,15 @@
      */
 @endphp
 
-
+<div class="row">
 <div class="col-md-12 filter">
-    <div class="col-md-3 pull-right">
+    <div class="row">
+    <div class="col-md-offset-9 col-lg-offset-9 col-md-3 col-lg-3 ">
         <input onclick="this.select();" autocomplete="off" placeholder="Input username to filter on map"
                class="form-control form-control-sm form-control-borderless"
                type="text" name="filter" id="filter-name">
     </div>
-
+    </div>
 </div>
 
 <div class="seat-map col-md-12">
@@ -121,7 +122,7 @@
         </div>
     </div>
 </div>
-
+</div>
 <script src="{{ asset('js/deleteSeatmap.js') }}"></script>
 <script src="{{ asset("/js/drag-to-scroll.js") }}"></script>
 @if(!isset($edit_mode))
