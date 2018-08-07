@@ -24,8 +24,7 @@ class SeatmapController extends Controller
         $map = Map::with('users.group')->findOrFail($id);
         return view('detail', [
             'map' => $map,
-            'users' => $map->users,
-            'edit_mode' => true,
+            'users' => $map->users
         ]);
     }
 
