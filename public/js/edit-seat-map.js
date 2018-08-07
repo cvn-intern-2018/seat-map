@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     var seatmap = document.querySelector(".seatmap-container");
     var arrangedUserSeat = document.getElementsByClassName("user-seat");
     var userList = document.querySelectorAll(".user-list .user-select");
+    var userBox = document.querySelector(".user-list");
     var controlPanel = document.querySelector(".control-panel-container");
     var scrollThreshold = 0;
 
@@ -131,18 +132,19 @@ document.addEventListener("DOMContentLoaded", function (e) {
      * Bind listener for drop on seat map
      */
     seatmap.addEventListener("drop", function (e) {
-
+     
         e.preventDefault();
 
         var [realX, realY] = getOffsets(e);
         if (e.target !== this) {
+            
             var parent = e.target.closest(".user-seat");
             realX += parseFloat(parent.style.left) * mapWidth / 100 - avatarSize / 2;
             realY += parseFloat(parent.style.top) * mapHeight / 100 - avatarSize / 2;
 
         }
         if (e.dataTransfer.getData("type") === "new") {
-
+            
             // Clone object
             var newSeat = document.querySelector(".user-seat-template").cloneNode(true);
             setAttributesNewSeat(newSeat, e);
@@ -179,7 +181,23 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
             }
         }
+    });    
+
+    /**
+     * Bind listener for the user select box when drop an user
+     */
+    userBox.addEventListener("drop", function (e) {
+        event.preventDefault();
+        var btnRemove = $( "#user-seat-"+ e.dataTransfer.getData("object_id")+" .remove-arranged-user");
+        btnRemove.click();
     });
+       
+    /**
+     * Bind listener for the user select box
+     */
+    userBox.addEventListener("dragover", function (e) {
+        event.preventDefault();
+    });   
 
     /**
      * Bind listener for zoom button

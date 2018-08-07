@@ -41,7 +41,7 @@ function displayUserInfor(infor) {
         infor = document.getElementById("list-of-users").dataset.prv_data;
     }
     infor = JSON.parse(infor);
-    document.querySelector("form[name=infor] img[id=avatar]").src = "images/user/" + infor.username + infor.avatar;
+    document.querySelector("form[name=infor] img[id=avatar]").src = "images/user/" + infor.id + infor.avatar;
     document.querySelector("form[name=infor] input[name=short_name]").value = infor.shortname;
     document.querySelector("form[name=infor] input[name=fullname]").value = infor.fullname;
     document.querySelector("form[name=infor] input[name=email]").value = infor.email;
@@ -77,8 +77,14 @@ function discardChanges(){
     displayUserInfor(infor);
 }
 
+// function to hide a pop-up
 function hidePopup(){
-    document.getElementById('id01').style.display='none'
+    document.getElementById('id01').style.display='none';
+};
+
+// function to show a pop-up
+function showPopup(){
+    document.getElementById('id01').style.display='block';
 };
 
 //function to add a user
@@ -164,11 +170,10 @@ function addUser(event){
                 nodeImg.onclick = function(){deleteUser(this)};
                 nodeImg.setAttribute('src', "images\/remove.png");
                 nodeImg.setAttribute('alt', "delete");
-                var nodeBtn = document.createElement("button");
-                nodeBtn.appendChild(nodeImg);
-                nodeBtn.setAttribute('type', "button");
+                var nodeDiv = document.createElement("div");
+                nodeDiv.appendChild(nodeImg);
                 nodeLi.appendChild(nodeP);
-                nodeLi.appendChild(nodeBtn);
+                nodeLi.appendChild(nodeDiv);
                 var items = document.querySelector("ul[id=list-of-users]");
                 items.insertBefore(nodeLi, items.childNodes[4]);
                 document.getElementById('id01').style.display='none';
@@ -230,4 +235,37 @@ function deleteUser(currentItem){
     })
 
 })($)
+
+
+// addEventListener
+window.onload = function(){
+    // hide pop-up
+    document.querySelector("input[name=inptCancelPopup]").addEventListener("click", hidePopup);
+    // show pop-up
+    document.querySelector("#left p[name=addUser]").addEventListener("click", showPopup);
+    // displayUser
+    document.querySelectorAll("#left p[name=name]").forEach(function(item){
+        item.addEventListener("click", function(){
+                displayUser(this);
+            });
+    });
+    // delete a user
+    document.querySelectorAll("#left img").forEach(function(item){
+        item.addEventListener("click", function(){
+                deleteUser(this)
+            });
+    });
+    // change avatar
+    document.querySelector("#right input[type=file]").addEventListener("change", function(){
+        changeAvatar(event);
+    });
+    // discard changes
+    document.querySelector("#right input[name=cancel]").addEventListener("click", discardChanges);
+
+    // submit pop-up
+    document.querySelector("form[name=inforPopup]").addEventListener("submit", function(){
+        addUser(event);
+    });    
+}
+
 

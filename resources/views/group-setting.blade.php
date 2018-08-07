@@ -1,5 +1,5 @@
 @extends("layouts.app")
-
+@section('groups-active','active')
 @section("title", "Group setting")
 @section("big-title", "Group setting")
 @section("groups-active", "active")

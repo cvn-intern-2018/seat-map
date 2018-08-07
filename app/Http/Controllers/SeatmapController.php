@@ -24,8 +24,7 @@ class SeatmapController extends Controller
         $map = Map::with('users.group')->findOrFail($id);
         return view('detail', [
             'map' => $map,
-            'users' => $map->users,
-            'edit_mode' => true,
+            'users' => $map->users
         ]);
     }
 
@@ -76,13 +75,13 @@ class SeatmapController extends Controller
             $deletedSeatmapNoti = $name . Lang::get('notification.deleted');
             $notifications = [$deletedSeatmapNoti];
             if ($request->returnHome == 1)
-                return redirect()->route('home');
+                return redirect()->route('home')->with(['notifications' => $notifications]);
             else
                 return back()->with(['notifications' => $notifications]);
 
         } else {
-            $permissionNoti = Lang::get('validation.permission');
-            return back()->with(['notifications' => $permissionNoti]);
+            $validateNoti = Lang::get('validation.permission');
+            return back()->with(['notifications' => $validateNoti]);
         }
 
 
@@ -141,9 +140,11 @@ class SeatmapController extends Controller
                 Seat::updateUserSeat($seatmap_id, $user_seat);
             }
             DB::commit();
+            $editSeatmapNoti = $request->seatmap_name . Lang::get('notification.saved');
+            $notifications = [$editSeatmapNoti];
             return redirect()->route('seatmapDetail', [
                 'id' => $seatmap_id,
-            ]);
+            ])->with(['notifications' => $notifications]);
         } catch (Exception $e) {
             DB::rollback();
             throw $e;
