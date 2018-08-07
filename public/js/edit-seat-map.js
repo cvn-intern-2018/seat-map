@@ -191,7 +191,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         var btnRemove = $( "#user-seat-"+ e.dataTransfer.getData("object_id")+" .remove-arranged-user");
         btnRemove.click();
     });
-       
+
     /**
      * Bind listener for the user select box
      */
@@ -252,7 +252,9 @@ document.addEventListener("DOMContentLoaded", function (e) {
                     el.style.display = "none";
                 });
                 Array.from(userList).filter(function (el) {
-                    if (el.dataset.name.indexOf(key) !== -1) {
+                    var name = el.dataset.name.toLowerCase();
+                    key = key.toLowerCase();
+                    if (name.indexOf(key) !== -1) {
                         return true;
                     }
                     return false;
@@ -261,6 +263,37 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 })
             } else {
                 Array.from(userList).forEach(function (el) {
+                    el.style.display = "";
+                });
+            }
+        }, 500);
+    })
+
+    /**
+     * Bind listener for "filter user name" input
+     */
+    document.querySelector("#filter-name").addEventListener("keyup", function () {
+        clearTimeout(waiterSetTimeOut);
+        var _this = this;
+        waiterSetTimeOut = setTimeout(function () {
+            var key = _this.value;
+            if (key !== "") {
+                Array.from(arrangedUserSeat).forEach(function (el) {
+                    el.style.display = "none";
+                });
+                Array.from(arrangedUserSeat).filter(function (el) {
+                    var name = $(el.querySelector(".name")).html();
+                    name = name.toLowerCase();
+                    key = key.toLowerCase();
+                    if (name.indexOf(key) !== -1) {
+                        return true;
+                    }
+                    return false;
+                }).forEach(function (el) {
+                    el.style.display = "";
+                })
+            } else {
+                Array.from(arrangedUserSeat).forEach(function (el) {
                     el.style.display = "";
                 });
             }
@@ -316,7 +349,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
      * Bind listener for scroll screen
      */
     window.onscroll = function (e) {
-        this.console.log(scrollThreshold);
         if (window.pageYOffset >= scrollThreshold) {
             controlPanel.classList.add("fix-bar");
         }
@@ -379,3 +411,4 @@ document.addEventListener("DOMContentLoaded", function (e) {
         seat.querySelector(".remove-arranged-user").dataset.name = event.dataTransfer.getData("name");
     }
 });
+

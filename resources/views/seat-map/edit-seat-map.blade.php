@@ -9,7 +9,6 @@
 @section("scripts")
 
     <script src="{{ asset("/js/edit-seat-map.js") }}"></script>
-
 @endsection
 @section("vertical")
     <link rel="stylesheet" href="{{ asset("/css/edit-seat-map.css") }}">
@@ -17,7 +16,7 @@
         <div class="row ">
             <div class="name-form col-md-12">
                 <label for="seatmap_name_holder">Seat map name:</label>
-                <input maxlength="100" class="form-control form-control-lg form-control-borderless" type="text"
+                <input maxlength="100" class="form-control form-control-sm form-control-borderless" type="text"
                        name="seatmap_name_holder"
                        id="seatmap_name_holder" required
                        value="{{ $map->name }}">
@@ -42,7 +41,7 @@
             <div class="search-user col-md-12 ">
                 <div class="user-search-avatar">
                     <div class="  input-search-user">
-                        <input placeholder="Input username" class="form-control form-control-lg form-control-borderless"
+                        <input placeholder="Input username" class="form-control form-control-sm form-control-borderless"
                                type="text" name="keyword" id="keyword">
                     </div>
                 </div>
