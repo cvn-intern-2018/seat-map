@@ -33,9 +33,9 @@
                 </div>
                 <div class="btn-group col-md-12">
 
-                    <button class="btn btn-default zoom-out" type="button"><span
+                    <button class="btn btn-default zoom-out col-md-6" type="button"><span
                                 class="glyphicon glyphicon-zoom-out"></span></button>
-                    <button class="btn btn-default zoom-in" type="button"><span
+                    <button class="btn btn-default zoom-in col-md-6" type="button"><span
                                 class="glyphicon glyphicon-zoom-in"></span></button>
                 </div>
             </div>
@@ -51,7 +51,7 @@
                 @foreach ($users as $user)
                     <div class=" col-sm-12 col-md-6 col-xs-12 col-lg-6 ">
                         <div class="user-select" data-id="{{ $user->id }}"
-                             data-name="{{ $user->name }}"
+                             data-name="{{ $user->short_name }}"
                              data-avatar="{{ getUserAvatar($user) }}"
                              data-group="{{ $user->group->name }}" data-phone="{{ $user->phone }}"
                              data-email="{{ $user->email }}" draggable="true"
@@ -63,7 +63,7 @@
                                 <img src="{{ getUserAvatar($user) }}" alt="" class="img-responsive"
                                      onerror="this.src='{{ asset("images/user/mys-man.jpg") }}'">
                             </div>
-                            <div class="name col-md-12">{{ $user->name }}</div>
+                            <div  class="name col-md-12">{{ $user->short_name }}</div>
                         </div>
                     </div>
                 @endforeach
