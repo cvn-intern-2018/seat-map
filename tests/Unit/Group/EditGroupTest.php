@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Group;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -9,6 +9,20 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class EditGroupTest extends TestCase
 {
     use WithFaker;
+    use RefreshDatabase;
+    
+    private function getAdmin()
+    {
+        return \App\User::where('permission', 1)->first();
+    }
+
+    public function setUp()
+    {
+        parent::setUp();
+        \Artisan::call('migrate:refresh', ['--env' => 'testing']);
+        \Artisan::call('db:seed', ['--env' => 'testing']);
+    }
+
     /**
      * Test edit group without login
      * 
@@ -37,7 +51,7 @@ class EditGroupTest extends TestCase
         ]);
         $response->assertStatus(403);
     }
-    
+
     /**
      * Test edit group with existed name
      * 
@@ -113,7 +127,6 @@ class EditGroupTest extends TestCase
         ]);
         $response->assertSessionHasErrors(['group_name']);
     }
-
     
     /**
      * Test edit group with name same as old name
@@ -130,9 +143,21 @@ class EditGroupTest extends TestCase
         ]);
         $response->assertSessionHasNoErrors();
     }
-
-    private function getAdmin()
+    
+    /**
+     * Test edit group with name same as old name
+     * 
+     * @return void
+     */
+    public function testEditNameUnassignedGroup()
     {
-        return \App\User::where('permission', 1)->first();
+        $user = $this->getAdmin();
+        $group = \App\UserGroup::find(3);
+        $response = $this->actingAs($user)->post('/group-setting/edit', [
+            'group_id' => 1,
+            'group_name' => $group->name,
+        ]);
+        $response->assertSessionHasErrors(['group_id']);
     }
+
 }

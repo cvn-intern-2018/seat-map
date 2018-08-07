@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Group;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -9,6 +9,19 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class AddGroupTest extends TestCase
 {
     use WithFaker;
+    use RefreshDatabase;
+
+    public function setUp()
+    {
+        parent::setUp();
+        \Artisan::call('migrate:refresh', ['--env' => 'testing']);
+        \Artisan::call('db:seed', ['--env' => 'testing']);
+    }
+
+    private function getAdmin()
+    {
+        return \App\User::where('permission', 1)->first();
+    }
     /**
      * Test add group without login
      * 
@@ -107,10 +120,5 @@ class AddGroupTest extends TestCase
             'group_name' => '            ',
         ]);
         $response->assertSessionHasErrors(['group_name']);
-    }
-
-    private function getAdmin()
-    {
-        return \App\User::where('permission', 1)->first();
     }
 }

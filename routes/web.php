@@ -23,8 +23,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'permission'], function () {
         Route::post('/seat-map/add', 'SeatmapController@addSeatmapHandler');
         Route::get('/seat-map/edit/{id}', 'SeatmapController@getEditSeatmapPage');
-        Route::post('/seat-map/delete', 'SeatmapController@deleteSeatmapHandler');
         Route::post('/seat-map/edit/', 'SeatmapController@updateEditingSeatmap')->name("seatmapEditHandler");
+        Route::post('/seat-map/delete', 'SeatmapController@deleteSeatmapHandler');
 
         Route::get('/group-setting', 'UserGroupController@getGroupSettingView')->name("groupSetting");
         Route::post('/group-setting/new', 'UserGroupController@addGroupHandler')->name("createNewGroup");
