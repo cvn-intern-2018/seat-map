@@ -15,25 +15,6 @@
                     <div class="col-md-9">
                         <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                             {{ csrf_field() }}
-                            @if(session()->has('login_error') || $errors->has('identity') || $errors->has('password'))
-                                <div class="alert alert-warning">
-                                    @if(session()->has('login_error'))
-                                        <span class="help-block">
-                  {{ session()->pull('login_error') }}
-                </span>
-                                    @endif
-                                    @if ($errors->has('identity'))
-                                        <span class="help-block">
-                  {{ $errors->first('identity') }}
-                </span>
-                                    @endif
-                                    @if ($errors->has('password'))
-                                        <span class="help-block">
-                  {{ $errors->first('password') }}
-                </span>
-                                    @endif
-                                </div>
-                            @endif
                             <div class="form-group{{ $errors->has('identity') ? ' has-error' : '' }}">
                                 <label for="identity" class="col-md-4 control-label">Email or Username</label>
 
