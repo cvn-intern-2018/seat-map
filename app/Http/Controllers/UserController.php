@@ -148,8 +148,8 @@ class UserController extends Controller
         } else {
             $short_name = UserController::test_input($infor->short_name);
              $this->userInfor['shortname'] = $short_name;          
-            if (strlen($short_name) > 50) {
-                $this->userInforErr['shortnameErr'] = "The shortname may not be greater than 50 characters";
+            if (strlen($short_name) > 10) {
+                $this->userInforErr['shortnameErr'] = "The shortname may not be greater than 10 characters";
             }
         } 
 
@@ -163,8 +163,8 @@ class UserController extends Controller
             if (!preg_match("/^[0-9]*$/", $phone)) {
 
                 $this->userInforErr['phoneErr'] = "Only numbers allowed";
-            }else if (strlen($phone) > 50) {
-                $this->userInforErr['phoneErr'] = "The phonenumber may not be greater than 50 characters";
+            }else if (strlen($phone) > 30) {
+                $this->userInforErr['phoneErr'] = "The phonenumber may not be greater than 30 characters";
             }
         }
 
@@ -176,7 +176,7 @@ class UserController extends Controller
             $file = $infor->file('avatar');
             $img = '.' . $file->extension();
             $public = Storage::disk('public_folder');
-            $public->putFileAs('images/user', $file, $infor->username . $img);
+            $public->putFileAs('images/user', $file, $infor->user_id . $img);
             $avatar = UserController::test_input($img);
             $this->userInfor['avatar'] = $avatar;
         }  
