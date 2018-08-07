@@ -161,6 +161,7 @@ function addUser(event){
                 var nodeP = document.createElement("p");
                 nodeP.setAttribute('name', "name");
                 nodeP.onclick = function(){displayUser(this)};
+                nodeP.classList.add("bg");
                 nodeP.dataset.info = JSON.stringify(response.userInfor);
                 console.log(_result.userInfor);
                 nodeP.innerHTML = response.userInfor.fullname;
@@ -222,7 +223,16 @@ function deleteUser(currentItem){
                     var node = currentItem.parentNode.parentNode;
                     // delete parentNode
                     node.parentNode.removeChild(node);
-                    alert(JSON.parse(this.responseText).status);
+
+                    // alert(JSON.parse(this.responseText).status);
+                    // Get the snackbar DIV
+                    var x = document.getElementById("snackbar");
+                    x.innerHTML = JSON.parse(this.responseText).status;
+                    // Add the "show" class to DIV
+                    x.className = "show";
+
+                    // After 3 seconds, remove the show class from DIV
+                    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
                 }
             }
         }
@@ -282,7 +292,11 @@ window.onload = function(){
         addUser(event);
     });
     // filter
-    document.querySelector("#myInput").addEventListener("keyup", filter);    
+    document.querySelector("#myInput").addEventListener("keyup", filter);   
 }
+
+
+
+
 
 
