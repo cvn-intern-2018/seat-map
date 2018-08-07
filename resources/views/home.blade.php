@@ -113,7 +113,7 @@
             @isset($search)
                 <div class="col-md-8 col-md-offset-2"
                      style="text-align:center; margin-bottom: 20px;  font-size: 15px; color: blue;">
-                    {{$maps->total()}} results have been found for key words: "{{$search}}"
+                    {{$maps->total()}} {{ $searchNoti}} "{{$search}}"
                 </div>
             @endisset
         @endif

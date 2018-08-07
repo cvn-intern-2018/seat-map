@@ -25,7 +25,18 @@
     margin-bottom: 20px;
 
 }
+.user-select>.name
+{
+    width:85px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-size: 12px;
+    white-space: nowrap;
+    border-radius: 15px;
 
+}
 label, input[type="checkbox" i] {
     cursor: pointer;
 }

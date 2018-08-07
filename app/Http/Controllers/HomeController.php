@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\SeatMap;
+use Lang;
 
 class HomeController extends Controller
 {
@@ -29,6 +30,7 @@ class HomeController extends Controller
             'search' => 'max:100 | string',
         ]);
         $maps = SeatMap::getSeatMap($request->search, $request->page);
-        return view('home', ['maps' => $maps->appends(Input::except('page')), 'search' => $request->search]);
+        $searchNoti =  Lang::get('notification.search');
+        return view('home', ['maps' => $maps->appends(Input::except('page')), 'search' => $request->search,'searchNoti'=> $searchNoti]);
     }
 }

@@ -1,4 +1,7 @@
-
+.seat-map
+{
+    margin:10px;
+}
 #delete-name {
     word-break: break-word;
 }
