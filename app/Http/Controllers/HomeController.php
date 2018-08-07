@@ -27,7 +27,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $request->validate([
-            'search' => 'max:100 | string',
+            'search' => 'max:100 | string| nullable',
         ]);
         $maps = SeatMap::getSeatMap($request->search, $request->page);
         $searchNoti =  Lang::get('notification.search');

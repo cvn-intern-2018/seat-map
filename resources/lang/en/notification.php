@@ -14,6 +14,6 @@ return [
     */
     'added' => ' has been added!!!.',
     'deleted' => ' has been deleted!!!.',
-    'saved' => 'has been saved successfully',
-    'search' => 'results have been found for key words:'
+    'saved' => ' has been saved successfully',
+    'search' => ' results have been found for key words:'
 ];

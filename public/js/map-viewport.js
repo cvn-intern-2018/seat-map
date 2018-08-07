@@ -35,11 +35,11 @@ $('.user-seat').click(
  */
 function setInfoBox(infoBox, top, left) {
     var change = 0;
-    if (top < 163) {
+    if (top < 210) {
         infoBox.css("bottom", "auto");
         change = 1;
     }
-    if (mapHeight - top < 163) {
+    if (mapHeight - top < 210) {
         infoBox.css("bottom", "100%");
         change = 1;
     }

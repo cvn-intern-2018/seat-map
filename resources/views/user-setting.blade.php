@@ -41,11 +41,11 @@
         <div id="left">
             <ul id="list-of-users" data-prv_data="{{session('prv_data')}}" data-info="{{ session('user_id') }}" >
                 <li class="flex-container_">
-                    <p name="addUser">Add a new user</p>
+                    <p class="bg" name="addUser">Add a new user</p>
                     <div></div>
                 </li>
                 <li class="flex-container_">
-                    <p name="name" data-info="{{ $admin }}"><strong>Admin</strong></p>
+                    <p name="name" class="bg" data-info="{{ $admin }}"><strong>Admin</strong></p>
                     <div name="admin"></div>
                 </li>
                 <li class="flex-container_">
@@ -55,8 +55,8 @@
                 @foreach($users as $user)
                 @if($user->permission == 0)
 
-                <li class="flex-container_">
-                    <p name="name" data-info="{{ $arr_users[$user->id] }}"><strong>{{ $user->name }}</strong></p>
+                <li class="flex-container_" draggable="true">
+                    <p name="name" class="bg" data-info="{{ $arr_users[$user->id] }}"><strong>{{ $user->name }}</strong></p>
                     <div><img name="{{ $user->name }}" src="{{asset('images/remove.png')}}" alt="delete"/></div>
                 </li>
                 @endif
@@ -116,6 +116,7 @@
 
     </div>
   </div>
+  <div id="snackbar"></div>
 
 @endsection
 

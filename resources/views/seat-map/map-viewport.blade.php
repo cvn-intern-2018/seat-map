@@ -12,8 +12,8 @@
 
 
 <div class="col-md-12 filter">
-    <div class="col-md-2 pull-right">
-        <input placeholder="Input username to filter on map"
+    <div class="col-md-3 pull-right">
+        <input onclick="this.select();" autocomplete="off" placeholder="Input username to filter on map"
                class="form-control form-control-sm form-control-borderless"
                type="text" name="filter" id="filter-name">
     </div>

@@ -82,15 +82,10 @@
     }
 
     /*left*/
-    #left > p{
-        font-weight: bold;
-        width: 50%;
-        text-align: center;
-    }
-
     #left ul p:hover{
         background-color: yellow;
         cursor: pointer;
+        box-shadow: 4px 4px 1px grey;
     }
 
 
@@ -150,12 +145,11 @@
     #right img{
         height: 20%;
         border: 1px solid black;
-
     }
 
-/*    #right > div.flex-container_ > *{
-        width: 150px;
-    }*/
+    #right img:hover, #right input:hover, #right select:hover{
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
 
 
     #userinformation{
@@ -227,6 +221,7 @@
 
     #right button:hover, #left img:hover {
         opacity: 0.5;
+        cursor: pointer;
     }
 
     /*display a pop-up*/
@@ -369,15 +364,78 @@
         to {transform: scale(1)}
     }
 
+    p[name=Error]{
+        color: #9f224e;
+        font-size: 11px;
+    }
 
-
+    .bg{
+        background-color: #f6f6f6;
+    }
 
     .active{
         background-color: red;
         color: black;
     }
 
-    p[name=Error]{
-        color: #9f224e;
-        font-size: 11px;
+    .bordershadow {
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+        transition: all 200ms ease-out;
+    }
+
+    #snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+    }
+
+    #snackbar.show {
+        visibility: visible;
+        -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
+
+    @-webkit-keyframes fadein {
+        from {bottom: 0; opacity: 0;} 
+        to {bottom: 30px; opacity: 1;}
+    }
+
+    @keyframes fadein {
+        from {bottom: 0; opacity: 0;}
+        to {bottom: 30px; opacity: 1;}
+    }
+
+    @-webkit-keyframes fadeout {
+        from {bottom: 30px; opacity: 1;} 
+        to {bottom: 0; opacity: 0;}
+    }
+
+    @keyframes fadeout {
+        from {bottom: 30px; opacity: 1;}
+        to {bottom: 0; opacity: 0;}
+    }
+
+    /* width */
+    #left::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    /* Track */
+    #left::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+    }
+     
+    /* Handle */
+    #left::-webkit-scrollbar-thumb {
+        background: #888; 
     }
