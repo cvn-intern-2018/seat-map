@@ -7,7 +7,7 @@
     <script src="js/user-setting.js"></script>
     <div class="container">
     <div id="id01" class="modal">
-            <form name="inforPopup" class="modal-content animate" onsubmit="addUser(event)" action="/users/add" method="POST" enctype="multipart/form-data">
+            <form name="inforPopup" class="modal-content animate" action="/users/add" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="container_">
                       <p><b>Full name:</b></p>
@@ -45,14 +45,14 @@
                     <div></div>
                 </li>
                 <li class="flex-container_">
-                    <p name="name" onclick="displayUser(this)" data-info="{{ $admin }}"><strong>Admin</strong></p>
-                    <div style="visibility: hidden;" name="admin" type="button"></div>
+                    <p name="name" data-info="{{ $admin }}"><strong>Admin</strong></p>
+                    <div name="admin"></div>
                 </li>
                 @foreach($users as $user)
                 @if($user->permission == 0)
                 <li class="flex-container_">
-                    <p name="name" onclick="displayUser(this)" data-info="{{ $arr_users[$user->id] }}"><strong>{{ $user->name }}</strong></p>
-                    <div><img name="{{ $user->name }}" onclick="deleteUser(this)" src="{{asset('images/remove.png')}}" alt="delete"/></div>
+                    <p name="name" data-info="{{ $arr_users[$user->id] }}"><strong>{{ $user->name }}</strong></p>
+                    <div><img name="{{ $user->name }}" src="{{asset('images/remove.png')}}" alt="delete"/></div>
                 </li>
                 @endif
                 @endForeach
@@ -68,7 +68,7 @@
                         <div class=flex-container_>
                             <button onclick="document.getElementById('changeAvar').click()" name="changeAvar" type="button">Change</button>
                             <input type="hidden" value="0" name="checkAvatar" />
-                            <input style="" onchange="changeAvatar(event)" type="file" accept="image/*" id="changeAvar" name="avatar" value="{{asset('images/user/'.json_decode($admin)->id.json_decode($admin)->avatar)}}"  />
+                            <input type="file" accept="image/*" id="changeAvar" name="avatar" value="{{asset('images/user/'.json_decode($admin)->id.json_decode($admin)->avatar)}}"  />
                             <button onclick="deleteAvatar()" type="button" name="deleteAvar">Delete</button>
                         </div>
 
@@ -95,15 +95,15 @@
                         </select>
                         <p><strong>Short name:</strong></p>
                         <input type="text" name="short_name" value="{{json_decode($admin)->shortname}}" maxlength="10" autocomplete="off"/>
-                        <input type="text" style="display: none;" value="{{json_decode($admin)->username}}"
+                        <input type="text" value="{{json_decode($admin)->username}}"
                                name="username"/>
-                        <input type="text" style="display: none;" value="{{json_decode($admin)->password}}"
+                        <input type="text" value="{{json_decode($admin)->password}}"
                                name="password"/>
-                        <input type="text" style="display: none;" value="{{json_decode($admin)->id}}"
+                        <input type="text" value="{{json_decode($admin)->id}}"
                                name="user_id"/>
                         <div>
                             <input name="submit" type="submit" value="Save"/>
-                            <input name="cancel" type="button" onclick="discardChanges()" value="Cancel"/>
+                            <input name="cancel" type="button" value="Cancel"/>
                         </div>
                   </div>
               </form>

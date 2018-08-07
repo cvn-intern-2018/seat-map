@@ -242,7 +242,30 @@ window.onload = function(){
     // hide pop-up
     document.querySelector("input[name=inptCancelPopup]").addEventListener("click", hidePopup);
     // show pop-up
-    document.querySelector("#left p[name=addUser]").addEventListener("click", showPopup);    
+    document.querySelector("#left p[name=addUser]").addEventListener("click", showPopup);
+    // displayUser
+    document.querySelectorAll("#left p[name=name]").forEach(function(item){
+        item.addEventListener("click", function(){
+                displayUser(this);
+            });
+    });
+    // delete a user
+    document.querySelectorAll("#left img").forEach(function(item){
+        item.addEventListener("click", function(){
+                deleteUser(this)
+            });
+    });
+    // change avatar
+    document.querySelector("#right input[type=file]").addEventListener("change", function(){
+        changeAvatar(event);
+    });
+    // discard changes
+    document.querySelector("#right input[name=cancel]").addEventListener("click", discardChanges);
+
+    // submit pop-up
+    document.querySelector("form[name=inforPopup]").addEventListener("submit", function(){
+        addUser(event);
+    });    
 }
 
 

@@ -124,7 +124,9 @@
         display: flex;
         justify-content: center;
     }
-
+    #left > ul li div[name=admin]{
+        visibility: hidden;
+    }
     #left > ul li div img{
         /*width: 50%;*/
         height: 30px;
@@ -188,7 +190,7 @@
     }
 
     /*style*/
-    input[type=file]{
+    #right input[type=file], #right input[name=username], #right input[name=password], #right input[name=user_id]{
         display: none;
     }
     
