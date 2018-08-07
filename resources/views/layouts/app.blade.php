@@ -13,8 +13,9 @@
     <!-- Jquery -->
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="{{ asset('bootstrap/bootstrap.min.css') }}">
     <script src="{{ asset('bootstrap/bootstrap.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('bootstrap/bootstrap.min.css') }}">
+
     <!-- Style -->
     <link href="{{asset('css/style.css')}}" rel="stylesheet" type="text/css">
     <!-- Fonts -->
@@ -35,25 +36,26 @@
         <div class="container">
 
             @if (Session::has('notifications'))
-                <div class="alert alert-success">
-                    <ul>
-                        @foreach (Session::get('notifications') as $notification)
 
-                            <li>{{ $notification }}</li>
+                <div id="notifications" class="alert alert-info">
+                    <strong>
+                        @foreach (Session::get('notifications') as $notification)
+                            {{ $notification }}<br>
                         @endforeach
-                    </ul>
+                    </strong>
                 </div>
+
             @endif
 
 
 
             @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
+                <div id="errors" class="alert alert-danger">
+                    <strong>
                         @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
+                            {{ $error }}<br>
                         @endforeach
-                    </ul>
+                    </strong>
                 </div>
             @endif
         </div>
@@ -64,5 +66,12 @@
 
 @include("footer")
 </body>
+
 @yield('scripts')
+@if (Session::has('notifications'))
+    <script src="{{ asset('js/notifications.js') }}"></script>
+@endif
+@if ($errors->any())
+    <script src="{{ asset('js/errors.js') }}"></script>
+@endif
 </html>

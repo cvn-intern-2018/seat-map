@@ -66,11 +66,11 @@ document.addEventListener("DOMContentLoaded", function (e) {
      */
     function setInfoBox(infoBox, top, left) {
         var change = 0;
-        if (top < 163) {
+        if (top < 210) {
             infoBox.css("bottom", "auto");
             change = 1;
         }
-        if (mapHeight - top < 163) {
+        if (mapHeight - top < 210) {
             infoBox.css("bottom", "100%");
             change = 1;
         }
@@ -173,8 +173,14 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 var pointerY = parseFloat(e.dataTransfer.getData("pointer_y"));
                 var left = realX - pointerX;
                 var top = realY - pointerY;
-                obj.style.left = ((realX - pointerX) / mapWidth * 100) + "%";
-                obj.style.top = ((realY - pointerY) / mapHeight * 100) + "%";
+                console.log("OK");
+                if(left<45) left = 45;
+                if(top<32) top=32;
+                if(left>mapWidth - 45) left = mapWidth-45;
+                if(top>mapHeight - 45) left = mapHeight-45;
+                obj.style.left = (left / mapWidth * 100) + "%";
+                obj.style.top = (top / mapHeight * 100) + "%";
+
                 var infoBox = $(obj).find(".info-box");
                 setInfoBox(infoBox, top, left);
 
