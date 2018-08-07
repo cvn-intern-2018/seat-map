@@ -61,6 +61,11 @@ class UserGroupController extends Controller
             'group_id' => 'required|int',
             'group_name' => 'required|max:100|string'
         ]);
+        if ($validated_data['group_id'] == \Config::get('group.UNASSIGNED_GROUP_ID')){
+            $validator = Validator::make([], []);
+            $validator->errors()->add('group_id', 'Cannot rename unassigned group.');
+            throw new \Illuminate\Validation\ValidationException($validator);
+        }
         $group = Group::find($validated_data['group_id']);
         $group->updateGroupName($validated_data['group_name']);
         if ($group->updateGroupName($validated_data['group_name'])) {
@@ -80,13 +85,13 @@ class UserGroupController extends Controller
     public function updateUserGroupHandler(Request $request)
     {
         $validated_data = $request->validate([
-            'user_group_id' => 'required|int',
+            'user_group_id' => 'required|int|exists:user_groups,id',
             'user_group_data' => 'required|json',
         ]);
         $data = json_decode($validated_data['user_group_data']);
         if ($validated_data['user_group_id'] == 1 && !empty($data->remove)) {
             $validator = Validator::make([], []);
-            $validator->errors()->add('group_id', 'Cannot remove user from unassigned group.');
+            $validator->errors()->add('user_group_id', 'Cannot remove user from unassigned group.');
             throw new \Illuminate\Validation\ValidationException($validator);
         }
         User::updateUserGroup($validated_data['user_group_id'], $data->add, $data->remove);

@@ -64,7 +64,7 @@ class SeatmapController extends Controller
     public function deleteSeatmapHandler(Request $request)
     {
         $request->validate([
-            'SeatmapID' => 'required | integer',
+            'SeatmapID' => 'required | integer | exists:seat_maps,id',
             'SeatmapName' => 'required| max:100| string'
         ]);
 
@@ -118,35 +118,50 @@ class SeatmapController extends Controller
     public function updateEditingSeatmap(Request $request)
     {
         $validatedData = $request->validate([
-            'seatmap_id' => 'required|integer',
+            'seatmap_id' => 'required|integer|exists:seat_maps,id',
             'seatmap_name' => 'required|max:100',
             'seat_data' => 'nullable|json',
         ]);
         $seatmap_id = $validatedData['seatmap_id'];
+        $user_seat = [];
+        $user_ids = User::select('id')->get()->toArray();
 
-        DB::beginTransaction();
+        if (!empty($validatedData['seat_data'])) {
+            $user_seat = array_map(function ($item) use ($seatmap_id) {
+                $new_item = get_object_vars($item);
+                $new_item['x'] = (int)($new_item['x'] * 100);
+                $new_item['y'] = (int)($new_item['y'] * 100);
+                $new_item['seat_map_id'] = $seatmap_id;
+                if (($new_item['x'] > 10000) || ($new_item['x'] < 0) || ($new_item['y'] > 10000) || ($new_item['y'] < 0))
+                {
+                    $validator = \Illuminate\Support\Facades\Validator::make([], []);
+                    $validator->errors()->add('seat_data', 'Seat data is invalid');
+                    throw new \Illuminate\Validation\ValidationException($validator);
+                }
+                return $new_item;
+            }, json_decode($validatedData['seat_data']));
+
+            $user_seat = array_filter($user_seat, function($item) use ($user_ids) {
+                return in_array($item['user_id'], $user_ids);
+            });
+        }
+
+        // DB::beginTransaction();
         try {
             $map = Map::findOrFail($seatmap_id);
             $map->saveSeatMapName($validatedData['seatmap_name']);
 
-            if (!empty($validatedData['seat_data'])) {
-                $user_seat = array_map(function ($item) use ($seatmap_id) {
-                    $new_item = get_object_vars($item);
-                    $new_item['x'] = (int)($new_item['x'] * 100);
-                    $new_item['y'] = (int)($new_item['y'] * 100);
-                    $new_item['seat_map_id'] = $seatmap_id;
-                    return $new_item;
-                }, json_decode($validatedData['seat_data']));
+            if (!is_empty($user_seat)) {
                 Seat::updateUserSeat($seatmap_id, $user_seat);
             }
-            DB::commit();
+            // DB::commit();
             $editSeatmapNoti = $request->seatmap_name . Lang::get('notification.saved');
             $notifications = [$editSeatmapNoti];
             return redirect()->route('seatmapDetail', [
                 'id' => $seatmap_id,
             ])->with(['notifications' => $notifications]);
         } catch (Exception $e) {
-            DB::rollback();
+            // DB::rollback();
             throw $e;
         }
     }

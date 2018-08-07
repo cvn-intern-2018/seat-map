@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Group;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -8,6 +8,14 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class DeleteGroupTest extends TestCase
 {
+    use RefreshDatabase;
+
+    public function setUp()
+    {
+        parent::setUp();
+        \Artisan::call('migrate:refresh', ['--env' => 'testing']);
+        \Artisan::call('db:seed', ['--env' => 'testing']);
+    }
     /**
      * Test delete group without login
      * 
@@ -46,6 +54,20 @@ class DeleteGroupTest extends TestCase
             'group_id' => 3,
         ]);
         $response->assertSessionHasNoErrors();
+    }
+
+    /**
+     * Test delete group without id
+     * 
+     * @return void
+     */
+    public function testDeleteGroupWithoutId()
+    {
+        $user = $this->getAdmin();
+        $response = $this->actingAs($user)->post('/group-setting/delete', [
+            'group_id' => '',
+        ]);
+        $response->assertSessionHasErrors(['group_id']);
     }
 
     /**

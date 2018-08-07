@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Group;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -10,6 +10,14 @@ use Faker\Generator as Faker;
 class GroupTest extends TestCase
 {
     use WithFaker;
+    use RefreshDatabase;
+
+    public function setUp()
+    {
+        parent::setUp();
+        \Artisan::call('migrate:refresh', ['--env' => 'testing']);
+        \Artisan::call('db:seed', ['--env' => 'testing']);
+    }
     
     /**
      * Test accessing group setting page without login
@@ -55,6 +63,9 @@ class GroupTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /**
+     * Get and admin user
+     */
     private function getAdmin()
     {
         return \App\User::where('permission', 1)->first();
