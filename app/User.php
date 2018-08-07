@@ -70,7 +70,7 @@ class User extends Authenticatable
     public static function updateUserGroup(int $group_id, array $assign, array $unassign)
     {
         self::whereIn('id', $assign)->update(['user_group_id' => $group_id]);
-        self::whereIn('id', $unassign)->update(['user_group_id' => Config::get('group.UNASSIGNED_GROUP_ID')]);
+        self::whereIn('id', $unassign)->update(['user_group_id' => Config::get('constants.UNASSIGNED_GROUP_ID')]);
     }
 
     function set($infor)

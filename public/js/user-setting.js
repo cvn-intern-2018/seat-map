@@ -175,7 +175,7 @@ function addUser(event){
                 nodeLi.appendChild(nodeP);
                 nodeLi.appendChild(nodeDiv);
                 var items = document.querySelector("ul[id=list-of-users]");
-                items.insertBefore(nodeLi, items.childNodes[6]);
+                items.insertBefore(nodeLi, items.childNodes[4]);
                 document.getElementById('id01').style.display='none';
                 document.querySelector("form[name=infor] input[name=user_id]").value = JSON.stringify(response.userInfor.id);             
             }
@@ -184,22 +184,7 @@ function addUser(event){
     xmlhttp.open("POST", "/users/add", true);
     xmlhttp.send(formData); 
 };
-//function to filter a list
-function filter() {
-    var input, filter, ul, li, p, i;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    ul = document.getElementById("list-of-users");
-    li = ul.getElementsByTagName("li");
-    for (i = 3; i < li.length; i++) {
-        p = li[i].getElementsByTagName("p")[0];
-        if (p.innerHTML.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = "";
-        } else {
-            li[i].style.display = "none";
-        }
-    }
-}
+
 // function to delete a user
 function deleteUser(currentItem){
     if(confirm("Do you want to delete \"" + currentItem.name + "\" ?")){
@@ -280,9 +265,7 @@ window.onload = function(){
     // submit pop-up
     document.querySelector("form[name=inforPopup]").addEventListener("submit", function(){
         addUser(event);
-    });
-    // filter
-    document.querySelector("#myInput").addEventListener("keyup", filter);    
+    });    
 }
 
 

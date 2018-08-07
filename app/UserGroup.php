@@ -85,7 +85,7 @@ class UserGroup extends Model
     public function deleteGroup()
     {
         User::where('user_group_id', $this->id)->update([
-            'user_group_id' => Config::get('group.UNASSIGNED_GROUP_ID'),
+            'user_group_id' => Config::get('constants.UNASSIGNED_GROUP_ID'),
         ]);
         $this->delete();
     }

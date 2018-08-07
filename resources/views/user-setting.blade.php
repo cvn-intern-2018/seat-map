@@ -48,13 +48,8 @@
                     <p name="name" data-info="{{ $admin }}"><strong>Admin</strong></p>
                     <div name="admin"></div>
                 </li>
-                <li class="flex-container_">
-                    <input type="text" id="myInput" placeholder="Search for names.." title="Type in a name" />
-                    <div></div>
-                </li>
                 @foreach($users as $user)
                 @if($user->permission == 0)
-
                 <li class="flex-container_">
                     <p name="name" data-info="{{ $arr_users[$user->id] }}"><strong>{{ $user->name }}</strong></p>
                     <div><img name="{{ $user->name }}" src="{{asset('images/remove.png')}}" alt="delete"/></div>

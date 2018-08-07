@@ -20,7 +20,7 @@ class CheckPermission
         if (!Auth::check()) {
             return redirect('login');
         }
-        if (Auth::user()->permission != Config::get('role.ADMIN')) {
+        if (Auth::user()->permission != Config::get('constants.ROLE.ADMIN')) {
             return abort(403);
         }
         return $next($request);

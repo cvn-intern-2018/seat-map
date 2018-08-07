@@ -2,12 +2,12 @@
 @section('groups-active','active')
 @section("title", "Group setting")
 @section("big-title", "Group setting")
-@section("groups-active", "active")
 @section("scripts")
-    <link rel="stylesheet" href="{{ cssLink("group-setting") }}">
-    <script src="{{ jsLink("group-setting") }}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 @section("content")
+    <link rel="stylesheet" href="{{ cssLink("group-setting") }}">
+    <script src="{{ jsLink("group-setting") }}"></script>
     <div class="container">
         <div class="row">
             <div class="col-sm-3">
@@ -49,7 +49,7 @@
                                         <input type="hidden" name="group_id" value="{{ $group->id }}">
                                         <span class="glyphicon glyphicon-trash"></span>
                                     </form>
-                                    <div class="group-button cancel-button" tabindex="-1">
+                                    <div class="group-button cancel-button">
                                         <span class="glyphicon glyphicon-remove"></span>
                                     </div>
                                 </div>

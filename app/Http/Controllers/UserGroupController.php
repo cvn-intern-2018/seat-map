@@ -59,16 +59,11 @@ class UserGroupController extends Controller
     {
         $validated_data = $request->validate([
             'group_id' => 'required|int',
-            'group_name' => 'required|max:100|string'
+            'group_name' => 'required|max:100|unique:user_groups,name|string'
         ]);
         $group = Group::find($validated_data['group_id']);
         $group->updateGroupName($validated_data['group_name']);
-        if ($group->updateGroupName($validated_data['group_name'])) {
-            return json_encode(['result' => true]);
-        }
-        $request->validate([
-            'group_name' => 'unique:user_groups,name'
-        ]);
+        return json_encode(['result' => true]);
     }
 
     /**
@@ -104,7 +99,7 @@ class UserGroupController extends Controller
     public function deleteGroupHandler(Request $request)
     {
         $validated_data = $request->validate([
-            'group_id' => 'required|int|exists:user_groups,id',
+            'group_id' => 'required|int',
         ]);
 
         if ($validated_data['group_id'] == 1) {

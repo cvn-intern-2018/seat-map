@@ -17,12 +17,12 @@ $factory->define(App\User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-        'user_group_id' => 1,
+        'user_group_id' => rand(1, 4),
         'email' => $faker->unique()->safeEmail,
         'permission' => 0,
         'username' => $faker->userName,
         'short_name' => $faker->lastName,
-        'phone' => '0123456789',
+        'phone' => $faker->phoneNumber,
         'img' => '.jpg',
 
     ];
