@@ -42,7 +42,7 @@ function displayUserInfor(infor) {
     }
     infor = JSON.parse(infor);
     document.querySelector("form[name=infor] img[id=avatar]").src = "images/user/" + infor.id + infor.avatar;
-    document.querySelector("form[name=infor] input[name=short_name]").value = infor.shortname;
+    document.querySelector("form[name=infor] input[name=short_name]").value = infor.short_name;
     document.querySelector("form[name=infor] input[name=fullname]").value = infor.fullname;
     document.querySelector("form[name=infor] input[name=email]").value = infor.email;
     document.querySelector("form[name=infor] input[name=phone]").value = infor.phone;

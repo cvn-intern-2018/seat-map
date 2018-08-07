@@ -35,7 +35,7 @@ class UserController extends Controller
                 $userInfor['group'] = UserGroup::where('id', $user->user_group_id)->first()->name;
                 $userInfor['password'] = $user->password;
                 $userInfor['username'] = $user->username;
-                $userInfor['shortname'] = $user->short_name;
+                $userInfor['short_name'] = $user->short_name;
                 $arr_users[$user->id] = json_encode($userInfor);
             } else {
                 $admin['id'] = $user->id;
@@ -45,7 +45,7 @@ class UserController extends Controller
                 $admin['email'] = $user->email;
                 $admin['phone'] = $user->phone;
                 $admin['group'] = UserGroup::where('id', $user->user_group_id)->first()->name;
-                $admin['shortname'] = $user->short_name;
+                $admin['short_name'] = $user->short_name;
                 $admin['username'] = $user->username;
             }
         }
@@ -143,11 +143,11 @@ class UserController extends Controller
 
         // check short_name
         if (empty($infor->short_name)) {
-            $this->userInfor['shortname'] = "";
+            $this->userInfor['short_name'] = "";
             // $this->userInforErr['shortnameErr'] = "Shortname is required";
         } else {
             $short_name = UserController::test_input($infor->short_name);
-             $this->userInfor['shortname'] = $short_name;          
+             $this->userInfor['short_name'] = $short_name;          
             if (strlen($short_name) > 10) {
                 $this->userInforErr['shortnameErr'] = "The shortname may not be greater than 10 characters";
             }
@@ -209,7 +209,8 @@ class UserController extends Controller
         }else{
             $this->response['status'] = "Error";
         }
-
+        // var_dump($this->userInfor); exit;
+        $this->userInfor['id'] = $user->id;
         $this->response['userInfor'] = $this->userInfor;
         $this->response['userInforErr'] = $this->userInforErr;
         return json_encode($this->response);
@@ -239,6 +240,7 @@ class UserController extends Controller
                 // var_dump($this->response); exit;
             if(count($this->userInforErr) == 0){
                 $this->response['status'] = "Success";
+                // var_dump($this->userInfor); exit;
                 $user->set($this->userInfor);
                 $user->save();
                 return redirect()->route('users')->with(['user_id' => $request->user_id, 'prv_data' => '', 'prv_error' => '']);                
@@ -254,14 +256,12 @@ class UserController extends Controller
                                                         'prv_data' => json_encode($this->userInfor),
                                                         'prv_error' => $this->userInforErr]);
             }                       
+        }else{
+            return view('404');
         }
-
-        $this->response['userInfor'] = $this->userInfor;
-        $this->response['userInforErr'] = $this->userInforErr;
-
-        return redirect()->route('users')->with(['user_id' => $request->user_id]);
-
-
+        // $this->response['userInfor'] = $this->userInfor;
+        // $this->response['userInforErr'] = $this->userInforErr;
+        // return redirect()->route('users')->with(['user_id' => $request->user_id]);
     }
 
     /**

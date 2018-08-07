@@ -93,8 +93,8 @@ class User extends Authenticatable
             $this->password = "";
         }
 
-        if (!empty($infor['shortname'])) {
-            $this->short_name = $infor['shortname'];
+        if (!empty($infor['short_name'])) {
+            $this->short_name = $infor['short_name'];
         } else {
             $this->short_name = "";
         }
