@@ -27,10 +27,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/seat-map/edit/', 'SeatmapController@updateEditingSeatmap')->name("seatmapEditHandler");
 
         Route::get('/group-setting', 'UserGroupController@getGroupSettingView')->name("groupSetting");
-        Route::post('/group-setting/edit', 'UserGroupController@editGroupHandler');
         Route::post('/group-setting/new', 'UserGroupController@addGroupHandler')->name("createNewGroup");
-        Route::post('/group-setting/delete', 'UserGroupController@deleteGroupHandler')->name("deleteGroup");
+        Route::post('/group-setting/edit', 'UserGroupController@editGroupHandler');
         Route::post('/group-setting/update-user', 'UserGroupController@updateUserGroupHandler')->name("updateUserGroup");
+        Route::post('/group-setting/delete', 'UserGroupController@deleteGroupHandler')->name("deleteGroup");
 
         Route::get('/users', 'UserController@getUsers')->name('users');
         Route::get('/users/delete/{name}', 'UserController@deleteUserHandler')->name('delete');

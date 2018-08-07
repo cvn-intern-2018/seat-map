@@ -75,7 +75,7 @@
         border-bottom: 1px solid;
     }
 
-    #left > ul li p{
+    #left > ul li p, #left > ul li input{
         border: 1px solid;
         border-radius: 5px;
         border-color: grey; 
@@ -95,7 +95,7 @@
 
 
 
-    #left > ul li p{
+    #left > ul li p, #left > ul li input{
         text-align: center;
     }
 
@@ -110,7 +110,7 @@
         margin: 5px;
     }
 
-    #left > ul li p{
+    #left > ul li p, #left > ul li input{
         width: 70%;
         overflow: hidden;
         font-weight: bold;

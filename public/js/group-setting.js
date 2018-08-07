@@ -152,6 +152,8 @@
 
         // Auto save new name on field loses focus
         $(`.group-item .group-display input[name="group_name"]`).focusout(function(e){
+            if ($(e.relatedTarget).hasClass("cancel-button"))
+            return;
             updateGroupName(this);
         });
 

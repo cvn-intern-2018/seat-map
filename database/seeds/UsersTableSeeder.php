@@ -28,7 +28,7 @@ class UsersTableSeeder extends Seeder
             'img' => '.jpg',
         ]);
         factory(App\User::class, 10)->create([
-            'phone' => '0123456789',
+            'user_group_id' => rand(1, 5),
         ]);
     }
 }
