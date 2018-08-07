@@ -9,6 +9,7 @@
      * @param string $map_image URL of seat map image
      */
 @endphp
+
 <div class="seat-map">
     <link rel="stylesheet" href="{{ asset("css/seatmap-viewport.css") }}">
     <div class="  panel panel-default">
@@ -57,7 +58,7 @@
                                     @isset($edit_mode)
                                         <div class="row">
                                             <div class="arranged-user-action col-xs-12">
-                                                <button class="btn btn-danger remove-arranged-user" type="button"
+                                                <button  class="btn btn-danger remove-arranged-user" type="button"
                                                         data-toggle="modal"
                                                         data-target="#remove-confirm" data-id="{{ $user->id }}"
                                                         data-name="{{ $user->name }}">
@@ -71,6 +72,7 @@
                         </div>
                     @endforeach
                     @isset($edit_mode)
+         
                         <div class="user-seat-template" id="" style="top:0;left:0" draggable="true" hidden>
                             <div class="seat-display">
                                 <div class="avatar-container">
