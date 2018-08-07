@@ -22,6 +22,7 @@ class AddGroupTest extends TestCase
     {
         return \App\User::where('permission', 1)->first();
     }
+    
     /**
      * Test add group without login
      * 
