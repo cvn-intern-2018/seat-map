@@ -16,14 +16,15 @@ class DeleteSeatMapTest extends TestCase
         \Artisan::call('migrate:refresh', ['--env' => 'testing']);
         \Artisan::call('db:seed', ['--env' => 'testing']);
     }
-    
+
     private function getAdmin()
     {
         return \App\User::where('permission', 1)->first();
     }
+
     /**
      * Test delete seat map without login
-     * 
+     *
      * @return void
      */
     public function testAccessDeleteNoLogin()
@@ -34,9 +35,10 @@ class DeleteSeatMapTest extends TestCase
         ]);
         $response->assertStatus(302);
     }
+
     /**
      * Test delete seat map with user privilege
-     * 
+     *
      * @return void
      */
     public function testAccessDeleteNoPermission()
@@ -51,7 +53,7 @@ class DeleteSeatMapTest extends TestCase
 
     /**
      * Test delete seat map with existed id
-     * 
+     *
      * @return void
      */
     public function testDeleteExistSeatMap()
@@ -66,7 +68,7 @@ class DeleteSeatMapTest extends TestCase
 
     /**
      * Test delete seat map with not existed id
-     * 
+     *
      * @return void
      */
     public function testDeleteNonExistSeatMap()
@@ -79,9 +81,9 @@ class DeleteSeatMapTest extends TestCase
         $response->assertSessionHasErrors(['SeatmapID']);
     }
 
-     /**
+    /**
      * Test delete seat map with not invalid id
-     * 
+     *
      * @return void
      */
     public function testDeleteSeatMapWithInvalidId()
@@ -93,9 +95,9 @@ class DeleteSeatMapTest extends TestCase
         $response->assertSessionHasErrors(['SeatmapID']);
     }
 
-     /**
+    /**
      * Test delete seat map with no id
-     * 
+     *
      * @return void
      */
     public function testDeleteSeatMapWithoutId()

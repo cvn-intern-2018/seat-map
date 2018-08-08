@@ -29,9 +29,9 @@
                             @foreach ($groups as $group)
                                 <div class="col-xs-12 group-item
                                 @if ($group->id == $active_id)
-                                active
-                                @endif
-                                " data-group="{{ $group->id }}">
+                                        active
+@endif
+                                        " data-group="{{ $group->id }}">
                                     <div class="group-display">
                                         <input type="hidden" name="group_id" value="{{ $group->id }}">
                                         <input type="text" name="group_name" value="{{ $group->name }}">
@@ -56,9 +56,9 @@
                             @endforeach
                             <div class="col-xs-12 group-item
                             @if ($groups->count() == 0)
-                            active
-                            @endif
-                            " data-group="{{ $unassigned_group->id }}">
+                                    active
+@endif
+                                    " data-group="{{ $unassigned_group->id }}">
                                 <div class="group-display">
                                     <label for="group-name"> {{ $unassigned_group->name }}</label>
                                 </div>
@@ -71,10 +71,10 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <h4 class="group-title">
-                            @if ($groups->count() == 0) 
-                            {{ $unassigned_group->name }}
+                            @if ($groups->count() == 0)
+                                {{ $unassigned_group->name }}
                             @else
-                            {{ $groups->get($active_id)->name }}
+                                {{ $groups->get($active_id)->name }}
                             @endif
                         </h4>
                     </div>
@@ -83,13 +83,13 @@
                     <div class="col-sm-5">
                         <select name="member_users" id="member_users" multiple>
                             @foreach ($users as $user)
-                            <option value="{{ $user->id }}" data-group="{{ $user->user_group_id }}"
-                            @if ($user->user_group_id != $active_id)
-                            hidden
-                            @endif
-                            >
-                                {{ $user->name }}
-                            </option>
+                                <option value="{{ $user->id }}" data-group="{{ $user->user_group_id }}"
+                                        @if ($user->user_group_id != $active_id)
+                                        hidden
+                                        @endif
+                                >
+                                    {{ $user->name }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -132,79 +132,79 @@
             </div>
         </div>
     </div>
-</div>
-@component("components.modal", [
-    "id" => "changeGroupModal"
-])
-    @slot("title")
-        Setting changed
-    @endslot
-    @slot("message")
-        You has made some change on the current group, do you want to discard all change
-        and move to this groups
-    @endslot
-    @slot("buttons")
-        <button type="button" class="btn btn-danger discard-group-setting">
-            Discard
-        </button>
-        <button type="button" class="btn btn-primary save-group-setting">
-            Save changes
-        </button>
-    @endslot
-@endcomponent
-@component("components.modal", [
-    "id" => "addGroupModal"
-])
-    @slot("title")
-        Setting changed
-    @endslot
-    @slot("message")
-        You has made some change on the current group, do you want to save the 
-        change or discard all change and create new group?
-    @endslot
-    @slot("buttons")
-        <button type="button" class="btn btn-danger discard-group-setting">
-            Discard
-        </button>
-        <button type="button" class="btn btn-primary save-group-setting">
-            Save changes
-        </button>
-    @endslot
-@endcomponent
-@component("components.modal", [
-    "id" => "deleteGroupModal"
-])
-    @slot("title")
-        Setting changed
-    @endslot
-    @slot("message")
-        <p>You has made some change on the current group, do you want to save the 
-        change or discard all change and delete group?</p>
-        <p>Users in the deleted group will be moved to <strong>Unassigned group.</strong></p>
-    @endslot
-    @slot("buttons")
-        <button type="button" class="btn btn-danger discard-group-setting">
-            Discard
-        </button>
-        <button type="button" class="btn btn-primary save-group-setting">
-            Save changes
-        </button>
-    @endslot
-@endcomponent
-@component("components.modal", [
-    "id" => "deleteGroupModalWithNoChange"
-])
-    @slot("title")
-        Delete group
-    @endslot
-    @slot("message")
-        <p>You are about to delete a group. Do you really want to delete it?</p>
-        <p>Users in the deleted group will be moved to <strong>Unassigned group.</strong></p>
-    @endslot
-    @slot("buttons")
-        <button type="button" class="btn btn-danger delete-group-setting">
-            Delete
-        </button>
-    @endslot
-@endcomponent
+    </div>
+    @component("components.modal", [
+        "id" => "changeGroupModal"
+    ])
+        @slot("title")
+            Setting changed
+        @endslot
+        @slot("message")
+            You has made some change on the current group, do you want to discard all change
+            and move to this groups
+        @endslot
+        @slot("buttons")
+            <button type="button" class="btn btn-danger discard-group-setting">
+                Discard
+            </button>
+            <button type="button" class="btn btn-primary save-group-setting">
+                Save changes
+            </button>
+        @endslot
+    @endcomponent
+    @component("components.modal", [
+        "id" => "addGroupModal"
+    ])
+        @slot("title")
+            Setting changed
+        @endslot
+        @slot("message")
+            You has made some change on the current group, do you want to save the
+            change or discard all change and create new group?
+        @endslot
+        @slot("buttons")
+            <button type="button" class="btn btn-danger discard-group-setting">
+                Discard
+            </button>
+            <button type="button" class="btn btn-primary save-group-setting">
+                Save changes
+            </button>
+        @endslot
+    @endcomponent
+    @component("components.modal", [
+        "id" => "deleteGroupModal"
+    ])
+        @slot("title")
+            Setting changed
+        @endslot
+        @slot("message")
+            <p>You has made some change on the current group, do you want to save the
+                change or discard all change and delete group?</p>
+            <p>Users in the deleted group will be moved to <strong>Unassigned group.</strong></p>
+        @endslot
+        @slot("buttons")
+            <button type="button" class="btn btn-danger discard-group-setting">
+                Discard
+            </button>
+            <button type="button" class="btn btn-primary save-group-setting">
+                Save changes
+            </button>
+        @endslot
+    @endcomponent
+    @component("components.modal", [
+        "id" => "deleteGroupModalWithNoChange"
+    ])
+        @slot("title")
+            Delete group
+        @endslot
+        @slot("message")
+            <p>You are about to delete a group. Do you really want to delete it?</p>
+            <p>Users in the deleted group will be moved to <strong>Unassigned group.</strong></p>
+        @endslot
+        @slot("buttons")
+            <button type="button" class="btn btn-danger delete-group-setting">
+                Delete
+            </button>
+        @endslot
+    @endcomponent
 @endsection

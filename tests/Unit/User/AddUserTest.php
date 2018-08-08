@@ -23,10 +23,10 @@ class AddUserTest extends TestCase
     {
         return \App\User::where('permission', 1)->first();
     }
-    
+
     /**
      * Test add user without login
-     * 
+     *
      * @return void
      */
     public function testAccessAddNoLogin()
@@ -39,7 +39,7 @@ class AddUserTest extends TestCase
 
     /**
      * Test add user with user privilege
-     * 
+     *
      * @return void
      */
     public function testAccessAddNoPermission()
@@ -52,8 +52,8 @@ class AddUserTest extends TestCase
     }
 
     /**
-     * Test add user 
-     * 
+     * Test add user
+     *
      * @return void
      */
     public function testAddUser()
@@ -77,7 +77,7 @@ class AddUserTest extends TestCase
 
     /**
      * Test add user with empty field
-     * 
+     *
      * @return void
      */
     public function testAddUserWithEmptyFields()

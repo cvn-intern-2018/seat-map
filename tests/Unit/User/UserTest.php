@@ -20,7 +20,7 @@ class UserTest extends TestCase
 
     /**
      * Test accessing user setting page without login
-     * 
+     *
      * @return void
      */
     public function testAccessSettingNoLogin()
@@ -31,7 +31,7 @@ class UserTest extends TestCase
 
     /**
      * Test accessing user setting page with user privilege
-     * 
+     *
      * @return void
      */
     public function testAccessNoPermission()
@@ -43,7 +43,7 @@ class UserTest extends TestCase
 
     /**
      * Test accessing user setting page with admin privilege
-     * 
+     *
      * @return void
      */
     public function testAccessWithPermission()

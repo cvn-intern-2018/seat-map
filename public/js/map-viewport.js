@@ -88,3 +88,35 @@ document.querySelector("#filter-name").addEventListener("keyup", function () {
         }
     }, 500);
 })
+
+
+/**
+ * Bind listener for zoom button
+ */
+document.querySelector("button.zoom-in").addEventListener("click", function () {
+    try {
+        var zoom = parseInt(seatmap.dataset.zoom);
+        if (zoom < 4) {
+            seatmap.dataset.zoom = zoom + 1;
+        }
+    }
+    catch (e) {
+        seatmap.dataset.zoom = 1
+    }
+    mapWidth = seatmap.clientWidth;
+    mapHeight = seatmap.clientHeight;
+});
+document.querySelector("button.zoom-out").addEventListener("click", function () {
+    try {
+        var zoom = parseInt(seatmap.dataset.zoom);
+        if (zoom > 1) {
+            seatmap.dataset.zoom = zoom - 1;
+        }
+    }
+    catch (e) {
+        seatmap.dataset.zoom = 1;
+    }
+
+    mapWidth = seatmap.clientWidth;
+    mapHeight = seatmap.clientHeight;
+});

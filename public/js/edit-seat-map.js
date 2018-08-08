@@ -11,7 +11,9 @@ document.addEventListener("DOMContentLoaded", function (e) {
     var userBox = document.querySelector(".user-list");
     var controlPanel = document.querySelector(".control-panel-container");
     var scrollThreshold = 0;
-
+    /**
+     * Bind listener for window when resizing.
+     */
     $(window).on('resize', function () {
         mapWidth = seatmap.clientWidth;
         mapHeight = seatmap.clientHeight;
@@ -23,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
         mapHeight = seatmap.clientHeight;
 
     }
-
     document.getElementById("seat_data").value = JSON.stringify(gatherSeatmapSetting());
 
     // ================= Function event handler =========================
@@ -107,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     }
 
     /**
-     * Bind listener dragover for seat map
+     * Bind listener dragging over of seat map
      */
     seatmap.addEventListener("dragover", function (e) {
         e.preventDefault();
@@ -129,22 +130,22 @@ document.addEventListener("DOMContentLoaded", function (e) {
     }
 
     /**
-     * Bind listener for drop on seat map
+     * Bind listener for dropping on seat map
      */
     seatmap.addEventListener("drop", function (e) {
-     
+
         e.preventDefault();
 
         var [realX, realY] = getOffsets(e);
         if (e.target !== this) {
-            
+
             var parent = e.target.closest(".user-seat");
             realX += parseFloat(parent.style.left) * mapWidth / 100 - avatarSize / 2;
             realY += parseFloat(parent.style.top) * mapHeight / 100 - avatarSize / 2;
 
         }
         if (e.dataTransfer.getData("type") === "new") {
-            
+
             // Clone object
             var newSeat = document.querySelector(".user-seat-template").cloneNode(true);
             setAttributesNewSeat(newSeat, e);
@@ -174,10 +175,10 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 var left = realX - pointerX;
                 var top = realY - pointerY;
                 console.log("OK");
-                if(left<45) left = 45;
-                if(top<32) top=32;
-                if(left>mapWidth - 45) left = mapWidth-45;
-                if(top>mapHeight - 45) left = mapHeight-45;
+                if (left < 45) left = 45;
+                if (top < 32) top = 32;
+                if (left > mapWidth - 45) left = mapWidth - 45;
+                if (top > mapHeight - 45) left = mapHeight - 45;
                 obj.style.left = (left / mapWidth * 100) + "%";
                 obj.style.top = (top / mapHeight * 100) + "%";
 
@@ -187,14 +188,14 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
             }
         }
-    });    
+    });
 
     /**
-     * Bind listener for the user select box when drop an user
+     * Bind listener for the user select box when dropping an user on it
      */
     userBox.addEventListener("drop", function (e) {
         event.preventDefault();
-        var btnRemove = $( "#user-seat-"+ e.dataTransfer.getData("object_id")+" .remove-arranged-user");
+        var btnRemove = $("#user-seat-" + e.dataTransfer.getData("object_id") + " .remove-arranged-user");
         btnRemove.click();
     });
 
@@ -203,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
      */
     userBox.addEventListener("dragover", function (e) {
         event.preventDefault();
-    });   
+    });
 
     /**
      * Bind listener for zoom button
@@ -237,7 +238,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     });
 
     /**
-     * Bind listener for comfirmed user-removing button
+     * Bind listener for clicking "confirm of removing user" button
      */
     document.querySelector("#remove-confirm .remove-confirmed").addEventListener("click", function () {
         var user_seat = document.querySelector(".seatmap-container #user-seat-" + this.dataset.id);
@@ -246,7 +247,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     });
 
     /**
-     * Bind listener for search user input
+     * Bind listener for "search user" input
      */
     document.querySelector("#keyword").addEventListener("keyup", function () {
         clearTimeout(waiterSetTimeOut);
@@ -307,7 +308,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     })
 
     /**
-     * Bind listener for click save button
+     * Bind listener for clicking save button
      */
     document.getElementById("save_edit").addEventListener("click", function (e) {
         e.preventDefault();
@@ -326,7 +327,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     });
 
     /**
-     * Bind listener for toggle checkbox option
+     * Bind listener for toggling checkbox option
      */
     document.getElementById("display_name").addEventListener("click", function (e) {
         if (this.checked == true) {
@@ -352,7 +353,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     });
 
     /**
-     * Bind listener for scroll screen
+     * Bind listener for scrolling the screen
      */
     window.onscroll = function (e) {
         if (window.pageYOffset >= scrollThreshold) {
@@ -367,6 +368,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     // =================== Support function =============================
     /**
      * Gathering seat map setting.
+     * @return {Array} seatData
      */
     function gatherSeatmapSetting() {
         var seatData = [];

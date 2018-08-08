@@ -22,10 +22,10 @@ class AddGroupTest extends TestCase
     {
         return \App\User::where('permission', 1)->first();
     }
-    
+
     /**
      * Test add group without login
-     * 
+     *
      * @return void
      */
     public function testAccessAddNoLogin()
@@ -39,7 +39,7 @@ class AddGroupTest extends TestCase
 
     /**
      * Test add group with user privilege
-     * 
+     *
      * @return void
      */
     public function testAccessAddNoPermission()
@@ -54,7 +54,7 @@ class AddGroupTest extends TestCase
 
     /**
      * Test add new group with existed name
-     * 
+     *
      * @return void
      */
     public function testAddExistedGroup()
@@ -69,7 +69,7 @@ class AddGroupTest extends TestCase
 
     /**
      * Test add new group with available name
-     * 
+     *
      * @return void
      */
     public function testAddAvailableGroup()
@@ -83,7 +83,7 @@ class AddGroupTest extends TestCase
 
     /**
      * Test add new group with no name
-     * 
+     *
      * @return void
      */
     public function testAddNoNameGroup()
@@ -97,7 +97,7 @@ class AddGroupTest extends TestCase
 
     /**
      * Test add new group with name longer than 100 characters
-     * 
+     *
      * @return void
      */
     public function testAddLongNameGroup()
@@ -111,7 +111,7 @@ class AddGroupTest extends TestCase
 
     /**
      * Test add new group with name with whitespace characters only
-     * 
+     *
      * @return void
      */
     public function testAddWhitespaceNameGroup()

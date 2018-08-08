@@ -87,9 +87,9 @@ class User extends Authenticatable
             $this->email = "";
         }
 
-        if(!empty($infor['password'])){
-            $this->password = bcrypt($infor['password']);            
-        }else{
+        if (!empty($infor['password'])) {
+            $this->password = bcrypt($infor['password']);
+        } else {
             $this->password = "";
         }
 
@@ -102,10 +102,10 @@ class User extends Authenticatable
         if (!empty($infor['avatar'])) {
             $this->img = $infor['avatar'];
             // var_dump("abc"); exit;           
-        }else{
-            if($infor['checkAvatar'] == 1){
+        } else {
+            if ($infor['checkAvatar'] == 1) {
                 $this->img = "";
-            }else{
+            } else {
                 // $this->img = "";  
             }
 
