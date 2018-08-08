@@ -90,7 +90,7 @@ class User extends Authenticatable
         if (!empty($infor['password'])) {
             $this->password = bcrypt($infor['password']);
         } else {
-            $this->password = "";
+            // $this->password = "";
         }
 
         if (!empty($infor['short_name'])) {
@@ -126,7 +126,7 @@ class User extends Authenticatable
         if (!empty($infor['username'])) {
             $this->username = $infor['username'];
         } else {
-            $this->username = "";
+            // $this->username = "";
         }
     }
 }
