@@ -117,10 +117,6 @@
                                 <p><strong>Short name:</strong></p>
                                 <input type="text" name="short_name" value="{{json_decode($admin)->short_name}}"
                                        maxlength="10" autocomplete="off"/>
-                                <input type="text" value="{{json_decode($admin)->username}}"
-                                       name="username"/>
-                                <input type="text" value="{{json_decode($admin)->password}}"
-                                       name="password"/>
                                 <input type="text" value="{{json_decode($admin)->id}}"
                                        name="user_id"/>
                                 <div>

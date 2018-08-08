@@ -233,8 +233,11 @@ class UserController extends Controller
             if(($this->userInforErr['emailErr'] == "Existed") and ($user->email == $this->userInfor['email'])){
                 unset($this->userInforErr['emailErr']);
             }
-            if (($this->userInforErr['usernameErr'] == "Existed") and ($user->username == $this->userInfor['username'])) {
-                unset($this->userInforErr['usernameErr']);
+            if(!empty($request->username)){
+                $this->userInforErr['usernameErr'] = "Not allowed!";   
+            }
+            if(!empty($request->password)){
+                $this->userInforErr['passwordErr'] = "Not allowed!";   
             }
             // $this->response['userInfor'] = $this->userInfor;
             // $this->response['userInforErr'] = $this->userInforErr;
@@ -258,7 +261,7 @@ class UserController extends Controller
                     'prv_error' => $this->userInforErr]);
             }
         } else {
-            return view('404');
+            return abort(404);
         }
         // $this->response['userInfor'] = $this->userInfor;
         // $this->response['userInforErr'] = $this->userInforErr;

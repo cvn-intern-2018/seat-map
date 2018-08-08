@@ -47,8 +47,6 @@ function displayUserInfor(infor) {
     document.querySelector("form[name=infor] input[name=email]").value = infor.email;
     document.querySelector("form[name=infor] input[name=phone]").value = infor.phone;
     document.querySelector("form[name=infor] input[name=user_id]").value = infor.id;
-    document.querySelector("form[name=infor] input[name=username]").value = infor.username;
-    document.querySelector("form[name=infor] input[name=password]").value = infor.password;
     var sel = document.querySelector("form[name=infor] select[name=group_id]");
     for (var i = 0, j = sel.options.length; i < j; ++i) {
         if (sel.options[i].innerHTML === infor.group) {
