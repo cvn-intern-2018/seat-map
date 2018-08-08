@@ -176,9 +176,9 @@ class UserController extends Controller
             $file = $infor->file('avatar');
             $img = '.' . $file->extension();
             $public = Storage::disk('public_folder');
-            $public->putFileAs('images/user', $file, $infor->user_id . $img);
-            $avatar = UserController::test_input($img);
-            $this->userInfor['avatar'] = $avatar;
+            $public->putFileAs('images/user', $file, $infor->user_id.$img);
+            // $avatar = UserController::test_input($img);
+            $this->userInfor['avatar'] = $img;
         }
 
         // check group_id
@@ -235,16 +235,24 @@ class UserController extends Controller
             }
             if(!empty($request->username)){
                 $this->userInforErr['usernameErr'] = "Not allowed!";   
+            }else{
+                if(!empty($this->userInforErr['usernameErr'])){
+                    unset($this->userInforErr['usernameErr']);
+                }
             }
             if(!empty($request->password)){
                 $this->userInforErr['passwordErr'] = "Not allowed!";   
+            }else{
+                if(!empty($this->userInforErr['passwordErr'])){
+                    unset($this->userInforErr['passwordErr']);
+                }
             }
             // $this->response['userInfor'] = $this->userInfor;
             // $this->response['userInforErr'] = $this->userInforErr;
             // var_dump($this->response); exit;
             if (count($this->userInforErr) == 0) {
                 $this->response['status'] = "Success";
-                // var_dump($this->userInfor); exit;
+                // var_dump($this->userInfor['avatar']); exit;
                 $user->set($this->userInfor);
                 $user->save();
                 return redirect()->route('users')->with(['user_id' => $request->user_id, 'prv_data' => '', 'prv_error' => '']);
