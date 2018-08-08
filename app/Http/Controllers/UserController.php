@@ -275,6 +275,7 @@ class UserController extends Controller
             $this->response['status'] = "Error";
         } else {
             User::where('id', $request->id)->delete();
+            // var_dump($request->id); exit;
             $this->response['status'] = "Success";
         }
         return json_encode($this->response);

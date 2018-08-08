@@ -207,7 +207,7 @@ function filter() {
 // function to delete a user
 function deleteUser(currentItem) {
     if (confirm("Do you want to delete \"" + currentItem.name + "\" ?")) {
-
+        console.log(currentItem.dataset.id);
         // delete in the database
         if (currentItem.name.length == 0) {
             return;
@@ -244,6 +244,7 @@ function deleteUser(currentItem) {
                     }
                 }
             }
+        
         }
         xmlhttp.open("GET", "/users/delete/{id}?id=" + currentItem.dataset.id, true);
         xmlhttp.send();
