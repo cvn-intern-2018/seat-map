@@ -26,7 +26,7 @@ class SeatMapTest extends TestCase
     public function testViewSeatmap()
     {
         $seatmap = \App\SeatMap::first();
-        $response = $this->get('/seat-map/'.$seatmap->id);
+        $response = $this->get('/seat-map/' . $seatmap->id);
         $response->assertStatus(200);
     }
 
@@ -49,7 +49,7 @@ class SeatMapTest extends TestCase
     public function testViewSeatmapWithFloatId()
     {
         $seatmap = \App\SeatMap::first();
-        $response = $this->get('/seat-map/'.$seatmap->id.'.000');
+        $response = $this->get('/seat-map/' . $seatmap->id . '.000');
         $response->assertStatus(404);
     }
 }

@@ -27,7 +27,7 @@ class AddSeatMapTest extends TestCase
 
     /**
      * Test add seat map when not login
-     * 
+     *
      * @return void
      */
     public function testAddSeatmapNoLogin()
@@ -41,7 +41,7 @@ class AddSeatMapTest extends TestCase
 
     /**
      * Test add seat map when login with user privilege
-     * 
+     *
      * @return void
      */
     public function testAddSeatmapAsUser()
@@ -56,7 +56,7 @@ class AddSeatMapTest extends TestCase
 
     /**
      * Test add seat map when login with admin privilege
-     * 
+     *
      * @return void
      */
     public function testAddSeatmap()
@@ -74,7 +74,7 @@ class AddSeatMapTest extends TestCase
 
     /**
      * Test add seat map without name
-     * 
+     *
      * @return void
      */
     public function testAddSeatmapWithNoName()
@@ -92,7 +92,7 @@ class AddSeatMapTest extends TestCase
 
     /**
      * Test add seat map with long name
-     * 
+     *
      * @return void
      */
     public function testAddSeatmapWithLongName()
@@ -110,7 +110,7 @@ class AddSeatMapTest extends TestCase
 
     /**
      * Test add seat map with whitespace name
-     * 
+     *
      * @return void
      */
     public function testAddSeatmapWithWhitespaceName()
@@ -128,7 +128,7 @@ class AddSeatMapTest extends TestCase
 
     /**
      * Test add seat map with small dimentional image
-     * 
+     *
      * @return void
      */
     public function testAddSeatmapWithNoImage()
@@ -144,7 +144,7 @@ class AddSeatMapTest extends TestCase
 
     /**
      * Test add seat map with small dimentional image
-     * 
+     *
      * @return void
      */
     public function testAddSeatmapWithSmallImage()
@@ -161,7 +161,7 @@ class AddSeatMapTest extends TestCase
 
     /**
      * Test add seat map with large file size
-     * 
+     *
      * @return void
      */
     public function testAddSeatmapWithLargeFile()

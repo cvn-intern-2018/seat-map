@@ -25,32 +25,32 @@ class EditSeatMapTest extends TestCase
 
     /**
      * Test edit seat map page when not login
-     * 
+     *
      * @return void
      */
     public function testEditSeatmapPageNoLogin()
     {
         $map = \App\SeatMap::first();
-        $response = $this->get('/seat-map/edit/'.$map->id);
+        $response = $this->get('/seat-map/edit/' . $map->id);
         $response->assertStatus(302);
     }
 
     /**
      * Test edit seat map page when login with user privilege
-     * 
+     *
      * @return void
      */
     public function testEditSeatmapPageAsUser()
     {
         $map = \App\SeatMap::first();
         $user = \App\User::where('permission', 0)->first();
-        $response = $this->actingAs($user)->get('/seat-map/edit/'.$map->id);
+        $response = $this->actingAs($user)->get('/seat-map/edit/' . $map->id);
         $response->assertStatus(403);
     }
 
     /**
      * Test edit seat map page when login with admin privilege
-     * 
+     *
      * @return void
      */
     public function testEditSeatmapPage()
@@ -58,7 +58,7 @@ class EditSeatMapTest extends TestCase
         $user = $this->getAdmin();
         $map = \App\SeatMap::first();
 
-        $response = $this->actingAs($user)->get('/seat-map/edit/'.$map->id, [
+        $response = $this->actingAs($user)->get('/seat-map/edit/' . $map->id, [
             'seatmap_id' => $map->id,
             'seatmap_name' => $this->faker->words(2, true),
             'seat_data' => json_encode([]),
@@ -68,7 +68,7 @@ class EditSeatMapTest extends TestCase
 
     /**
      * Test edit seat map submit when not login
-     * 
+     *
      * @return void
      */
     public function testEditSeatmapNoLogin()
@@ -80,7 +80,7 @@ class EditSeatMapTest extends TestCase
 
     /**
      * Test edit seat map submit when login with user privilege
-     * 
+     *
      * @return void
      */
     public function testEditSeatmapAsUser()
@@ -93,7 +93,7 @@ class EditSeatMapTest extends TestCase
 
     /**
      * Test edit seat map submit when login with admin privilege
-     * 
+     *
      * @return void
      */
     public function testEditSeatmap()
@@ -111,7 +111,7 @@ class EditSeatMapTest extends TestCase
 
     /**
      * Test edit seat map submit without id
-     * 
+     *
      * @return void
      */
     public function testEditSeatmapNoId()
@@ -128,7 +128,7 @@ class EditSeatMapTest extends TestCase
 
     /**
      * Test edit seat map submit with non-existed id
-     * 
+     *
      * @return void
      */
     public function testEditSeatmapInvalidId()
@@ -145,7 +145,7 @@ class EditSeatMapTest extends TestCase
 
     /**
      * Test edit seat map submit without name
-     * 
+     *
      * @return void
      */
     public function testEditSeatmapNoName()
@@ -160,10 +160,10 @@ class EditSeatMapTest extends TestCase
         ]);
         $response->assertSessionHasErrors(['seatmap_name']);
     }
-    
+
     /**
      * Test edit seat map submit with long name
-     * 
+     *
      * @return void
      */
     public function testEditSeatmapLongName()
@@ -181,7 +181,7 @@ class EditSeatMapTest extends TestCase
 
     /**
      * Test edit seat map submit with empty seat data
-     * 
+     *
      * @return void
      */
     public function testEditSeatmapNoSeatData()
@@ -197,10 +197,10 @@ class EditSeatMapTest extends TestCase
         $response->assertSessionHasNoErrors();
     }
 
-    
+
     /**
      * Test edit seat map submit with invalid seat data
-     * 
+     *
      * @return void
      */
     public function testEditSeatmapInvalidSeatData()
@@ -218,7 +218,7 @@ class EditSeatMapTest extends TestCase
 
     /**
      * Test edit seat map submit with seat data has invalid user
-     * 
+     *
      * @return void
      */
     public function testEditSeatmapInvalidUser()
@@ -242,7 +242,7 @@ class EditSeatMapTest extends TestCase
 
     /**
      * Test edit seat map submit with seat data has invalid coordination
-     * 
+     *
      * @return void
      */
     public function testEditSeatmapInvalidCoordination()

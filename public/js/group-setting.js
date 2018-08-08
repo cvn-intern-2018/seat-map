@@ -1,6 +1,6 @@
-(function($){
-    $.fn.setCursorPosition = function(pos) {
-        this.each(function(index, elem) {
+(function ($) {
+    $.fn.setCursorPosition = function (pos) {
+        this.each(function (index, elem) {
             if (elem.setSelectionRange) {
                 elem.setSelectionRange(pos, pos);
             } else if (elem.createTextRange) {
@@ -13,9 +13,9 @@
         });
         return this;
     };
-    
+
     var lockUpdateGroup = false;
-    $(document).ready(function(){
+    $(document).ready(function () {
         //======================= Initial data =============================
         $.ajaxSetup({
             headers: {
@@ -72,7 +72,7 @@
                 dataType: "json",
                 complete: function (response) {
                     var data = JSON.parse(response.responseText);
-                    if (response.status === 200 
+                    if (response.status === 200
                         && data.hasOwnProperty("result") && data.result == true) {
                         $(group_item).removeClass("edit");
                         group_item.querySelector("label").innerHTML = group_name;
@@ -93,12 +93,13 @@
                         $(group_item).find(`input[name="group_name"]`).val(
                             $(group_item).find(`label[for="group-name"]`).eq(0).html()
                         );
-                        
-                    lockUpdateGroup = false;
+
+                        lockUpdateGroup = false;
                     }
                 }
             })
         }
+
         function disableRemoveOnUnassignedGroup() {
             if ($(`.group-list .group-item[data-group="1"]`).hasClass("active")) {
                 $(".arrows .remove-user").addClass("disable");
@@ -111,7 +112,7 @@
         /**
          * Bind event on change group item
          */
-        $(".group-list .group-item").click(function(){
+        $(".group-list .group-item").click(function () {
             var [added, removed] = getMembershipUpdate();
             // console.log(added, removed);
             if (added.length === 0 && removed.length === 0) {
@@ -151,15 +152,15 @@
         });
 
         // Auto save new name on field loses focus
-        $(`.group-item .group-display input[name="group_name"]`).focusout(function(e){
+        $(`.group-item .group-display input[name="group_name"]`).focusout(function (e) {
             if ($(e.relatedTarget).hasClass("cancel-button"))
-            return;
+                return;
             updateGroupName(this);
         });
 
         //
-        $(`.group-item .group-display input[name="group_name"]`).keydown(function(e){
-            if (e.keyCode == 13){
+        $(`.group-item .group-display input[name="group_name"]`).keydown(function (e) {
+            if (e.keyCode == 13) {
                 $(this).focusout();
             }
         });
@@ -169,18 +170,18 @@
          */
         $("form.add-group-item .group-button.add-button").click(function () {
             var [added, removed] = getMembershipUpdate();
-            
-            if ( added.length === 0 && removed.length === 0 ) {
+
+            if (added.length === 0 && removed.length === 0) {
                 handleAddGroupForm();
             } else {
                 $("#addGroupModal").modal("show");
             }
         });
 
-        $("#addGroupModal .save-group-setting").click(function(){
+        $("#addGroupModal .save-group-setting").click(function () {
             handleMembershipUpdateForm();
         });
-        $("#addGroupModal .discard-group-setting").click(function(){
+        $("#addGroupModal .discard-group-setting").click(function () {
             $("#addGroupModal").modal("hide");
             handleAddGroupForm();
             disableRemoveOnUnassignedGroup();
@@ -191,16 +192,16 @@
          */
 
         // Bind event for discard button on popup on group changing
-        $("#changeGroupModal .discard-group-setting").click(function(){
+        $("#changeGroupModal .discard-group-setting").click(function () {
             $("#changeGroupModal").modal("hide");
             var clickTarget = $(`.group-list .group-item[data-group="${$(this).data("group_id")}"]`);
             updateUserSelectPanel(clickTarget);
-            $("#changeGroupModal").modal("hide"); 
+            $("#changeGroupModal").modal("hide");
             disableRemoveOnUnassignedGroup();
         });
 
         // Bind event for save button on popup on group changing
-        $("#changeGroupModal .save-group-setting").click(function(){
+        $("#changeGroupModal .save-group-setting").click(function () {
             handleMembershipUpdateForm();
         });
 
@@ -210,27 +211,27 @@
         $("form.delete-group-item").click(function (e) {
             e.stopPropagation();
             var [added, removed] = getMembershipUpdate();
-            
-            if ( added.length === 0 && removed.length === 0 ) {
+
+            if (added.length === 0 && removed.length === 0) {
                 $("#deleteGroupModalWithNoChange .delete-group-setting")
-                .data("id", $(this).find(`input[name="group_id"]`).val());
+                    .data("id", $(this).find(`input[name="group_id"]`).val());
                 $("#deleteGroupModalWithNoChange").modal("show");
             } else {
                 $("#deleteGroupModal").find(".discard-group-setting")
-                .data("id", $(this).find(`input[name="group_id"]`).val());
-                $("#deleteGroupModal").modal("show");  
+                    .data("id", $(this).find(`input[name="group_id"]`).val());
+                $("#deleteGroupModal").modal("show");
             }
         });
 
-        $("#deleteGroupModal .save-group-setting").click(function(){
+        $("#deleteGroupModal .save-group-setting").click(function () {
             handleMembershipUpdateForm();
         });
-        $("#deleteGroupModal .discard-group-setting").click(function(){
+        $("#deleteGroupModal .discard-group-setting").click(function () {
             $("#deleteGroupModal").modal("hide");
             var group_id = $(this).data("id");
             $(`.group-list .group-item[data-group="${group_id}"] form.delete-group-item`).submit();
         });
-        $("#deleteGroupModalWithNoChange .delete-group-setting").click(function(){
+        $("#deleteGroupModalWithNoChange .delete-group-setting").click(function () {
             var group_id = $(this).data("id");
             $(`.group-list .group-item[data-group="${group_id}"] form.delete-group-item`).submit();
         });
@@ -254,7 +255,7 @@
         });
 
         $(".user-group-setting .save-group-setting").click(handleMembershipUpdateForm)
-        $(".user-group-setting .reset-group-setting").click(function(){
+        $(".user-group-setting .reset-group-setting").click(function () {
             updateUserSelectPanel($(".group-list .group-item.active"));
         })
 
@@ -263,7 +264,7 @@
         /**
          * Get 2 lists of added and removed users.
          */
-        function getMembershipUpdate(){
+        function getMembershipUpdate() {
             var group_id = $("#user_group_id").val();
             var selected = Array.from(document.querySelectorAll(`#member_users option`)).filter(function (el) {
                 return ($(el).data("group") != group_id) &&

@@ -17,7 +17,9 @@ class SeatmapController extends Controller
 
 
     /**
-     * Load detail page
+     * Load detail seat map page
+     * @param int $id
+     * @return detail view
      */
     public function getSeatmapDetail(int $id)
     {
@@ -31,7 +33,7 @@ class SeatmapController extends Controller
     /**
      *  'Add Seatmap' request handler
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return  redirect to the home view or back to the last view
      */
     public function addSeatmapHandler(Request $request)
     {
@@ -59,7 +61,7 @@ class SeatmapController extends Controller
     /**
      * 'Delete Seatmap' request handler
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|string
+     * @return redirect to home view or back to the last view
      */
     public function deleteSeatmapHandler(Request $request)
     {
@@ -91,7 +93,7 @@ class SeatmapController extends Controller
      * Load add seat map page
      *
      * @param int $id
-     * @return view
+     * @return edit seat map view
      */
     public function getEditSeatmapPage(int $id)
     {
@@ -132,8 +134,7 @@ class SeatmapController extends Controller
                 $new_item['x'] = (int)($new_item['x'] * 100);
                 $new_item['y'] = (int)($new_item['y'] * 100);
                 $new_item['seat_map_id'] = $seatmap_id;
-                if (($new_item['x'] > 10000) || ($new_item['x'] < 0) || ($new_item['y'] > 10000) || ($new_item['y'] < 0))
-                {
+                if (($new_item['x'] > 10000) || ($new_item['x'] < 0) || ($new_item['y'] > 10000) || ($new_item['y'] < 0)) {
                     $validator = \Illuminate\Support\Facades\Validator::make([], []);
                     $validator->errors()->add('seat_data', 'Seat data is invalid');
                     throw new \Illuminate\Validation\ValidationException($validator);
@@ -141,7 +142,7 @@ class SeatmapController extends Controller
                 return $new_item;
             }, json_decode($validatedData['seat_data']));
 
-            $user_seat = array_filter($user_seat, function($item) use ($user_ids) {
+            $user_seat = array_filter($user_seat, function ($item) use ($user_ids) {
                 return in_array($item['user_id'], $user_ids);
             });
         }
