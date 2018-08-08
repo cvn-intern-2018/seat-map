@@ -70,8 +70,8 @@ class AddUserTest extends TestCase
             'avatar' => $image,
             'group_id' => 1,
         ]);
-        $response->assertJsonStructure([
-            'status'
+        $response->assertJson([
+            'status' => 'Success',
         ]);
     }
 
@@ -94,6 +94,9 @@ class AddUserTest extends TestCase
             'avatar' => $image,
             'group_id' => 1,
         ]);
+        $response->assertJson([
+            'status' => 'Error'
+        ]);
         $response->assertJsonStructure([
             'status',
             'userInforErr' => [
@@ -103,7 +106,37 @@ class AddUserTest extends TestCase
                 'emailErr',
                 'shortnameErr',
                 'phoneErr',
-                'imageErr'
+                'imageErr',
+            ],
+        ]);
+    }
+
+    /**
+     * Test add user with existed username and email
+     * 
+     * @return void
+     */
+    public function testAddUserWithUniqueField()
+    {
+        $user = $this->getAdmin();
+        $image = UploadedFile::fake()->image('avatar.jpg', 500, 500);
+        $response = $this->actingAs($user)->post('/users/add', [
+            'username' => $user->username,
+            'fullname' => $this->faker->name,
+            'password' => 'secret',
+            'email' => $user->email,
+            'short_name' => substr($this->faker->lastName, 0, 10),
+            'phone' => '0123456789',
+            'avatar' => $image,
+            'group_id' => 1,
+        ]);
+        $response->assertJson([
+            'status' => 'Error'
+        ]);
+        $response->assertJsonStructure([
+            'userInforErr' => [
+                'usernameErr',
+                'emailErr',
             ]
         ]);
     }
