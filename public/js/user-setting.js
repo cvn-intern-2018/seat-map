@@ -154,7 +154,7 @@ function addUser(event){
                     item.insertBefore(nodeP, child.nextSibling);
                 }
             }else{
-                var _result = JSON.parse( this.responseText); 
+                var _result = JSON.parse(this.responseText); 
                 // add on the screen
                 var nodeLi = document.createElement("li");
                 nodeLi.className = "flex-container_";
@@ -167,6 +167,7 @@ function addUser(event){
                 nodeP.innerHTML = response.userInfor.fullname;
                 var nodeImg = document.createElement("img");
                 nodeImg.setAttribute('name', response.userInfor.fullname);
+                nodeImg.dataset.id = response.userInfor.id;
                 console.log(response.userInfor.fullname);
                 nodeImg.onclick = function(){deleteUser(this)};
                 nodeImg.setAttribute('src', "images\/remove.png");
@@ -217,13 +218,16 @@ function deleteUser(currentItem){
                 if(JSON.parse(this.responseText).status == "Error"){
                     alert(JSON.parse(this.responseText).status);
                 }else{
+                    var ul = document.querySelector("#list-of-users");
+                    if(ul.dataset.info == currentItem.dataset.id){
+                        displayUser(document.querySelectorAll("p[name=name]")[0]);
+                    }                    
                     // delete on the screen
                     // currentItem was a button
-                    // get parentNode 
+                    // get parentNode
                     var node = currentItem.parentNode.parentNode;
                     // delete parentNode
                     node.parentNode.removeChild(node);
-
                     // alert(JSON.parse(this.responseText).status);
                     // Get the snackbar DIV
                     var x = document.getElementById("snackbar");

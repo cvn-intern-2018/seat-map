@@ -57,7 +57,7 @@
 
                 <li class="flex-container_" draggable="true">
                     <p name="name" class="bg" data-info="{{ $arr_users[$user->id] }}"><strong>{{ $user->name }}</strong></p>
-                    <div><img name="{{ $user->name }}" src="{{asset('images/remove.png')}}" alt="delete"/></div>
+                    <div><img name="{{ $user->name }}" src="{{asset('images/remove.png')}}" data-id="{{ $user->id }}" alt="delete"/></div>
                 </li>
                 @endif
                 @endForeach
