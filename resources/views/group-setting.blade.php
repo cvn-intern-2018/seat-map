@@ -55,7 +55,7 @@
                                 </div>
                             @endforeach
                             <div class="col-xs-12 group-item
-                            @if ($groups->count() == 0)
+                            @if ($groups->count() == 0 || $active_id == \Config::get('group.UNASSIGNED_GROUP_ID'))
                                     active
 @endif
                                     " data-group="{{ $unassigned_group->id }}">
@@ -71,7 +71,7 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <h4 class="group-title">
-                            @if ($groups->count() == 0)
+                            @if ($groups->count() == 0 || $active_id == \Config::get('group.UNASSIGNED_GROUP_ID'))
                                 {{ $unassigned_group->name }}
                             @else
                                 {{ $groups->get($active_id)->name }}
@@ -198,7 +198,7 @@
             Delete group
         @endslot
         @slot("message")
-            <p>You are about to delete a group. Do you really want to delete it?</p>
+            <p>You are about to delete <strong class="delete-group-name"></strong> group. Do you really want to delete it?</p>
             <p>Users in the deleted group will be moved to <strong>Unassigned group.</strong></p>
         @endslot
         @slot("buttons")

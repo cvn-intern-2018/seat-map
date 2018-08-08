@@ -24,6 +24,7 @@ class UserGroupController extends Controller
             $active_id = $request->session()->get('active_group', $groups->first()->id);
         }
         $unassigned = $groups->pull(1);
+        // var_dump($groups->get($active_id)); die();
         return view('group-setting', [
             'users' => $users,
             'groups' => $groups,

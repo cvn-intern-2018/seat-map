@@ -210,6 +210,9 @@
             if (added.length === 0 && removed.length === 0) {
                 $("#deleteGroupModalWithNoChange .delete-group-setting")
                     .data("id", $(this).find(`input[name="group_id"]`).val());
+                $("#deleteGroupModalWithNoChange .delete-group-name").html("");
+                $("#deleteGroupModalWithNoChange .delete-group-name")
+                    .append(document.createTextNode($(this).parent(`.group-item`).find(`input[name="group_name"]`).val()));
                 $("#deleteGroupModalWithNoChange").modal("show");
             } else {
                 $("#deleteGroupModal").find(".discard-group-setting")
@@ -291,7 +294,8 @@
                 #non_member_users option`).removeAttr("hidden");
             $(`#non_member_users option[data-group="${group_id}"]`)
                 .attr("hidden", "hidden");
-            $(".group-title").html($(el).find(`label[for="group-name"]`).text());
+            $(".group-title").html("");
+            $(".group-title").append(document.createTextNode(($(el).find(`label[for="group-name"]`).text())));
             $(`#member_users, #non_member_users`).val(0);
             $("#user-group-data").val("");
         }
