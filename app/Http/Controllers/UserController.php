@@ -50,16 +50,15 @@ class UserController extends Controller
             }
         }
 
-        return view('user-setting', [  'users' => $users,
+        return view('user-setting', ['users' => $users,
             'arr_users' => $arr_users,
             'admin' => json_encode($admin),
             'groups' => $groups,
             'user_id' => $request->session('user_id', 1),
             'prv_data' => $request->session('prv_data', 1),
-            'prv_error'  => $request->session('prv_error', 1)
-            ]);
+            'prv_error' => $request->session('prv_error', 1)
+        ]);
     }
-
 
 
     /**
@@ -89,15 +88,16 @@ class UserController extends Controller
         return 'User setting view';
     }
 
-    public function check_request($infor){
+    public function check_request($infor)
+    {
         // check username
         if (empty($infor->username)) {
             $this->userInfor['username'] = "";
             $this->userInforErr['usernameErr'] = "Username is required";
         } else {
             $username = UserController::test_input($infor->username);
-             $this->userInfor['username'] = $username;
-             if (User::where('username', '=', $username)->count() > 0) {
+            $this->userInfor['username'] = $username;
+            if (User::where('username', '=', $username)->count() > 0) {
                 $this->userInforErr['usernameErr'] = "Existed";
             } else if (strlen($username) > 50) {
                 $this->userInforErr['usernameErr'] = "The username may not be greater than 50 characters";
@@ -110,7 +110,7 @@ class UserController extends Controller
             $this->userInforErr['fullnameErr'] = "Fullname is required";
         } else {
             $fullname = UserController::test_input($infor->fullname);
-             $this->userInfor['fullname'] = $fullname;
+            $this->userInfor['fullname'] = $fullname;
             if (strlen($fullname) > 50) {
                 $this->userInforErr['fullnameErr'] = "The fullname may not be greater than 50 characters";
             }
@@ -122,7 +122,7 @@ class UserController extends Controller
             $this->userInforErr['passwordErr'] = "Password is required";
         } else {
             $password = UserController::test_input($infor->password);
-             $this->userInfor['password'] = $password;        
+            $this->userInfor['password'] = $password;
         }
 
         // check email
@@ -138,7 +138,7 @@ class UserController extends Controller
                 $this->userInforErr['emailErr'] = "Existed";
             } else if (strlen($email) > 50) {
                 $this->userInforErr['emailErr'] = "The email may not be greater than 50 characters";
-            }           
+            }
         }
 
         // check short_name
@@ -147,11 +147,11 @@ class UserController extends Controller
             // $this->userInforErr['shortnameErr'] = "Shortname is required";
         } else {
             $short_name = UserController::test_input($infor->short_name);
-             $this->userInfor['short_name'] = $short_name;          
+            $this->userInfor['short_name'] = $short_name;
             if (strlen($short_name) > 10) {
                 $this->userInforErr['shortnameErr'] = "The shortname may not be greater than 10 characters";
             }
-        } 
+        }
 
         // check phonenumber
         if (empty($infor->phone)) {
@@ -163,15 +163,15 @@ class UserController extends Controller
             if (!preg_match("/^[0-9]*$/", $phone)) {
 
                 $this->userInforErr['phoneErr'] = "Only numbers allowed";
-            }else if (strlen($phone) > 30) {
+            } else if (strlen($phone) > 30) {
                 $this->userInforErr['phoneErr'] = "The phonenumber may not be greater than 30 characters";
             }
         }
 
         // check avatar
-        if(empty($infor->avatar)){
+        if (empty($infor->avatar)) {
             $this->userInfor['checkAvatar'] = $infor->checkAvatar;
-        }else{
+        } else {
             $this->userInfor['checkAvatar'] = 0;
             $file = $infor->file('avatar');
             $img = '.' . $file->extension();
@@ -179,10 +179,10 @@ class UserController extends Controller
             $public->putFileAs('images/user', $file, $infor->user_id . $img);
             $avatar = UserController::test_input($img);
             $this->userInfor['avatar'] = $avatar;
-        }  
+        }
 
         // check group_id
-        if(empty($infor->group_id)){
+        if (empty($infor->group_id)) {
             $this->userInfor['group_id'] = 0;
         } else {
             $group_id = UserController::test_input($infor->group_id);
@@ -206,7 +206,7 @@ class UserController extends Controller
             $this->response['status'] = "Success";
             $user->set($this->userInfor);
             $user->save();
-        }else{
+        } else {
             $this->response['status'] = "Error";
         }
         // var_dump($this->userInfor); exit;
@@ -222,41 +222,41 @@ class UserController extends Controller
     public function editUserHandler(Request $request)
     {
         $prv_data = "";
-        if(!empty($request->user_id)){
+        if (!empty($request->user_id)) {
             $user = User::where('id', $request->user_id)->first();
             $this->check_request($request);
             // $this->response['userInfor'] = $this->userInfor;
             // $this->response['userInforErr'] = $this->userInforErr;
             // var_dump($request->user_id);
             // var_dump($this->response); exit;
-            if($this->userInforErr['emailErr'] == "Existed"){
+            if ($this->userInforErr['emailErr'] == "Existed") {
                 unset($this->userInforErr['emailErr']);
             }
             if ($this->userInforErr['usernameErr'] == "Existed") {
                 unset($this->userInforErr['usernameErr']);
             }
-                // $this->response['userInfor'] = $this->userInfor;
-                // $this->response['userInforErr'] = $this->userInforErr;
-                // var_dump($this->response); exit;
-            if(count($this->userInforErr) == 0){
+            // $this->response['userInfor'] = $this->userInfor;
+            // $this->response['userInforErr'] = $this->userInforErr;
+            // var_dump($this->response); exit;
+            if (count($this->userInforErr) == 0) {
                 $this->response['status'] = "Success";
                 // var_dump($this->userInfor); exit;
                 $user->set($this->userInfor);
                 $user->save();
-                return redirect()->route('users')->with(['user_id' => $request->user_id, 'prv_data' => '', 'prv_error' => '']);                
-            }else{
+                return redirect()->route('users')->with(['user_id' => $request->user_id, 'prv_data' => '', 'prv_error' => '']);
+            } else {
                 $this->userInfor['id'] = $user->id;
-                if($this->userInfor['checkAvatar'] == 1){
+                if ($this->userInfor['checkAvatar'] == 1) {
                     $this->userInfor['avatar'] = "";
-                }else{
+                } else {
                     $this->userInfor['avatar'] = $user->img;
                 }
                 $this->response['status'] = "Error";
                 return redirect()->route('users')->with(['user_id' => $request->user_id,
-                                                        'prv_data' => json_encode($this->userInfor),
-                                                        'prv_error' => $this->userInforErr]);
-            }                       
-        }else{
+                    'prv_data' => json_encode($this->userInfor),
+                    'prv_error' => $this->userInforErr]);
+            }
+        } else {
             return view('404');
         }
         // $this->response['userInfor'] = $this->userInfor;
@@ -279,7 +279,8 @@ class UserController extends Controller
         return json_encode($this->response);
     }
 
-    public function test_input($data){
+    public function test_input($data)
+    {
         $data = trim($data);
         $data = stripslashes($data);
         // $data = htmlspecialchars($data);

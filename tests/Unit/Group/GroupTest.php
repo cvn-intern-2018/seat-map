@@ -18,10 +18,10 @@ class GroupTest extends TestCase
         \Artisan::call('migrate:refresh', ['--env' => 'testing']);
         \Artisan::call('db:seed', ['--env' => 'testing']);
     }
-    
+
     /**
      * Test accessing group setting page without login
-     * 
+     *
      * @return void
      */
     public function testAccessSettingNoLogin()
@@ -35,7 +35,7 @@ class GroupTest extends TestCase
 
     /**
      * Test accessing group setting page with user privilege
-     * 
+     *
      * @return void
      */
     public function testAccessNoPermission()
@@ -50,7 +50,7 @@ class GroupTest extends TestCase
 
     /**
      * Test accessing group setting page with admin privilege
-     * 
+     *
      * @return void
      */
     public function testAccessWithPermission()

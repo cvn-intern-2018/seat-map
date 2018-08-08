@@ -12,7 +12,7 @@ class UserGroupController extends Controller
 {
     /**
      * Load Add/Edit/Delete group page
-     * 
+     *
      * @param Request $request
      */
     public function getGroupSettingView(Request $request)
@@ -34,8 +34,8 @@ class UserGroupController extends Controller
 
     /**
      * Handle add group request submit
-     * 
-     * @param Request $request 
+     *
+     * @param Request $request
      * @return view group setting page
      */
     public function addGroupHandler(Request $request)
@@ -51,8 +51,8 @@ class UserGroupController extends Controller
 
     /**
      * Handle edit group request submit
-     * 
-     * @param Request $request 
+     *
+     * @param Request $request
      * @return view group setting page
      */
     public function editGroupHandler(Request $request)
@@ -61,7 +61,7 @@ class UserGroupController extends Controller
             'group_id' => 'required|int',
             'group_name' => 'required|max:100|string'
         ]);
-        if ($validated_data['group_id'] == \Config::get('group.UNASSIGNED_GROUP_ID')){
+        if ($validated_data['group_id'] == \Config::get('group.UNASSIGNED_GROUP_ID')) {
             $validator = Validator::make([], []);
             $validator->errors()->add('group_id', 'Cannot rename unassigned group.');
             throw new \Illuminate\Validation\ValidationException($validator);
@@ -77,9 +77,9 @@ class UserGroupController extends Controller
     }
 
     /**
-     * Handle change user's group 
-     * 
-     * @param Request $request 
+     * Handle change user's group
+     *
+     * @param Request $request
      * @return view group setting page
      */
     public function updateUserGroupHandler(Request $request)
@@ -99,11 +99,11 @@ class UserGroupController extends Controller
             'active_group' => $validated_data['user_group_id']
         ]);
     }
-    
+
     /**
      * Handle delete group request submit
-     * 
-     * @param Request $request 
+     *
+     * @param Request $request
      * @return view group setting page
      */
     public function deleteGroupHandler(Request $request)

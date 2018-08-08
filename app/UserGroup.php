@@ -79,7 +79,7 @@ class UserGroup extends Model
 
     /**
      * Delete a group
-     * 
+     *
      * @param int $group_id
      */
     public function deleteGroup()
@@ -89,5 +89,5 @@ class UserGroup extends Model
         ]);
         $this->delete();
     }
-    
+
 }

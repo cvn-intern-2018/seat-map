@@ -1,13 +1,12 @@
-.full-size
-{
-    padding:0;
+.full-size {
+    padding: 0;
 }
+
 .user-seat {
     z-index: 1;
 }
 
-.user-select
-{
+.user-select {
     display: table;
     margin: 0 auto;
     margin-bottom: 5px;
@@ -31,9 +30,9 @@
     margin-bottom: 20px;
 
 }
-.user-select>.name
-{
-    width:85px;
+
+.user-select > .name {
+    width: 85px;
     text-overflow: ellipsis;
     overflow: hidden;
     background-color: rgba(0, 0, 0, 0.7);
@@ -43,6 +42,7 @@
     border-radius: 15px;
 
 }
+
 label, input[type="checkbox" i] {
     cursor: pointer;
 }
@@ -83,7 +83,6 @@ label, input[type="checkbox" i] {
     overflow-y: scroll;
     height: 40vh;
 }
-
 
 .user-list .user-select[hidden] {
     display: none;

@@ -1,4 +1,4 @@
-.seat-map{
+.seat-map {
 
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -9,6 +9,7 @@
     outline: 0;
 
 }
+
 #delete-name {
     word-break: break-word;
 }
@@ -22,20 +23,23 @@
 .seatmap-button {
     height: 40px;
 }
-.filter
-{
-    margin:10px;
+
+.filter {
+    margin-bottom: 10px;
 }
+
 .seatmap-button:hover {
     position: sticky;
     transform: scale(1.2);
     cursor: pointer;
     z-index: 101;
 }
-.dragscroll
-{
-    cursor: -webkit-grab; cursor: grab;
+
+.dragscroll {
+    cursor: -webkit-grab;
+    cursor: grab;
 }
+
 .panel-heading {
     font-size: 25px;
 }
@@ -131,7 +135,7 @@
 
 .seatmap-viewport .seatmap-container .user-seat .info-box {
     display: none;
-    word-wrap:break-word;
+    word-wrap: break-word;
 }
 
 .seatmap-viewport .seatmap-container .user-seat.active .info-box {

@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class EditMembershipGroupTest extends TestCase
-{ 
+{
     use RefreshDatabase;
 
     public function setUp()
@@ -17,7 +17,7 @@ class EditMembershipGroupTest extends TestCase
         \Artisan::call('db:seed', ['--env' => 'testing']);
     }
 
-    
+
     private function getAdmin()
     {
         return \App\User::where('permission', 1)->first();
@@ -25,7 +25,7 @@ class EditMembershipGroupTest extends TestCase
 
     /**
      * Test edit group without login
-     * 
+     *
      * @return void
      */
     public function testAccessUpdateNoLogin()
@@ -39,7 +39,7 @@ class EditMembershipGroupTest extends TestCase
 
     /**
      * Test edit group with user privilege
-     * 
+     *
      * @return void
      */
     public function testAccessUpdateNoPermission()
@@ -51,10 +51,10 @@ class EditMembershipGroupTest extends TestCase
         ]);
         $response->assertStatus(403);
     }
-    
+
     /**
      * test a valid update
-     * 
+     *
      * @return void
      */
     public function testUpdateGroup()
@@ -74,7 +74,7 @@ class EditMembershipGroupTest extends TestCase
 
     /**
      * test a invalid update
-     * 
+     *
      * @return void
      */
     public function testInvalidUpdateGroup()
@@ -91,7 +91,7 @@ class EditMembershipGroupTest extends TestCase
 
     /**
      * Test update a user group to non existed group
-     * 
+     *
      * @return void
      */
     public function testUpdateNonExistGroup()
@@ -111,7 +111,7 @@ class EditMembershipGroupTest extends TestCase
 
     /**
      * Test update a user group to non existed group
-     * 
+     *
      * @return void
      */
     public function testUpdateNonExistUser()
@@ -131,7 +131,7 @@ class EditMembershipGroupTest extends TestCase
 
     /**
      * Test remove user from unassigned group
-     * 
+     *
      * @return void
      */
     public function testUpdateRemoveFromUnassigned()

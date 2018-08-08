@@ -10,18 +10,9 @@ use Lang;
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
+     * @param  request
+     * @return home view
      */
 
     public function index(Request $request)
@@ -30,7 +21,7 @@ class HomeController extends Controller
             'search' => 'max:100 | string| nullable',
         ]);
         $maps = SeatMap::getSeatMap($request->search, $request->page);
-        $searchNoti =  Lang::get('notification.search');
-        return view('home', ['maps' => $maps->appends(Input::except('page')), 'search' => $request->search,'searchNoti'=> $searchNoti]);
+        $searchNoti = Lang::get('notification.search');
+        return view('home', ['maps' => $maps->appends(Input::except('page')), 'search' => $request->search, 'searchNoti' => $searchNoti]);
     }
 }

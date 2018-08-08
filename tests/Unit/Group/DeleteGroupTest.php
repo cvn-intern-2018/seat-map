@@ -16,9 +16,10 @@ class DeleteGroupTest extends TestCase
         \Artisan::call('migrate:refresh', ['--env' => 'testing']);
         \Artisan::call('db:seed', ['--env' => 'testing']);
     }
+
     /**
      * Test delete group without login
-     * 
+     *
      * @return void
      */
     public function testAccessDeleteNoLogin()
@@ -28,9 +29,10 @@ class DeleteGroupTest extends TestCase
         ]);
         $response->assertStatus(302);
     }
+
     /**
      * Test delete group with user privilege
-     * 
+     *
      * @return void
      */
     public function testAccessDeleteNoPermission()
@@ -44,7 +46,7 @@ class DeleteGroupTest extends TestCase
 
     /**
      * Test delete group with existed id not 1
-     * 
+     *
      * @return void
      */
     public function testDeleteExistGroup()
@@ -58,7 +60,7 @@ class DeleteGroupTest extends TestCase
 
     /**
      * Test delete group without id
-     * 
+     *
      * @return void
      */
     public function testDeleteGroupWithoutId()
@@ -72,7 +74,7 @@ class DeleteGroupTest extends TestCase
 
     /**
      * Test delete group with not existed id
-     * 
+     *
      * @return void
      */
     public function testDeleteNonExistGroup()
@@ -84,10 +86,10 @@ class DeleteGroupTest extends TestCase
         $response->assertSessionHasErrors(['group_id']);
     }
 
-    
+
     /**
      * Test delete group with id = 1
-     * 
+     *
      * @return void
      */
     public function testDeleteUnassignedGroup()

@@ -10,7 +10,7 @@ class EditGroupTest extends TestCase
 {
     use WithFaker;
     use RefreshDatabase;
-    
+
     private function getAdmin()
     {
         return \App\User::where('permission', 1)->first();
@@ -25,7 +25,7 @@ class EditGroupTest extends TestCase
 
     /**
      * Test edit group without login
-     * 
+     *
      * @return void
      */
     public function testAccessEditNoLogin()
@@ -39,7 +39,7 @@ class EditGroupTest extends TestCase
 
     /**
      * Test edit group with user privilege
-     * 
+     *
      * @return void
      */
     public function testAccessEditNoPermission()
@@ -54,7 +54,7 @@ class EditGroupTest extends TestCase
 
     /**
      * Test edit group with existed name
-     * 
+     *
      * @return void
      */
     public function testEditExistedGroup()
@@ -70,7 +70,7 @@ class EditGroupTest extends TestCase
 
     /**
      * Test edit group with available name
-     * 
+     *
      * @return void
      */
     public function testEditAvailableGroup()
@@ -85,7 +85,7 @@ class EditGroupTest extends TestCase
 
     /**
      * Test edit group with no name
-     * 
+     *
      * @return void
      */
     public function testEditNoNameGroup()
@@ -100,7 +100,7 @@ class EditGroupTest extends TestCase
 
     /**
      * Test edit group with name longer than 100 characters
-     * 
+     *
      * @return void
      */
     public function testEditLongNameGroup()
@@ -115,7 +115,7 @@ class EditGroupTest extends TestCase
 
     /**
      * Test edit group with name with whitespace characters only
-     * 
+     *
      * @return void
      */
     public function testEditWhitespaceNameGroup()
@@ -127,10 +127,10 @@ class EditGroupTest extends TestCase
         ]);
         $response->assertSessionHasErrors(['group_name']);
     }
-    
+
     /**
      * Test edit group with name same as old name
-     * 
+     *
      * @return void
      */
     public function testEditSameNameGroup()
@@ -143,10 +143,10 @@ class EditGroupTest extends TestCase
         ]);
         $response->assertSessionHasNoErrors();
     }
-    
+
     /**
      * Test edit group with name same as old name
-     * 
+     *
      * @return void
      */
     public function testEditNameUnassignedGroup()

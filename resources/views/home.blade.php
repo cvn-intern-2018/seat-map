@@ -88,7 +88,8 @@
                                                oninput="this.setCustomValidity('')" type="text"
                                                class="form-control sm-name"
                                                placeholder="Enter Seatmap's name" name="SeatmapName" required>
-                                        <label for="SeatmapPic"><b>Image (Accept .jpg, .png or .gif with at least 300px) : </b></label>
+                                        <label for="SeatmapPic"><b>Image (Accept .jpg, .png or .gif with at least 300px)
+                                                : </b></label>
                                         <input oninvalid="this.setCustomValidity('Hey dude, you forgot to upload the map\'s image!!!')"
                                                oninput="this.setCustomValidity('')" onchange="loadFile(event)"
                                                type="file"

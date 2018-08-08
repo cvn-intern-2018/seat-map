@@ -7,7 +7,6 @@
     Edit seat map
 @endsection
 @section("scripts")
-
     <script src="{{ asset("/js/edit-seat-map.js") }}"></script>
 @endsection
 @section("vertical")
@@ -29,12 +28,6 @@
                 <div class="form-group  col-md-12 col-lg-6">
                     <input type="checkbox" name="display_group" id="display_group" checked>
                     <label for="display_group">show group</label>
-                </div>
-                <div class="btn-group col-md-12">
-                    <button class="btn btn-default zoom-out col-md-6" type="button"><span
-                                class="glyphicon glyphicon-zoom-out"></span></button>
-                    <button class="btn btn-default zoom-in col-md-6" type="button"><span
-                                class="glyphicon glyphicon-zoom-in"></span></button>
                 </div>
             </div>
             <div class="search-user col-md-12 ">
@@ -93,10 +86,6 @@
         </div>
 
     </form>
-
-
-
-
     <div class="modal fade" id="remove-confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
