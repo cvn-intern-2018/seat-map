@@ -33,35 +33,29 @@
             <div id="app">
 
                 <main class="py-4">
-
-
                     @if (Session::has('notifications'))
-                        <div class="alert alert-success">
-                            <ul>
-                                @foreach (Session::get('notifications') as $notification)
 
-                                    <li>{{ $notification }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-
-
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-
-
-
-
+                    <div id="notifications" class="alert alert-info">
+                        <strong>
+                            @foreach (Session::get('notifications') as $notification)
+                                {{ $notification }}<br>
+                            @endforeach
+                        </strong>
+                    </div>
+    
+                @endif
+    
+    
+    
+                @if ($errors->any())
+                    <div id="errors" class="alert alert-danger">
+                        <strong>
+                            @foreach ($errors->all() as $error)
+                                {{ $error }}<br>
+                            @endforeach
+                        </strong>
+                    </div>
+                @endif
                     @yield('content')
                 </main>
             </div>
@@ -74,4 +68,10 @@
 @include("footer")
 </body>
 @yield('scripts')
+@if (Session::has('notifications'))
+    <script src="{{ asset('js/notifications.js') }}"></script>
+@endif
+@if ($errors->any())
+    <script src="{{ asset('js/errors.js') }}"></script>
+@endif
 </html>
