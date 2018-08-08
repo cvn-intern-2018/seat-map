@@ -275,9 +275,10 @@ class UserController extends Controller
                 $this->userInfor['id'] = $user->id;
                 if ($this->userInfor['checkAvatar'] == 1) {
                     $this->userInfor['avatar'] = "";
-                } else {
-                    $this->userInfor['avatar'] = $user->img;
-                }
+                } 
+                // else {
+                //     $this->userInfor['avatar'] = $user->img;
+                // }
                 $this->response['status'] = "Error";
                 return redirect()->route('users')->with(['user_id' => $request->user_id,
                     'prv_data' => json_encode($this->userInfor),
