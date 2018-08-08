@@ -72,8 +72,11 @@
             <!-- display information of a user -->
             <div id="right" class="flex-container_">
                 <form name="infor" class="flex-container_" action="/users/edit" method="POST"
-                      enctype="multipart/form-data">@csrf
+                      enctype="multipart/form-data">@csrf 
                     <div name="avatar" id="avatarcontainer_" class="flex-container_">
+                      <?php if (isset(session('prv_error')['avatarErr'])) {
+                            echo "<p name=\"Error\">" . (session('prv_error'))['avatarErr'] . "</p>";
+                        } ?> 
                         <img name="ava" id="avatar"
                              src="{{asset('images/user/'.json_decode($admin)->id.json_decode($admin)->avatar)}}"
                              alt="avatar" onerror="this.src='{{asset('images/user/mys-man.jpg')}}'"/>

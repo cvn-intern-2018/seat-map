@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Controllers\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
@@ -172,13 +172,27 @@ class UserController extends Controller
         if (empty($infor->avatar)) {
             $this->userInfor['checkAvatar'] = $infor->checkAvatar;
         } else {
-            $this->userInfor['checkAvatar'] = 0;
-            $file = $infor->file('avatar');
-            $img = '.' . $file->extension();
-            $public = Storage::disk('public_folder');
-            $public->putFileAs('images/user', $file, $infor->user_id.$img);
-            // $avatar = UserController::test_input($img);
-            $this->userInfor['avatar'] = $img;
+            try {
+                $this->userInfor['checkAvatar'] = 0;
+                $file = $infor->file('avatar');
+                // var_dump($file); die();
+                if(!$file->extension()){
+                    throw new \Illuminate\Validation\ValidationException('Invalid');
+                }
+                $img = '.' . $file->extension();
+                if(($img != ".jpeg") and ($img != ".png") and ($img != ".bmp") and ($img != ".gif") and ($img != ".svg")){
+                    $this->userInforErr['avatarErr'] = "Invalid";
+                }else{
+                    $public = Storage::disk('public_folder');
+                    $public->putFileAs('images/user', $file, $infor->user_id.$img);
+                    // $avatar = UserController::test_input($img);
+                    $this->userInfor['avatar'] = $img;
+                }
+            } catch (\Exception $e) {
+                $this->userInforErr['avatarErr'] = "Invalid";
+            }
+            
+            
         }
 
         // check group_id
@@ -247,6 +261,7 @@ class UserController extends Controller
                     unset($this->userInforErr['passwordErr']);
                 }
             }
+            // $this->userInfor['id'] = $user->id;
             // $this->response['userInfor'] = $this->userInfor;
             // $this->response['userInforErr'] = $this->userInforErr;
             // var_dump($this->response); exit;
