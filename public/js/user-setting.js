@@ -163,12 +163,10 @@ function addUser(event){
                 nodeP.onclick = function(){displayUser(this)};
                 nodeP.classList.add("bg");
                 nodeP.dataset.info = JSON.stringify(response.userInfor);
-                console.log(_result.userInfor);
                 nodeP.innerHTML = response.userInfor.fullname;
                 var nodeImg = document.createElement("img");
                 nodeImg.setAttribute('name', response.userInfor.fullname);
                 nodeImg.dataset.id = response.userInfor.id;
-                console.log(response.userInfor.fullname);
                 nodeImg.onclick = function(){deleteUser(this)};
                 nodeImg.setAttribute('src', "images\/remove.png");
                 nodeImg.setAttribute('alt', "delete");
@@ -240,7 +238,7 @@ function deleteUser(currentItem){
                 }
             }
         }
-        xmlhttp.open("GET", "/users/delete/{name}?name=" + currentItem.name, true);
+        xmlhttp.open("GET", "/users/delete/{id}?id=" + currentItem.dataset.id, true);
         xmlhttp.send();
         } 
     }

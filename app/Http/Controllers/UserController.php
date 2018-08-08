@@ -230,10 +230,10 @@ class UserController extends Controller
             // $this->response['userInforErr'] = $this->userInforErr;
             // var_dump($request->user_id);
             // var_dump($this->response); exit;
-            if($this->userInforErr['emailErr'] == "Existed"){
+            if(($this->userInforErr['emailErr'] == "Existed") and ($user->email == $this->userInfor['email'])){
                 unset($this->userInforErr['emailErr']);
             }
-            if ($this->userInforErr['usernameErr'] == "Existed") {
+            if (($this->userInforErr['usernameErr'] == "Existed") and ($user->username == $this->userInfor['username'])) {
                 unset($this->userInforErr['usernameErr']);
             }
                 // $this->response['userInfor'] = $this->userInfor;
@@ -271,10 +271,10 @@ class UserController extends Controller
     public function deleteUserHandler(Request $request)
     {
 
-        if (empty($request->name)) {
+        if (empty($request->id)) {
             $this->response['status'] = "Error";
         } else {
-            User::where('name', $request->name)->delete();
+            User::where('id', $request->id)->delete();
             $this->response['status'] = "Success";
         }
         return json_encode($this->response);
