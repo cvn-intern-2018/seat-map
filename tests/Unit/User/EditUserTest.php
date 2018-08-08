@@ -98,8 +98,7 @@ class EditUserTest extends TestCase
         $user = $this->getAdmin();
         $image = UploadedFile::fake()->create('test.txt', 5);
         $response = $this->actingAs($user)->post('/users/edit', [
-            'user_id' => 142563,
-            'username' => $this->faker->userName,
+            'user_id' => 1423,
             'fullname' => $this->faker->name,
             'password' => 'secret',
             'email' => $this->faker->unique()->safeEmail,
