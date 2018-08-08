@@ -253,6 +253,7 @@ function deleteUser(currentItem) {
 // after the page has been reloaded
 (function () {
     $(document).ready(function () {
+        document.querySelector("input[name=checkAvatar]").value = 0;
         // get id
         var infor = document.querySelector("#list-of-users").dataset.info;
         // get user
