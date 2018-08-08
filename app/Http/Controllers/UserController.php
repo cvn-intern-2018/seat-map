@@ -213,6 +213,7 @@ class UserController extends Controller
         $this->userInfor['id'] = $user->id;
         $this->response['userInfor'] = $this->userInfor;
         $this->response['userInforErr'] = $this->userInforErr;
+        // var_dump($this->response); exit;
         return json_encode($this->response);
     }
 

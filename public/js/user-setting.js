@@ -169,6 +169,7 @@ function addUser(event) {
                 nodeP.innerHTML = response.userInfor.fullname;
                 var nodeImg = document.createElement("img");
                 nodeImg.setAttribute('name', response.userInfor.fullname);
+                nodeImg.dataset.id = response.userInfor.id;
                 console.log(response.userInfor.fullname);
                 nodeImg.onclick = function () {
                     deleteUser(this)
@@ -217,25 +218,28 @@ function deleteUser(currentItem) {
         } else {
             //send request
             var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    //get response
-                    if (JSON.parse(this.responseText).status == "Error") {
-                        alert(JSON.parse(this.responseText).status);
-                    } else {
-                        // delete on the screen
-                        // currentItem was a button
-                        // get parentNode
-                        var node = currentItem.parentNode.parentNode;
-                        // delete parentNode
-                        node.parentNode.removeChild(node);
-
-                        // alert(JSON.parse(this.responseText).status);
-                        // Get the snackbar DIV
-                        var x = document.getElementById("snackbar");
-                        x.innerHTML = JSON.parse(this.responseText).status;
-                        // Add the "show" class to DIV
-                        x.className = "show";
+            xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                //get response
+                if(JSON.parse(this.responseText).status == "Error"){
+                    alert(JSON.parse(this.responseText).status);
+                }else{
+                    var ul = document.querySelector("#list-of-users");
+                    if(ul.dataset.info == currentItem.dataset.id){
+                        displayUser(document.querySelectorAll("p[name=name]")[0]);
+                    }                    
+                    // delete on the screen
+                    // currentItem was a button
+                    // get parentNode
+                    var node = currentItem.parentNode.parentNode;
+                    // delete parentNode
+                    node.parentNode.removeChild(node);
+                    // alert(JSON.parse(this.responseText).status);
+                    // Get the snackbar DIV
+                    var x = document.getElementById("snackbar");
+                    x.innerHTML = JSON.parse(this.responseText).status;
+                    // Add the "show" class to DIV
+                    x.className = "show";
 
                         // After 3 seconds, remove the show class from DIV
                         setTimeout(function () {
