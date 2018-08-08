@@ -14,7 +14,6 @@
         return this;
     };
 
-    var lockUpdateGroup = false;
     $(document).ready(function () {
         //======================= Initial data =============================
         $.ajaxSetup({
@@ -55,10 +54,7 @@
          * Update group name by AJAX / announce errors
          */
         function updateGroupName(el) {
-            if (lockUpdateGroup) {
-                return;
-            }
-            lockUpdateGroup = true;
+
             var group_item = el.closest(".group-item");
             var group_name = group_item.querySelector(`input[name="group_name"]`).value;
             var group_id = parseInt(group_item.querySelector(`input[name="group_id"]`).value);
@@ -94,7 +90,6 @@
                             $(group_item).find(`label[for="group-name"]`).eq(0).html()
                         );
 
-                        lockUpdateGroup = false;
                     }
                 }
             })
