@@ -126,7 +126,9 @@ class SeatmapController extends Controller
         ]);
         $seatmap_id = $validatedData['seatmap_id'];
         $user_seat = [];
-        $user_ids = User::select('id')->get()->toArray();
+        $user_ids = array_map(function($item) {
+            return $item['id'];
+        }, User::select('id')->get()->toArray());
 
         if (!empty($validatedData['seat_data'])) {
             $user_seat = array_map(function ($item) use ($seatmap_id) {
@@ -141,7 +143,6 @@ class SeatmapController extends Controller
                 }
                 return $new_item;
             }, json_decode($validatedData['seat_data']));
-
             $user_seat = array_filter($user_seat, function ($item) use ($user_ids) {
                 return in_array($item['user_id'], $user_ids);
             });
@@ -152,7 +153,7 @@ class SeatmapController extends Controller
             $map = Map::findOrFail($seatmap_id);
             $map->saveSeatMapName($validatedData['seatmap_name']);
 
-            if (!is_empty($user_seat)) {
+            if (!empty($user_seat)) {
                 Seat::updateUserSeat($seatmap_id, $user_seat);
             }
             // DB::commit();
