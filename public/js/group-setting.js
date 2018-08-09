@@ -71,8 +71,10 @@
                     if (response.status === 200
                         && data.hasOwnProperty("result") && data.result == true) {
                         $(group_item).removeClass("edit");
-                        group_item.querySelector("label").innerHTML = group_name;
-                        document.querySelector("h4.group-title").innerHTML = group_name;
+                        group_item.querySelector("label").innerHTML = "";
+                        group_item.querySelector("label").append(document.createTextNode(group_name));
+                        document.querySelector("h4.group-title").innerHTML = "";
+                        document.querySelector("h4.group-title").append(document.createTextNode(group_name));
                     } else {
                         var timeOutId = 10;
                         var timeOutId = setTimeout(function () {
@@ -87,7 +89,7 @@
                         errorBox += '</ul></div>';
                         $(group_item).children(".group-display").eq(0).append(errorBox);
                         $(group_item).find(`input[name="group_name"]`).val(
-                            $(group_item).find(`label[for="group-name"]`).eq(0).html()
+                            $(group_item).find(`label[for="group-name"]`).eq(0).text()
                         );
 
                     }
@@ -143,7 +145,7 @@
         $(".group-button.cancel-button").click(function () {
             var _parent = $(this).parents(".group-item");
             _parent.removeClass("edit");
-            _parent.find(`input[name="group_name"]`).val(_parent.find(`label[for="group-name"]`).html());
+            _parent.find(`input[name="group_name"]`).val(_parent.find(`label[for="group-name"]`).text());
         });
 
         // Auto save new name on field loses focus

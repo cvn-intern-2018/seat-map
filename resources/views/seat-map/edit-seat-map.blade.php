@@ -45,6 +45,7 @@
                     <div class="user-container">
                         <div class="user-select" data-id="{{ $user->id }}"
                              data-name="{{ $user->name }}"
+                             data-short_name="{{ $user->short_name }}"
                              data-avatar="{{ getUserAvatar($user) }}"
                              data-group="{{ $user->group->name }}" data-phone="{{ $user->phone }}"
                              data-email="{{ $user->email }}" draggable="true"

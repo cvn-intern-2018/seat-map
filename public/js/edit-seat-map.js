@@ -213,11 +213,19 @@ document.addEventListener("DOMContentLoaded", function (e) {
         try {
             var zoom = parseInt(seatmap.dataset.zoom);
             if (zoom < 4) {
-                seatmap.dataset.zoom = zoom + 1;
+                zoom += 1
+                seatmap.dataset.zoom = zoom;
+            }
+            if (zoom >= 4) {
+                this.setAttribute("disabled", "disabled");
+            }
+            
+            if ( zoom > 1) {
+                document.querySelector("button.zoom-out").removeAttribute("disabled", "disabled");
             }
         }
         catch (e) {
-            seatmap.dataset.zoom = 1
+            seatmap.dataset.zoom = 1;
         }
         mapWidth = seatmap.clientWidth;
         mapHeight = seatmap.clientHeight;
@@ -226,7 +234,15 @@ document.addEventListener("DOMContentLoaded", function (e) {
         try {
             var zoom = parseInt(seatmap.dataset.zoom);
             if (zoom > 1) {
-                seatmap.dataset.zoom = zoom - 1;
+                zoom -= 1
+                seatmap.dataset.zoom = zoom;
+            }
+            if (zoom <= 1) {
+                this.setAttribute("disabled", "disabled");
+            }
+            
+            if (zoom < 4) {
+                document.querySelector("button.zoom-in").removeAttribute("disabled", "disabled");
             }
         }
         catch (e) {
@@ -253,15 +269,15 @@ document.addEventListener("DOMContentLoaded", function (e) {
         clearTimeout(waiterSetTimeOut);
         var _this = this;
         waiterSetTimeOut = setTimeout(function () {
-            var key = _this.value;
+            var key = _this.value.toLowerCase();
             if (key !== "") {
                 Array.from(userList).forEach(function (el) {
                     el.style.display = "none";
                 });
                 Array.from(userList).filter(function (el) {
                     var name = el.dataset.name.toLowerCase();
-                    key = key.toLowerCase();
-                    if (name.indexOf(key) !== -1) {
+                    var short_name = el.dataset.short_name.toLowerCase();
+                    if (name.indexOf(key) !== -1 || short_name.indexOf(key) !== -1) {
                         return true;
                     }
                     return false;
@@ -273,7 +289,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
                     el.style.display = "";
                 });
             }
-        }, 500);
+        }, 100);
     })
 
     /**

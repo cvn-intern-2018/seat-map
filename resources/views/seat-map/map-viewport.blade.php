@@ -19,7 +19,7 @@
                            type="text" name="filter" id="filter-name">
                 </div>
                 <div class="btn-group col-md-2 col-lg-1">
-                    <button class="btn btn-default zoom-out col-md-6" type="button"><span
+                    <button class="btn btn-default zoom-out col-md-6" type="button" disabled="disabled"><span
                                 class="glyphicon glyphicon-zoom-out"></span></button>
                     <button class="btn btn-default zoom-in col-md-6" type="button"><span
                                 class="glyphicon glyphicon-zoom-in"></span></button>
@@ -170,10 +170,10 @@
                                                          onerror="this.src='{{ asset("images/user/mys-man.jpg") }}'">
                                                 </div>
                                                 <div class="info-user col-xs-8">
-                                                    <p><label>Name:</label><span class="name"></span></p>
-                                                    <p><label>Group:</label><span class="group"></span></p>
-                                                    <p><label>Phone:</label><span class="phone"></span></p>
-                                                    <p><label>Email:</label><span class="email"></span></p>
+                                                    <p class="name-line"><label>Name:</label><span class="name"></span></p>
+                                                    <p class="group-line"><label>Group:</label><span class="group"></span></p>
+                                                    <p class="phone-line"><label>Phone:</label><span class="phone"></span></p>
+                                                    <p class="email-line"><label>Email:</label><span class="email"></span></p>
                                                 </div>
                                                 <div class="arranged-user-action col-xs-12">
                                                     <button class="btn btn-danger remove-arranged-user" type="button"
